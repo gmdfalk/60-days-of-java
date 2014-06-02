@@ -9,28 +9,71 @@ public class Methods {
 		// visibility();
 		System.out.println(tangens(9.48));
 		int[] a = { 1, 2, 3, 4, 5, 6 };
-		reverseArray(a);
-		reverseArrayInPlace(a);
+		// reverseArray(a);
+		// reverseArrayInPlace(a);
+		System.out.println(factor(5));
+		System.out.println(recurseFactor(5));
+		System.out.println(pow(5.4, 2));
+		System.out.println(recurseFib(15));
+		System.out.println(fib(16));
+	}
+
+	private static int fib(int n) {
+		if (n < 2)
+			return 1;
+		int a = 0, b = 1, temp;
+		for (int i = 0; i < n; i++) {
+			temp = a;
+			a = b;
+			b = a + temp;
+		}
+		return a;
+	}
+
+	static int recurseFib(int n) {
+		if (n < 2)
+			return 1;
+		return recurseFib(n - 1) + recurseFib(n - 2);
+	}
+
+	static double pow(double x, int k) {
+		if (k == 0) {
+			return 1;
+		} else if (k > 0) {
+			return x * pow(x, k - 1);
+		} else
+			return 1 / pow(x, -k);
+	}
+
+	private static int factor(int n) {
+		if (n == 0)
+			return 1;
+		for (int i = n - 1; i > 0; i--)
+			n *= i;
+		return n;
+	}
+
+	private static int recurseFactor(int n) {
+		if (n == 0)
+			return 1;
+		return n * recurseFactor(n - 1);
 	}
 
 	private static void reverseArrayInPlace(int[] a) {
-		int temp, len = a.length - 1;
+		int temp;
 		for (int i = 0; i < a.length / 2; i++) {
 			temp = a[i];
-			a[i] = a[len];
-			a[len] = temp;
-			len -= 1;
+			a[i] = a[a.length - 1 - i];
+			a[a.length - 1 - i] = temp;
 		}
 		for (int i : a)
 			System.out.println(i);
 	}
 
 	private static void reverseArray(int[] a) {
-		int len = a.length;
-		int[] b = new int[len];
+		int[] b = new int[a.length];
 		for (int i = 0; i < a.length; i++) {
-			b[i] = a[len - 1];
-			len -= 1;
+			b[i] = a[a.length - 1 - i];
 		}
 		for (int i : b)
 			System.out.println(i);
