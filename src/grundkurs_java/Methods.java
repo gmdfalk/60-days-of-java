@@ -1,5 +1,7 @@
 package grundkurs_java;
 
+import java.util.Scanner;
+
 public class Methods {
 
 	public static void main(String[] args) {
@@ -18,36 +20,51 @@ public class Methods {
 		// System.out.println(fib(16));
 		// System.out.println(palindrome("racecaR"));
 		// System.out.println(recursePalindrome("Racecar"));
-		System.out.println(sum(a));
-		double[] dd = { -3.0, -2.0, 0.0, 1.5, 3.0 };
-		double[] dr = enter(-3.0, 1, dd);
-		for (double d : dr)
-			System.out.println(d);
+		// System.out.println(sum(a));
+		sortArray();
+	}
+
+	public static void sortArray() {
+		Scanner in = new Scanner(System.in);
+		// double[] dd = { -3.0, -2.0, 0.0, 1.5, 3.0 };
+		double d;
+		double[] dd = new double[0];
+		do {
+			d = in.nextDouble();
+			dd = enter(d, position(d, dd), dd);
+		} while (d != 0);
+		for (double e : dd)
+			System.out.println(e);
+	}
+
+	public static double[] enter(double d, int c, double[] dField) {
+		// 6.11
+		double[] result = new double[dField.length + 1];
+		if (c < 0) {
+			result[0] = d;
+			for (int i = 1; i < dField.length + 1; i++) {
+				result[i] = dField[i - 1];
+			}
+		} else if (c >= dField.length) {
+			for (int i = 0; i < dField.length; i++) {
+				result[i] = dField[i];
+			}
+			result[dField.length] = d;
+		}
+
+		return result;
 	}
 
 	public static int position(double d, double[] dField) {
-		int index = 0;
+		// 6.11
 		for (int i = 0; i < dField.length; i++) {
-			if (i == d)
+			if (dField[i] == d)
 				return i;
 		}
 		if (d < 0)
 			return dField.length;
-		return index;
-	}
-
-	public static double[] enter(double d, int c, double[] dField) {
-		// 6.11 s = s + z[i++];
-		if (c < 0) {
-			for (int i = dField.length - 1; i >= 0; i--) {
-				dField[i + 1] = dField[i];
-			}
-			dField[0] = d;
-		} else if (c >= dField.length) {
-			dField[dField.length] = d;
-		}
-
-		return dField;
+		else
+			return 0;
 	}
 
 	public static int sum(int[] z) {
