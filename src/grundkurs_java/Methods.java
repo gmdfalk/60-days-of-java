@@ -26,7 +26,7 @@ public class Methods {
 		// System.out.println(recursePalindrome("Racecar"));
 		// System.out.println(sum(a));
 		printArray(sortArray(dd));
-		printArray(sortArrayEasy(dd));
+		// printArray(sortArrayEasy(dd));
 	}
 
 	public static void printArray(double[] array) {
@@ -35,6 +35,7 @@ public class Methods {
 	}
 
 	public static double[] sortArrayEasy(double[] field) {
+		// 6.11
 		Arrays.sort(field);
 		double[] result = new double[field.length];
 		int counter = 0;
@@ -54,33 +55,16 @@ public class Methods {
 	}
 
 	public static double[] sortArray(double[] field) {
+		// 6.11
 		double[] dd = new double[0];
 		for (double e : field) {
-			dd = enter2(e, position(e, dd), dd);
+			dd = enter(e, position(e, dd), dd);
 		}
 		return dd;
 	}
 
-	public static double[] enter(double d, int c, double[] dField) {
+	public static double[] enter(double d, int k, double[] dFeld) {
 		// 6.11
-		double[] result = new double[dField.length + 1];
-		if (c < 0) {
-			result[0] = d;
-			for (int i = 1; i < dField.length + 1; i++) {
-				result[i] = dField[i - 1];
-			}
-		} else if (c >= dField.length) {
-			for (int i = 0; i < dField.length; i++) {
-				result[i] = dField[i];
-			}
-			result[dField.length] = d;
-		}
-
-		return result;
-	}
-
-	public static double[] enter2(double d, int k, double[] dFeld) {
-
 		int i;
 		double[] eFeld = new double[dFeld.length + 1];
 
@@ -96,6 +80,7 @@ public class Methods {
 
 		for (i = k + 1; i < eFeld.length; i++)
 			eFeld[i] = dFeld[i - 1];
+		printArray(eFeld);
 
 		return eFeld;
 	}
