@@ -7,20 +7,69 @@ public class Methods {
 		// System.out.println(max(2, 4.0));
 		// variableArgs(1, 2, 3, 4, 5);
 		// visibility();
-		System.out.println(tangens(9.48));
+		// System.out.println(tangens(9.48));
 		int[] a = { 1, 2, 3, 4, 5, 6 };
 		// reverseArray(a);
 		// reverseArrayInPlace(a);
-		System.out.println(factor(5));
-		System.out.println(recurseFactor(5));
-		System.out.println(pow(5.4, 2));
-		System.out.println(recurseFib(15));
-		System.out.println(fib(16));
-		System.out.println(palindrome("racecaR"));
-		System.out.println(recursePalindrome("Racecar"));
+		// System.out.println(factor(5));
+		// System.out.println(recurseFactor(5));
+		// System.out.println(pow(5.4, 2));
+		// System.out.println(recurseFib(15));
+		// System.out.println(fib(16));
+		// System.out.println(palindrome("racecaR"));
+		// System.out.println(recursePalindrome("Racecar"));
+		System.out.println(sum(a));
+		double[] dd = { -3.0, -2.0, 0.0, 1.5, 3.0 };
+		double[] dr = enter(-3.0, 1, dd);
+		for (double d : dr)
+			System.out.println(d);
 	}
 
-	private static boolean recursePalindrome(String string) {
+	public static int position(double d, double[] dField) {
+		int index = 0;
+		for (int i = 0; i < dField.length; i++) {
+			if (i == d)
+				return i;
+		}
+		if (d < 0)
+			return dField.length;
+		return index;
+	}
+
+	public static double[] enter(double d, int c, double[] dField) {
+		// 6.11 s = s + z[i++];
+		if (c < 0) {
+			for (int i = dField.length - 1; i >= 0; i--) {
+				dField[i + 1] = dField[i];
+			}
+			dField[0] = d;
+		} else if (c >= dField.length) {
+			dField[dField.length] = d;
+		}
+
+		return dField;
+	}
+
+	public static int sum(int[] z) {
+		// berechnet die Summe der Komponenten des Feldes z
+		int s = 0, i = 0;
+		while (i < z.length)
+			s = s + z[i++];
+		// s = s + z[++i]; = arrayindexoutofbounds
+		return s;
+	}
+
+	public static void stringStuff() {
+		String s1 = "Christmas";
+		String s2 = "ChristmAs";
+		System.out.println(s1.compareTo(s2));
+		System.out.println(s1.equalsIgnoreCase(s2));
+		System.out.println(s1.replace('s', 'S'));
+		System.out.println(s1.substring(0, 4));
+		System.out.println(String.valueOf(1.5e3));
+	}
+
+	public static boolean recursePalindrome(String string) {
 		string = string.toLowerCase();
 		if (string.length() < 2)
 			return true;
