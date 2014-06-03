@@ -16,6 +16,27 @@ public class Methods {
 		System.out.println(pow(5.4, 2));
 		System.out.println(recurseFib(15));
 		System.out.println(fib(16));
+		System.out.println(palindrome("racecaR"));
+		System.out.println(recursePalindrome("Racecar"));
+	}
+
+	private static boolean recursePalindrome(String string) {
+		string = string.toLowerCase();
+		if (string.length() < 2)
+			return true;
+		if (string.charAt(0) == string.charAt(string.length() - 1))
+			return recursePalindrome(string.substring(1, string.length() - 1));
+		else
+			return false;
+	}
+
+	private static boolean palindrome(String string) {
+		string = string.toLowerCase();
+		for (int i = 0; i < string.length() / 2; i++) {
+			if (string.charAt(i) != string.charAt(string.length() - 1 - i))
+				return false;
+		}
+		return true;
 	}
 
 	private static int fib(int n) {
