@@ -1,6 +1,9 @@
 package grundkurs_java;
 
+import java.util.Arrays;
 import java.util.Scanner;
+
+import org.apache.commons.lang3.ArrayUtils;
 
 public class Methods {
 
@@ -11,6 +14,7 @@ public class Methods {
 		// visibility();
 		// System.out.println(tangens(9.48));
 		int[] a = { 1, 2, 3, 4, 5, 6 };
+		double[] dd = { 1.0, -1.0, 3, 4.8, 0.0, 3, -29 };
 		// reverseArray(a);
 		// reverseArrayInPlace(a);
 		// System.out.println(factor(5));
@@ -21,20 +25,40 @@ public class Methods {
 		// System.out.println(palindrome("racecaR"));
 		// System.out.println(recursePalindrome("Racecar"));
 		// System.out.println(sum(a));
-		sortArray();
+		printArray(sortArray(dd));
+		printArray(sortArrayEasy(dd));
 	}
 
-	public static void sortArray() {
-		Scanner in = new Scanner(System.in);
-		// double[] dd = { -3.0, -2.0, 0.0, 1.5, 3.0 };
-		double d;
+	public static void printArray(double[] array) {
+		for (double d : array)
+			System.out.println(d);
+	}
+
+	public static double[] sortArrayEasy(double[] field) {
+		Arrays.sort(field);
+		double[] result = new double[field.length];
+		int counter = 0;
+		for (int i = 0; i < field.length; i++) {
+			if (field[i] >= 0) {
+				result[counter] = field[i];
+				counter++;
+			}
+		}
+		for (int i = 0; i < field.length; i++) {
+			if (field[i] < 0) {
+				result[counter] = field[i];
+				counter++;
+			}
+		}
+		return result;
+	}
+
+	public static double[] sortArray(double[] field) {
 		double[] dd = new double[0];
-		do {
-			d = in.nextDouble();
-			dd = enter(d, position(d, dd), dd);
-		} while (d != 0);
-		for (double e : dd)
-			System.out.println(e);
+		for (double e : field) {
+			dd = enter2(e, position(e, dd), dd);
+		}
+		return dd;
 	}
 
 	public static double[] enter(double d, int c, double[] dField) {
@@ -55,6 +79,27 @@ public class Methods {
 		return result;
 	}
 
+	public static double[] enter2(double d, int k, double[] dFeld) {
+
+		int i;
+		double[] eFeld = new double[dFeld.length + 1];
+
+		if (k < 0)
+			k = 0;
+		else if (k > dFeld.length)
+			k = dFeld.length;
+
+		for (i = 0; i < k; i++)
+			eFeld[i] = dFeld[i];
+
+		eFeld[k] = d;
+
+		for (i = k + 1; i < eFeld.length; i++)
+			eFeld[i] = dFeld[i - 1];
+
+		return eFeld;
+	}
+
 	public static int position(double d, double[] dField) {
 		// 6.11
 		for (int i = 0; i < dField.length; i++) {
@@ -63,8 +108,7 @@ public class Methods {
 		}
 		if (d < 0)
 			return dField.length;
-		else
-			return 0;
+		return 0;
 	}
 
 	public static int sum(int[] z) {
