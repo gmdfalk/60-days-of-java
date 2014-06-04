@@ -17,6 +17,23 @@ public class OOP {
 }
 
 class Student {
+
+	// encapsulation.
+	private String name;
+	private int number;
+	private final int yearOfBirth;
+	private static int counter = 0;
+	public static final Student PHANTOM;
+
+	static {
+		// Constructor (static initializer) for static class objects.
+		PHANTOM = new Student(1735);
+		PHANTOM.setName("Erik le Phant");
+		PHANTOM.number = -12345; // illegal value so we manipulate the object
+									// directly instead of the reference.
+		counter = 0; // can't avoid the constructor so we have to reset here.
+	}
+
 	public Student() {
 		// Constructor (no arguments), redirect to overloaded constructor.
 		// Restricted to constructors, must be first argument, only once.
@@ -28,12 +45,6 @@ class Student {
 		this.yearOfBirth = yearOfBirth;
 		counter++;
 	}
-
-	// encapsulation.
-	private String name;
-	private int number;
-	private final int yearOfBirth;
-	private static int counter = 0;
 
 	public static int getCounter() {
 		return counter;
