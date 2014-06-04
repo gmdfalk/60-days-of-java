@@ -13,14 +13,26 @@ public class OOP {
 		System.out.println(studi.validateNumber());
 		System.out.println(studi); // every object has toString()
 		System.out.println(Student.getCounter()); // every object has toString()
-
 	}
 }
 
 class Student {
+	public Student() {
+		// Constructor (no arguments), redirect to overloaded constructor.
+		// Restricted to constructors, must be first argument, only once.
+		this(1970);
+	}
+
+	public Student(int yearOfBirth) {
+		// constructor
+		this.yearOfBirth = yearOfBirth;
+		counter++;
+	}
+
 	// encapsulation.
 	private String name;
 	private int number;
+	private final int yearOfBirth;
 	private static int counter = 0;
 
 	public static int getCounter() {
@@ -28,7 +40,7 @@ class Student {
 	}
 
 	public static Student createStudent() {
-		counter++;
+		// counter++;
 		return new Student();
 	}
 
