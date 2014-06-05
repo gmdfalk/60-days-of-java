@@ -9,8 +9,8 @@ public class OOP {
 		SpecialStudent a = new SpecialStudent("SS", 12345, 1, 1812, false);
 		SpecialStudent b = new SpecialStudent();
 		System.out.println(studi);
-		a.setNummer(1234790);
-		a.setNummer(1848600);
+		a.setNummer(1234790); // invalid nummer
+		a.setNummer(1848500); // valid nummer
 		System.out.println(a);
 	}
 
@@ -51,6 +51,7 @@ class Sub extends Super {
 }
 
 class SpecialStudent extends Student {
+	// 8.3
 
 	public SpecialStudent() {
 		super(1970);
@@ -70,30 +71,29 @@ class SpecialStudent extends Student {
 	}
 
 	public boolean validateNummer() {
-		int num, counter, crossSum;
-		num = this.getNummer();
+		int num, crossSum;
 		int[] digits = new int[7];
-		counter = 7;
-		while (num > 0) {
-			counter--;
-			digits[counter] = num % 10;
-			num = num / 10;
+		int[] factors = { 2, 1, 4, 3, 2, 1 };
+		num = getNummer();
+		crossSum = 0;
+		for (int i = 6; i >= 0; i--) {
+			digits[i] = num % 10;
+			num /= 10;
 		}
-
-		if (counter > 0) {
+		if (num != 0) {
 			System.out.println("Invalid length");
 			return false;
 		}
-		crossSum = digits[0] * 2 + digits[1] + digits[2] * 4 + digits[3] * 3
-				+ digits[4] * 2 + digits[5];
-		for (int d : digits)
-			System.out.println(d);
-		System.out.println(crossSum);
+		for (int i = 0; i < 6; i++)
+			crossSum += digits[i] * factors[i];
 		if (digits[6] != crossSum % 10) {
-			System.out.println("Invalid crossSum.");
+			System.out.println(digits[6] + " != " + crossSum % 10);
+			System.out.println("Invalid nummer " + getNummer());
 			return false;
+		} else {
+			System.out.println("Valid nummer " + getNummer());
+			return true;
 		}
-		return true;
 	}
 }
 
