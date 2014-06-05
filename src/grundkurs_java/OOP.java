@@ -4,8 +4,14 @@ public class OOP {
 
 	public static void main(String[] args) {
 		Student studi = new Student("Charles Dickens", 12345, 7, 1812, true);
-		students(studi);
+		// students(studi);
 		// Sub s = new Sub();
+		SpecialStudent a = new SpecialStudent("SS", 12345, 1, 1812, false);
+		SpecialStudent b = new SpecialStudent();
+		System.out.println(studi);
+		a.setNummer(1234790);
+		a.setNummer(1848600);
+		System.out.println(a);
 	}
 
 	private static void students(Student studi) {
@@ -41,6 +47,53 @@ class Sub extends Super {
 		System.out.println("Sub-Konstruktor beendet.");
 		System.out.println("x = " + x);
 		System.out.println("y = " + y);
+	}
+}
+
+class SpecialStudent extends Student {
+
+	public SpecialStudent() {
+		super(1970);
+	}
+
+	public SpecialStudent(int yearOfBirth) {
+		super(yearOfBirth);
+	}
+
+	public SpecialStudent(String name, int nummer, int fach, int geburtsjahr) {
+		super(name, nummer, fach, geburtsjahr);
+	}
+
+	public SpecialStudent(String name, int nummer, int fach, int geburtsjahr,
+			boolean geschlecht) {
+		super(name, nummer, fach, geburtsjahr, geschlecht);
+	}
+
+	public boolean validateNummer() {
+		int num, counter, crossSum;
+		num = this.getNummer();
+		int[] digits = new int[7];
+		counter = 7;
+		while (num > 0) {
+			counter--;
+			digits[counter] = num % 10;
+			num = num / 10;
+		}
+
+		if (counter > 0) {
+			System.out.println("Invalid length");
+			return false;
+		}
+		crossSum = digits[0] * 2 + digits[1] + digits[2] * 4 + digits[3] * 3
+				+ digits[4] * 2 + digits[5];
+		for (int d : digits)
+			System.out.println(d);
+		System.out.println(crossSum);
+		if (digits[6] != crossSum % 10) {
+			System.out.println("Invalid crossSum.");
+			return false;
+		}
+		return true;
 	}
 }
 
@@ -248,7 +301,6 @@ class Student {
 		this.name = name;
 		this.fach = fach;
 		this.nummer = nummer;
-
 	}
 
 	// *** Aufgabe 8.2: Konstruktor mit Beruecksichtigung des Geschlechts
