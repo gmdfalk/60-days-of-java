@@ -13,14 +13,45 @@ public class OOP {
 		// a.setNummer(1848500); // valid nummer
 		// a.setNummer(111111); // valid nummer
 		// System.out.println(a);
-		Hund.main(args);
-		TestZwei.main(args);
+		// Hund.main(args);
+		// TestZwei.main(args);
+		// Fehler2.main(args);
+		// Fehler4.main(args);
+		// Fehler6.main(args);
+		TennisSpieler t = new TennisSpieler();
+		TennisSpieler u = new TennisSpieler();
 	}
 
 	private static void students(Student studi) {
 		System.out.println(studi.validateNummer());
 		System.out.println(studi); // every object has toString()
 		System.out.println(Student.getZaehler()); // every object has toString()
+	}
+}
+
+class TennisSpieler {
+	public String name;
+	public int alter;
+	public int startNummer;
+	public static int folgeNummer = 0;
+	public TennisSpieler verfolger = null;
+
+	public TennisSpieler() {
+		startNummer = folgeNummer++;
+		System.out.println(startNummer);
+		System.out.println(folgeNummer);
+	}
+
+	public TennisSpieler(String name, int alter) {
+		this.name = name;
+		this.alter = alter;
+		startNummer = folgeNummer++;
+	}
+
+	// Name des Spielers
+	// Alter in Jahren ̈
+	public int altersDifferenz(int alter) {
+		return Math.abs(alter - this.alter);
 	}
 }
 
@@ -426,6 +457,46 @@ class TestZwei {
 	}
 }
 
+class Fehler2 {
+	/** Private Instanzvariable */
+	private String name;
+
+	/** Konstruktor */
+	public Fehler2(String name) {
+		this.name = name;
+	}
+
+	/** String-Ausgabe */
+	public String toString() {
+		return "Name = " + name;
+	}
+
+	/** Hauptprogramm */
+	public static void main(String[] args) {
+		System.out.println(new Fehler2("Testname"));
+	}
+}
+
+class Fehler4 {
+	/** Private Instanzvariable */
+	private String name;
+
+	/** Konstruktor */
+	public Fehler4(String nom) {
+		name = nom;
+	}
+
+	/** String-Ausgabe */
+	public String toString() {
+		return "Name = " + name;
+	}
+
+	/** Hauptprogramm */
+	public static void main(String[] args) {
+		System.out.println(new Fehler4("Testname"));
+	}
+}
+
 class Fehler5 {
 	/** Private Instanzvariable */
 	private String name;
@@ -443,5 +514,26 @@ class Fehler5 {
 	/** Hauptprogramm */
 	public static void main(String[] args) {
 		System.out.println(new Fehler5("Testname"));
+	}
+}
+
+class Fehler6 {
+	/** Private Instanzvariable */
+	private String name;
+
+	/** Konstruktor */
+	public Fehler6() {
+	}
+
+	/** String-Ausgabe */
+	public String toString() {
+		return "Name = " + name;
+	}
+
+	/** Hauptprogramm */
+	public static void main(String[] args) {
+		Fehler6 variable = new Fehler6();
+		variable.name = "Testname";
+		System.out.println(variable);
 	}
 }
