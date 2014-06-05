@@ -6,12 +6,15 @@ public class OOP {
 		Student studi = new Student("Charles Dickens", 12345, 7, 1812, true);
 		// students(studi);
 		// Sub s = new Sub();
-		SpecialStudent a = new SpecialStudent("SS", 12345, 1, 1812, false);
-		SpecialStudent b = new SpecialStudent();
-		System.out.println(studi);
-		a.setNummer(1234790); // invalid nummer
-		a.setNummer(1848500); // valid nummer
-		System.out.println(a);
+		// SpecialStudent a = new SpecialStudent("SS", 12345, 1, 1812, false);
+		// SpecialStudent b = new SpecialStudent();
+		// System.out.println(studi);
+		// a.setNummer(1234790); // invalid nummer
+		// a.setNummer(1848500); // valid nummer
+		// a.setNummer(111111); // valid nummer
+		// System.out.println(a);
+		Hund.main(args);
+		TestZwei.main(args);
 	}
 
 	private static void students(Student studi) {
@@ -71,16 +74,17 @@ class SpecialStudent extends Student {
 	}
 
 	public boolean validateNummer() {
-		int num, crossSum;
+		int num, counter, crossSum;
 		int[] digits = new int[7];
 		int[] factors = { 2, 1, 4, 3, 2, 1 };
 		num = getNummer();
 		crossSum = 0;
-		for (int i = 6; i >= 0; i--) {
-			digits[i] = num % 10;
+		counter = 7;
+		while (num > 0) {
+			digits[--counter] = num % 10;
 			num /= 10;
 		}
-		if (num != 0) {
+		if (counter > 0) {
 			System.out.println("Invalid length");
 			return false;
 		}
@@ -90,10 +94,9 @@ class SpecialStudent extends Student {
 			System.out.println(digits[6] + " != " + crossSum % 10);
 			System.out.println("Invalid nummer " + getNummer());
 			return false;
-		} else {
-			System.out.println("Valid nummer " + getNummer());
-			return true;
 		}
+		System.out.println("Valid nummer " + getNummer());
+		return true;
 	}
 }
 
@@ -330,5 +333,115 @@ class Student {
 		PHANTOM.nummer = -12345;
 		// Setze den Zaehler wieder zurueck
 		zaehler = 0;
+	}
+}
+
+class Maus {
+	Maus() {
+		System.out.println("Maus");
+	}
+}
+
+class Katze {
+	Katze() {
+		System.out.println("Katze");
+	}
+}
+
+class Ratte extends Maus {
+	Ratte() {
+		System.out.println("Ratte");
+	}
+}
+
+class Fuchs extends Katze {
+	Fuchs() {
+		System.out.println("Fuchs");
+	}
+}
+
+class Hund extends Fuchs {
+	Maus m = new Maus();
+	Ratte r = new Ratte();
+
+	Hund() {
+		System.out.println("Hund");
+	}
+
+	public static void main(String[] args) {
+		// Superclass constructor is always called first.
+		new Hund();
+	}
+}
+
+class Eins {
+	public long f;
+	public static long g = 2;
+
+	public Eins(long f) {
+		this.f = f;
+	}
+
+	public Object clone() {
+		return new Eins(f + g);
+	}
+}
+
+class Zwei {
+	public Eins h;
+
+	public Zwei(Eins eins) {
+		h = eins;
+	}
+
+	public Object clone() {
+		return new Zwei(h);
+	}
+}
+
+class TestZwei {
+	public static void main(String[] args) {
+		Eins e1 = new Eins(1), e2;
+		// e1.f = 1, e1.g = 2
+		Zwei z1 = new Zwei(e1), z2;
+		//
+		System.out.print(Eins.g + "-");
+		// 2-
+		System.out.println(z1.h.f);
+		// 1
+		e2 = (Eins) e1.clone();
+		z2 = (Zwei) z1.clone();
+		e1.f = 4;
+		Eins.g = 5;
+		System.out.print(e2.f + "-");
+		// 3-
+		System.out.print(e2.g + "-");
+		// 5-
+		System.out.print(z1.h.f + "-");
+		// 4-
+		System.out.print(z2.h.f + "-");
+		// 4-
+		System.out.println(z2.h.g);
+		// 5
+	}
+}
+
+class Fehler5 {
+	/** Private Instanzvariable */
+	private String name;
+
+	/** Konstruktor */
+	public void Fehler5(String name) {
+		this.name = name;
+	}
+
+	/** String-Ausgabe */
+	public String toString() {
+		return "Name = " + name;
+	}
+
+	/** Hauptprogramm */
+	public static void main(String[] args) {
+		System.out.println(new Fehler5("Testname"));
 	}
 }
