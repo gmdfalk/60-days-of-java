@@ -30,6 +30,7 @@ public class OOP {
 }
 
 class TennisSpieler {
+	// 8.8
 	public String name;
 	public int alter;
 	public int startNummer;
