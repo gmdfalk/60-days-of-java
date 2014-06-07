@@ -23,6 +23,7 @@ public class OOP {
 		Human herbert = new Human(42, "Herbert", "Landser", true);
 		Human marianne = new Human();
 		System.out.println(Human.getCounter());
+		System.out.println(herbert);
 	}
 
 	private static void students(Student studi) {
@@ -74,7 +75,11 @@ class Human {
 	}
 
 	public String toString() {
-		return "";
+		String gender = "female";
+		if (male)
+			gender = "male";
+		return firstName + " " + lastName + ", " + age + ", " + gender + ", "
+				+ counter;
 	}
 }
 

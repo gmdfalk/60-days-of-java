@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 import grundkurs_java.Methods;
 
-public class ScopeTest {
+public class Scope {
 
 	public static void main(String[] args) {
 		Methods m = new Methods();
 		System.out.println(m.recursePalindrome("asdf"));
-		ScopeTest st = new ScopeTest();
+		Scope st = new Scope();
 		st.Foo();
 		Echolot.main(args);
 	}
