@@ -18,14 +18,63 @@ public class OOP {
 		// Fehler2.main(args);
 		// Fehler4.main(args);
 		// Fehler6.main(args);
-		TennisSpieler t = new TennisSpieler();
-		TennisSpieler u = new TennisSpieler();
+		// TennisSpieler t = new TennisSpieler();
+		// TennisSpieler u = new TennisSpieler();
+		Human herbert = new Human(42, "Herbert", "Landser", true);
+		Human marianne = new Human();
+		System.out.println(Human.getCounter());
 	}
 
 	private static void students(Student studi) {
 		System.out.println(studi.validateNummer());
 		System.out.println(studi); // every object has toString()
 		System.out.println(Student.getZaehler()); // every object has toString()
+	}
+}
+
+class Human {
+	private int age;
+	private static int counter = 0;
+	private String firstName;
+	private String lastName;
+	private boolean male = false;
+	private int sum = 0;
+
+	public Human() {
+		counter++;
+	}
+
+	public Human(int age, String firstName, String lastName, boolean male) {
+		this.age = age;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.male = male;
+		// this(firstName, lastName, male);
+		counter++;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	public static int getCounter() {
+		return counter;
+	}
+
+	public boolean isMale() {
+		return male;
+	}
+
+	public boolean olderThan(Human h) {
+		return true;
+	}
+
+	public String toString() {
+		return "";
 	}
 }
 
@@ -514,7 +563,7 @@ class Fehler5 {
 
 	/** Hauptprogramm */
 	public static void main(String[] args) {
-		System.out.println(new Fehler5("Testname"));
+		// System.out.println(new Fehler5("Testname"));
 	}
 }
 
