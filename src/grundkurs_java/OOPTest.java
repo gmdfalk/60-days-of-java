@@ -10,11 +10,8 @@ import org.junit.Test;
 
 public class OOPTest {
 
-	private Human t;
-
 	@Before
 	public void setUp() throws Exception {
-		t = new Human(16, "John", "Locke", true);
 	}
 
 	@After
@@ -23,12 +20,21 @@ public class OOPTest {
 
 	@Test
 	public void testHumanAge() {
-		assertEquals("age should be 16.", 16, t.getAge());
-		// fail("Not yet implemented");
+		Human h = new Human(16, "John", "Locke", true);
+		assertEquals("age should be 16.", 16, h.getAge());
 	}
 
 	@Test
 	public void testHumanCounter() {
+		Human h = new Human(16, "John", "Locke", true);
 		assertEquals(1, Human.getCounter());
+	}
+
+	@Test
+	public void testPoint() {
+		Point p = new Point(10.14, 37.2);
+		assertEquals(10.14, p.getX(), 0.00001);
+		assertEquals(37.2, p.getY(), 0.00001);
+		assertEquals("10.14,37.2", p.toString());
 	}
 }

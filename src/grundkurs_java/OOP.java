@@ -20,10 +20,10 @@ public class OOP {
 		// Fehler6.main(args);
 		// TennisSpieler t = new TennisSpieler();
 		// TennisSpieler u = new TennisSpieler();
-		Human herbert = new Human(42, "Herbert", "Landser", true);
-		Human marianne = new Human();
-		System.out.println(Human.getCounter());
-		System.out.println(herbert);
+		// Human herbert = new Human(42, "Herbert", "Landser", true);
+		// Human marianne = new Human();
+		// System.out.println(Human.getCounter());
+		// System.out.println(herbert);
 	}
 
 	private static void students(Student studi) {
@@ -31,6 +31,37 @@ public class OOP {
 		System.out.println(studi); // every object has toString()
 		System.out.println(Student.getZaehler()); // every object has toString()
 	}
+}
+
+class Distance {
+
+}
+
+class Point {
+	// 8.10
+	private double x, y;
+
+	public Point() {
+
+	}
+
+	public Point(double x, double y) {
+		this.x = x;
+		this.y = y;
+	}
+
+	public double getX() {
+		return x;
+	}
+
+	public double getY() {
+		return y;
+	}
+
+	public String toString() {
+		return x + "," + y;
+	}
+
 }
 
 class Human {
@@ -71,7 +102,7 @@ class Human {
 	}
 
 	public boolean olderThan(Human h) {
-		return true;
+		return (age > h.getAge());
 	}
 
 	public String toString() {
