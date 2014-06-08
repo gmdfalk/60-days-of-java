@@ -24,16 +24,45 @@ public class OOP {
 		// Human marianne = new Human();
 		// System.out.println(Human.getCounter());
 		// System.out.println(herbert);
-		Point a = new Point(1.0, 2.0);
-		Point b = new Point(2.0, 3.0);
+		Point a = new Point(0.0, 0.0);
+		Point b = new Point(4.0, 3.0);
 		Distance d = new Distance(a, b);
 		System.out.println(d.toString());
+		System.out.println(d.getLength());
+		AchJa.main(args);
 	}
 
 	private static void students(Student studi) {
 		System.out.println(studi.validateNummer());
 		System.out.println(studi); // every object has toString()
 		System.out.println(Student.getZaehler()); // every object has toString()
+	}
+}
+
+class AchJa {
+	// 8.11
+	public int x;
+	static int ach;
+
+	int ja(int i, int j) {
+		int y;
+		if ((i <= 0) || (j <= 0) || (i % j == 0) || (j % i == 0)) {
+			System.out.print(i + j);
+			return i + j;
+		} else {
+			x = ja(i - 2, j);
+			System.out.print(" + ");
+			y = ja(i, j - 2);
+			return x + y;
+		}
+	}
+
+	public static void main(String[] args) {
+		int n = 5, k = 2;
+		AchJa so = new AchJa();
+		System.out.print("ja(" + n + "," + k + ") = ");
+		ach = so.ja(n, k);
+		System.out.println(" = " + ach);
 	}
 }
 
@@ -47,7 +76,8 @@ class Distance {
 	}
 
 	public double getLength() {
-		return 1.0;
+		return Math.sqrt(Math.pow((p.getX() - q.getX()), 2)
+				+ Math.pow(p.getY() - q.getY(), 2));
 	}
 
 	public String toString() {

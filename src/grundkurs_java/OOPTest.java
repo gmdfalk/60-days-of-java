@@ -37,4 +37,12 @@ public class OOPTest {
 		assertEquals(37.2, p.getY(), 0.00001);
 		assertEquals("10.14,37.2", p.toString());
 	}
+
+	@Test
+	public void testDistance() {
+		Point a = new Point(-3, 5);
+		Point b = new Point(7, -1);
+		Distance d = new Distance(a, b);
+		assertEquals(11.6, d.getLength(), 0.1);
+	}
 }
