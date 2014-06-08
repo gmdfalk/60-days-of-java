@@ -24,6 +24,10 @@ public class OOP {
 		// Human marianne = new Human();
 		// System.out.println(Human.getCounter());
 		// System.out.println(herbert);
+		Point a = new Point(1.0, 2.0);
+		Point b = new Point(2.0, 3.0);
+		Distance d = new Distance(a, b);
+		System.out.println(d.toString());
 	}
 
 	private static void students(Student studi) {
@@ -34,7 +38,21 @@ public class OOP {
 }
 
 class Distance {
+	private Point p;
+	private Point q;
 
+	public Distance(Point p, Point q) {
+		this.p = p;
+		this.q = q;
+	}
+
+	public double getLength() {
+		return 1.0;
+	}
+
+	public String toString() {
+		return p.toString() + " " + q.toString();
+	}
 }
 
 class Point {
