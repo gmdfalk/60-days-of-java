@@ -45,4 +45,13 @@ public class OOPTest {
 		Distance d = new Distance(a, b);
 		assertEquals(11.6, d.getLength(), 0.1);
 	}
+
+	@Test
+	public void testPatient() {
+		Patient maier = new Patient("H. Maier", 68);
+		Patient schmid = new Patient("G. Schmid", 45, maier);
+		Patient berger = new Patient("I. Berger", 36, schmid);
+		assertEquals(4, Patient.nextNumber);
+		assertEquals(3, berger.getNumber());
+	}
 }

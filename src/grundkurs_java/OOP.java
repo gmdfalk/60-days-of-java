@@ -24,18 +24,53 @@ public class OOP {
 		// Human marianne = new Human();
 		// System.out.println(Human.getCounter());
 		// System.out.println(herbert);
-		Point a = new Point(0.0, 0.0);
-		Point b = new Point(4.0, 3.0);
-		Distance d = new Distance(a, b);
-		System.out.println(d.toString());
-		System.out.println(d.getLength());
-		AchJa.main(args);
+		// Point a = new Point(0.0, 0.0);
+		// Point b = new Point(4.0, 3.0);
+		// Distance d = new Distance(a, b);
+		// System.out.println(d.toString());
+		// System.out.println(d.getLength());
+		// AchJa.main(args);
 	}
 
 	private static void students(Student studi) {
 		System.out.println(studi.validateNummer());
 		System.out.println(studi); // every object has toString()
 		System.out.println(Student.getZaehler()); // every object has toString()
+	}
+}
+
+class Patient {
+	public String name;
+	public int age;
+	private Patient previous;
+	private int number;
+	public static int nextNumber = 1;
+
+	public Patient(String name, int age) {
+		this.name = name;
+		this.age = age;
+		previous = this;
+		number = nextNumber;
+		nextNumber += 1;
+	}
+
+	public boolean isFirst() {
+		if (previous == null)
+			return true;
+		return false;
+	}
+
+	public int getNumber() {
+		return number;
+	}
+
+	public Patient(String name, int age, Patient previous) {
+		this(name, age); // call 2-arg constructor.
+		this.previous = previous;
+	}
+
+	public int ageDifference(int age) {
+		return Math.abs(age - this.age);
 	}
 }
 
