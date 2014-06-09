@@ -30,6 +30,21 @@ public class OOP {
 		// System.out.println(d.toString());
 		// System.out.println(d.getLength());
 		// AchJa.main(args);
+		Fahrzeug a = new Fahrzeug("Auto", 4, 1.9);
+		Fahrzeug f = new Fahrzeug("Fahrrad", 2, 4.5);
+		f.fahreLos();
+		a.status();
+		f.status();
+		a.fahreLos();
+		a.status();
+		f.status();
+		f.halteAn();
+		a.status();
+		f.status();
+		a.halteAn();
+		a.status();
+		f.status();
+
 	}
 
 	private static void students(Student studi) {
@@ -39,7 +54,84 @@ public class OOP {
 	}
 }
 
+class Glasboden {
+	// 8.16
+	private double radius;
+
+	public Glasboden(double r) {
+		radius = r;
+	}
+
+	public void verkleinern(double x) {
+		// verkleinert den Radius des Glasboden-Objekts um x
+		radius = radius - x;
+	}
+
+	public double flaeche() {
+		// liefert die Flaeche des Glasboden-Objekts
+		return Math.PI * radius * radius;
+	}
+
+	public double umfang() {
+		// liefert den Umfang der Glasboden-Objekts
+		return 2 * Math.PI * radius;
+	}
+
+	public String toString() {
+		// liefert die String-Darstellung des Glasboden-Objekts ̈
+		return "B(r=" + radius + ")";
+	}
+}
+
+class Fahrzeug {
+	// 8.14
+
+	private String name;
+	private int anzahlReifen;
+	private Reifen reifenArt;
+	private boolean faehrt;
+
+	public Fahrzeug(String name, int anzahlReifen, double luftdruck) {
+		this.name = name;
+		this.anzahlReifen = anzahlReifen;
+		reifenArt = new Reifen(luftdruck);
+	}
+
+	public void fahreLos() {
+		faehrt = true;
+	}
+
+	public void halteAn() {
+		faehrt = false;
+	}
+
+	public void status() {
+		String status = name + " mit " + anzahlReifen + " Reifen ("
+				+ reifenArt.aktuellerDruck() + " bar)";
+		if (faehrt) {
+			status += " fährt...";
+		} else {
+			status += " fährt nicht...";
+		}
+		System.out.println(status);
+	}
+}
+
+class Reifen {
+	// 8.13
+	private double druck;
+
+	public Reifen(double luftdruck) {
+		druck = luftdruck;
+	}
+
+	public double aktuellerDruck() {
+		return druck;
+	}
+}
+
 class Patient {
+	// 8.12
 	public String name;
 	public int age;
 	private Patient previous;
