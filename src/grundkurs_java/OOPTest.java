@@ -57,4 +57,14 @@ public class OOPTest {
 		assertFalse("berger is not first", berger.isFirst());
 		assertEquals("G. Schmid (2) is after H. Maier (1)", schmid.toString());
 	}
+
+	@Test
+	public void testTrinkGlas() {
+		Glasboden a = new Glasboden(100);
+		TrinkGlas b = new TrinkGlas(50, a);
+		System.out.println(b.fuellMenge());
+		System.out.println(b.flaeche());
+		System.out.println(b);
+
+	}
 }

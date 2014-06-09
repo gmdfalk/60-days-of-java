@@ -30,27 +30,68 @@ public class OOP {
 		// System.out.println(d.toString());
 		// System.out.println(d.getLength());
 		// AchJa.main(args);
-		Fahrzeug a = new Fahrzeug("Auto", 4, 1.9);
-		Fahrzeug f = new Fahrzeug("Fahrrad", 2, 4.5);
-		f.fahreLos();
-		a.status();
-		f.status();
-		a.fahreLos();
-		a.status();
-		f.status();
-		f.halteAn();
-		a.status();
-		f.status();
-		a.halteAn();
-		a.status();
-		f.status();
+		// Fahrzeug a = new Fahrzeug("Auto", 4, 1.9);
+		// Fahrzeug f = new Fahrzeug("Fahrrad", 2, 4.5);
+		// f.fahreLos();
+		// a.status();
+		// f.status();
+		// a.fahreLos();
+		// a.status();
+		// f.status();
+		// f.halteAn();
+		// a.status();
+		// f.status();
+		// a.halteAn();
+		// a.status();
+		// f.status();
+		trinkglas();
 
+	}
+
+	public static void trinkglas() {
+		Glasboden b = new Glasboden(100);
+		TrinkGlas g = new TrinkGlas(50, b);
+
+		while (g.flaeche() < g.fuellMenge() / 8) {
+			g.verkleinern(5);
+			System.out.println("Das Trinkglas " + g);
+			System.out.println("hat die Innenflaeche " + g.flaeche());
+			System.out.println("und die Fuellmenge " + g.fuellMenge());
+		}
 	}
 
 	private static void students(Student studi) {
 		System.out.println(studi.validateNummer());
 		System.out.println(studi); // every object has toString()
 		System.out.println(Student.getZaehler()); // every object has toString()
+	}
+}
+
+class TrinkGlas {
+
+	private Glasboden boden;
+	private double fuellStand;
+
+	public TrinkGlas(double fuellStand, Glasboden boden) {
+		this.fuellStand = fuellStand;
+		this.boden = boden;
+	}
+
+	public void verkleinern(double x) {
+		fuellStand -= x;
+		boden.verkleinern(x);
+	}
+
+	public double flaeche() {
+		return boden.flaeche() + boden.umfang() * fuellStand;
+	}
+
+	public double fuellMenge() {
+		return boden.flaeche() * fuellStand;
+	}
+
+	public String toString() {
+		return "G(" + boden + "," + "s=" + fuellStand;
 	}
 }
 
@@ -64,7 +105,7 @@ class Glasboden {
 
 	public void verkleinern(double x) {
 		// verkleinert den Radius des Glasboden-Objekts um x
-		radius = radius - x;
+		radius -= x;
 	}
 
 	public double flaeche() {
