@@ -49,15 +49,11 @@ class Patient {
 	public Patient(String name, int age) {
 		this.name = name;
 		this.age = age;
-		previous = this;
-		number = nextNumber;
-		nextNumber += 1;
+		number = nextNumber++;
 	}
 
 	public boolean isFirst() {
-		if (previous == null)
-			return true;
-		return false;
+		return (previous == null);
 	}
 
 	public int getNumber() {
@@ -71,6 +67,13 @@ class Patient {
 
 	public int ageDifference(int age) {
 		return Math.abs(age - this.age);
+	}
+
+	public String toString() {
+		String text = name + " (" + number + ")";
+		if (previous != null)
+			text += " is after " + previous.toString();
+		return text;
 	}
 }
 

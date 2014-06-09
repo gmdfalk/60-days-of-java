@@ -53,5 +53,8 @@ public class OOPTest {
 		Patient berger = new Patient("I. Berger", 36, schmid);
 		assertEquals(4, Patient.nextNumber);
 		assertEquals(3, berger.getNumber());
+		assertTrue("maier is first", maier.isFirst());
+		assertFalse("berger is not first", berger.isFirst());
+		assertEquals("G. Schmid (2) is after H. Maier (1)", schmid.toString());
 	}
 }
