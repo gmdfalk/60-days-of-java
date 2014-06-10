@@ -5,10 +5,7 @@ import java.util.Iterator;
 public class OOPAdvanced {
 
 	public static void main(String[] args) {
-		Euro a = new Euro(1000);
-		DM b = new DM(1);
-		CurrencyCalc calc = new CurrencyCalc(123.4);
-		System.out.println(calc.inEuro());
+
 	}
 }
 
@@ -129,11 +126,13 @@ class CurrencyCalc {
 	}
 
 	public double inFranc() {
-		return betrag.euroBetrag();
+		Franc f = new Franc(betrag);
+		return f.waehrungsBetrag();
 	}
 
 	public double inLire() {
-		return betrag.euroBetrag();
+		Lire L = new Lire(betrag);
+		return L.waehrungsBetrag();
 	}
 
 }
