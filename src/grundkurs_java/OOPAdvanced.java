@@ -7,9 +7,9 @@ public class OOPAdvanced {
 	public static void main(String[] args) {
 		Euro a = new Euro(1000);
 		DM b = new DM(1);
-		System.out.println(b.euroBetrag());
+		CurrencyCalc calc = new CurrencyCalc(123.4);
+		System.out.println(calc.inEuro());
 	}
-
 }
 
 // abstract = not instantiable. used often to inherit from.
@@ -118,8 +118,22 @@ class Franc extends Euro {
 }
 
 class CurrencyCalc {
-	public static void main(String[] args) {
-		DM dm = new DM(13.20);
-		System.out.println(dm.euroBetrag());
+	public DM betrag;
+
+	public CurrencyCalc(double betrag) {
+		this.betrag = new DM(betrag);
 	}
+
+	public double inEuro() {
+		return betrag.euroBetrag();
+	}
+
+	public double inFranc() {
+		return betrag.euroBetrag();
+	}
+
+	public double inLire() {
+		return betrag.euroBetrag();
+	}
+
 }
