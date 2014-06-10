@@ -5,7 +5,41 @@ import java.util.Iterator;
 public class OOPAdvanced {
 
 	public static void main(String[] args) {
+		Vater v = new Vater();
+		Vater s = new Sohn(); // but not Sohn s = new Vater();
+		v.zeigeVar(); // 1
+		((Vater) s).zeigeVar(); // 2
+		System.out.println("VATER: " + ((Vater) s).var); // 1
+	}
+}
 
+class Vater {
+	/** Eine oeffentliche Variable var */
+	public int var;
+
+	/** Konstruktor */
+	public Vater() {
+		var = 1;
+	}
+
+	/** Ausgabe des Variableninhalts */
+	public void zeigeVar() {
+		System.out.println("VATER: " + var);
+	}
+}
+
+class Sohn extends Vater {
+	/** Eine oeffentliche Variable var */
+	public int var;
+
+	/** Konstruktor */
+	public Sohn() {
+		var = 2;
+	}
+
+	/** Ausgabe des Variableninhalts */
+	public void zeigeVar() {
+		System.out.println("SOHN: " + var);
 	}
 }
 
