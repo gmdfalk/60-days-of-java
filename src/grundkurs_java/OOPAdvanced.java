@@ -8,8 +8,23 @@ public class OOPAdvanced {
 		Vater v = new Vater();
 		Vater s = new Sohn(); // but not Sohn s = new Vater();
 		v.zeigeVar(); // 1
-		((Vater) s).zeigeVar(); // 2
-		System.out.println("VATER: " + ((Vater) s).var); // 1
+		((Vater) s).zeigeVar(); // 2 (dynamic binding)
+		System.out.println("VATER: " + ((Vater) s).var); // 1 (no dyn binding)
+		// note: polymorphism works for methods only.
+		Kind k = new Kind();
+	}
+}
+
+class Papa {
+	// prevent polymorphing/overloading/mutating this method
+	public final void singe() {
+		System.out.println("La la la la la ...");
+	}
+}
+
+class Kind extends Papa {
+	public void singe() {
+		System.out.println("Do Re Mi Fa So ...");
 	}
 }
 
