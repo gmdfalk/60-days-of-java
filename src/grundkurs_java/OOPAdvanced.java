@@ -161,6 +161,19 @@ class Franc extends Euro {
 	public double waehrungsBetrag() {
 		return euroBetrag() * 6.55957;
 	}
+
+	// overwriting java.lang.Object methods
+	public String toString() {
+		return "$" + dollarBetrag();
+	}
+
+	// Note: When overloading "equals()" also overwrite "hashCode()"
+	public boolean equals(Object obj) {
+		if (obj instanceof Waehrung)
+			return this.dollarBetrag() == ((Waehrung) obj).dollarBetrag();
+		else
+			return super.equals(obj);
+	}
 }
 
 class CurrencyCalc {
