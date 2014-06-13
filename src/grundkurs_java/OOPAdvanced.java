@@ -173,7 +173,7 @@ class Franc extends Euro {
 			return this.dollarBetrag() == ((Waehrung) obj).dollarBetrag();
 		else
 			return super.equals(obj);
-	}
+	} // daily
 }
 
 class CurrencyCalc {
