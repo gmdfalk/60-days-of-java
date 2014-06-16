@@ -12,8 +12,23 @@ public class OOPAdvanced {
 		System.out.println("VATER: " + ((Vater) s).var); // 1 (no dyn binding)
 		// note: polymorphism works for methods only.
 		Kind k = new Kind();
+		Vater vaeterchen = new Vater();
+		Sohn soehnchen = new Sohn();
+		System.out.println(vaeterchen instanceof Sohn);
+		System.out.println(vaeterchen instanceof Vater);
+		// System.out.println(vaeterchen instanceof Waehrung); // incompatible
+		System.out.println(vaeterchen instanceof Object);
+		System.out.println(soehnchen instanceof Sohn);
+		System.out.println(soehnchen instanceof Vater);
+		// System.out.println(soehnchen instanceof Waehrung);
+		System.out.println(soehnchen instanceof Object);
+
+		double d = 3.14;
+		Double D = new Double(3.14);
+		System.out.println(d + " " + D);
 		Lire l = new Lire(1000);
 		System.out.println(l);
+
 	}
 }
 
