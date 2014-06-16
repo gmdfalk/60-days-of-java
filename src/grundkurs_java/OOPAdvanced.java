@@ -12,6 +12,8 @@ public class OOPAdvanced {
 		System.out.println("VATER: " + ((Vater) s).var); // 1 (no dyn binding)
 		// note: polymorphism works for methods only.
 		Kind k = new Kind();
+		Lire l = new Lire(1000);
+		System.out.println(l);
 	}
 }
 
@@ -23,9 +25,9 @@ class Papa {
 }
 
 class Kind extends Papa {
-	public void singe() {
-		System.out.println("Do Re Mi Fa So ...");
-	}
+	// public void singe() {
+	// System.out.println("Do Re Mi Fa So ...");
+	// }
 }
 
 class Vater {
@@ -113,6 +115,10 @@ class Euro extends Waehrung {
 		return betrag;
 	}
 
+	public String toString() {
+		return euroBetrag() + "€";
+	}
+
 	public static void setEuroKurs(double Kurs) {
 		kurs = Kurs;
 	}
@@ -173,7 +179,11 @@ class Franc extends Euro {
 			return this.dollarBetrag() == ((Waehrung) obj).dollarBetrag();
 		else
 			return super.equals(obj);
-	} // daily
+	}
+
+	public int hashCode() {
+		return (int) (dollarBetrag() * 100);
+	}
 }
 
 class CurrencyCalc {
