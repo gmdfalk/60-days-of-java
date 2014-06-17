@@ -51,6 +51,35 @@ class Goldbarren implements Wertgegenstand {
 	public Waehrung wert() {
 		return new USDollar(gewicht * preisProGrammInDollar);
 	}
+
+	public static Waehrung gesamtwert(Wertgegenstand[] objekte) {
+		double summe = 0;
+		for (Wertgegenstand w : objekte)
+			summe += w.wert().dollarBetrag();
+		return new USDollar(summe);
+	}
+}
+
+class Kruegerrand extends Waehrung implements Wertgegenstand {
+	private static double kurs;
+	private double wert;
+
+	public Kruegerrand(double wert) {
+		this.wert = wert;
+	}
+
+	public double dollarBetrag() {
+		return wert * kurs;
+
+	}
+
+	public static void setKurs(double Kurs) {
+		kurs = Kurs;
+	}
+
+	public Waehrung wert() {
+		return this;
+	}
 }
 
 class Papa {
