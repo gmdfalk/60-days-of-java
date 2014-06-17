@@ -32,6 +32,27 @@ public class OOPAdvanced {
 	}
 }
 
+interface Wertgegenstand {
+	// an interface is not a class but it can be "inherited" from with
+	// the keyword "implements"
+	public Waehrung wert();
+}
+
+class Goldbarren implements Wertgegenstand {
+	public static double preisProGrammInDollar = 60;
+	private double gewicht;
+
+	// constructor
+	public Goldbarren(double gewichtInGramm) {
+		gewicht = gewichtInGramm;
+	}
+
+	// actual interface implementation
+	public Waehrung wert() {
+		return new USDollar(gewicht * preisProGrammInDollar);
+	}
+}
+
 class Papa {
 	// prevent polymorphing/overloading/mutating this method
 	public final void singe() {
