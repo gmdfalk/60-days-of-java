@@ -1,6 +1,6 @@
 package grundkurs_java;
 
-import java.util.Iterator;
+import Prog1Tools.Plotter;
 
 public class OOPAdvanced {
 
@@ -28,7 +28,51 @@ public class OOPAdvanced {
 		System.out.println(d + " " + D);
 		Lire l = new Lire(1000);
 		System.out.println(l);
+		// Note: You can prevent instantiation by making the constructor
+		// private (apart from defining it abstract, obviously).
+		KreisPlot.main(args);
+	}
+}
 
+interface Plottable {
+	public double inf();
+
+	public double sup();
+
+	public double x(double t);
+
+	public double y(double t);
+}
+
+class KreisPlot implements Plottable {
+	// 9.7
+	// ( x(t) ) <- t
+	// ( y(t) ),
+
+	public double inf() {
+		return 0;
+	}
+
+	public double sup() {
+		return 2 + Math.PI;
+	}
+
+	public double x(double t) {
+		return Math.sin(t);
+	}
+
+	public double y(double t) {
+		return Math.cos(t);
+	}
+
+	public static void main(String[] args) {
+		Plotter p = new Plotter(new KreisPlot(), "Kreisplot");
+		p.adjustGrid(0.2, 0.2);
+		p.showGrid(true);
+		p.setNumOfPoints(9);
+		p.setVisible(true);
+		System.out.print("zum Beenden bitte das ");
+		System.out.println("Grafikfenster schliessen.");
 	}
 }
 
