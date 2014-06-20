@@ -80,7 +80,7 @@ interface Wertgegenstand {
 	// an interface is not a class but it can be "inherited" from with
 	// the keyword "implements"
 	public Waehrung wert();
-}
+} // dail
 
 class Goldbarren implements Wertgegenstand {
 	public static double preisProGrammInDollar = 60;
