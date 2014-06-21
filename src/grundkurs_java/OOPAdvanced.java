@@ -30,7 +30,47 @@ public class OOPAdvanced {
 		System.out.println(l);
 		// Note: You can prevent instantiation by making the constructor
 		// private (apart from defining it abstract, obviously).
-		KreisPlot.main(args);
+		// KreisPlot.main(args);
+		Aufzaehlung.main(args);
+	}
+}
+
+interface Folge {
+	/**
+	 * Liefert genau dann true, wenn weitere Elemente verfuegbar sind
+	 */
+	boolean elementeVerfuegbar();
+
+	/** Liefert das naechste Element zurueck */
+	Object naechstesElement();
+}
+
+class Aufzaehlung {
+	/** Feld von Zufallszahlen */
+	private double[] zahlen;
+
+	/** Konstruktor. Erzeugt ein Objekt mit n Zufallszahlen */
+	public Aufzaehlung(int n) {
+		zahlen = new double[n];
+		for (int i = 0; i < n; i++)
+			zahlen[i] = Math.random();
+	}
+
+	/** Gibt die Anzahl der gespeicherten Zahlen aus */
+	public int length() {
+		return zahlen.length;
+	}
+
+	/** Gibt die i-te Zufallszahl zurueck */
+	public double getZahl(int i) {
+		return zahlen[i];
+	}
+
+	public static void main(String[] args) {
+		Aufzaehlung zahlen = new Aufzaehlung(10);
+		for (int i = 0; i < zahlen.length(); i++) {
+			System.out.println(zahlen.getZahl(i));
+		}
 	}
 }
 
@@ -80,7 +120,7 @@ interface Wertgegenstand {
 	// an interface is not a class but it can be "inherited" from with
 	// the keyword "implements"
 	public Waehrung wert();
-} // dail
+}
 
 class Goldbarren implements Wertgegenstand {
 	public static double preisProGrammInDollar = 60;
