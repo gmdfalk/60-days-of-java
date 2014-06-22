@@ -45,11 +45,17 @@ interface Folge {
 	Object naechstesElement();
 }
 
+/**
+ * Diese Klasse erzeugt eine Reihe von Zufallszahlen, die man in Form einer
+ * Folge durchlaufen kann.
+ **/
 class Aufzaehlung {
 	/** Feld von Zufallszahlen */
 	private double[] zahlen;
 
-	/** Konstruktor. Erzeugt ein Objekt mit n Zufallszahlen */
+	/**
+	 * Konstruktor. Erzeugt ein Objekt mit n Zufallszahlen
+	 */
 	public Aufzaehlung(int n) {
 		zahlen = new double[n];
 		for (int i = 0; i < n; i++)
@@ -66,10 +72,42 @@ class Aufzaehlung {
 		return zahlen[i];
 	}
 
+	/** Erzeuge eine Folge, die den Inhalt repraesentiert. */
+	public Folge folge() {
+		return new Aneinanderreihung();
+	}
+
+	/**
+	 * Innere Klasse: Definiert eine Folge auf den Zufallsdaten.
+	 */
+	private class Aneinanderreihung implements Folge {
+		/** Ein Zaehler zeigt an, bei welchem Element wir sind */
+		private int zaehler = 0;
+
+		/** Zeigt an, ob es noch mehr Elemente gibt */
+		public boolean elementeVerfuegbar() {
+			return zaehler < zahlen.length;
+		}
+
+		/** Gibt das naechste Element zurueck und erhoeht den Zaehler. */
+		public Object naechstesElement() {
+			// Wandle die double-Zahl in ein Objekt um
+			Double res = new Double(zahlen[zaehler]);
+			// Erhoehe den Zaehler
+			zaehler++;
+			// Gib das Ergebnis zurueck
+			return res;
+		}
+	}
+
+	/**
+	 * Main-Methode. Erzeugt ein Zahlenfeld der Laenge 10 und gibt die Zahlen
+	 * aus.
+	 */
 	public static void main(String[] args) {
 		Aufzaehlung zahlen = new Aufzaehlung(10);
-		for (int i = 0; i < zahlen.length(); i++) {
-			System.out.println(zahlen.getZahl(i));
+		for (Folge f = zahlen.folge(); f.elementeVerfuegbar();) {
+			System.out.println(f.naechstesElement());
 		}
 	}
 }
