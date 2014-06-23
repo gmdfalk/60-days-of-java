@@ -98,7 +98,7 @@ class Aufzaehlung {
 			// Gib das Ergebnis zurueck
 			return res;
 		}
-	} // asdf
+	}
 
 	/**
 	 * Main-Methode. Erzeugt ein Zahlenfeld der Laenge 10 und gibt die Zahlen
