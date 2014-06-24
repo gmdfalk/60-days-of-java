@@ -95,7 +95,7 @@ class Aufzaehlung {
 			Double res = new Double(zahlen[zaehler]);
 			// Erhoehe den Zaehler
 			zaehler++;
-			// Gib das Ergebnis zurueck
+			// Gib das Ergebnis zuruec
 			return res;
 		}
 	}
