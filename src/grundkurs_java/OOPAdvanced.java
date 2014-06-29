@@ -73,7 +73,7 @@ class Aufzaehlung {
 	}
 
 	/** Erzeuge eine Folge, die den Inhalt repraesentiert. */
-	public Folge folge() {
+	public Folge folge() { //
 		return new Folge() {
 			/** Ein Zaehler zeigt an, bei welchem Element wir sind */
 			private int zaehler = 0;
