@@ -64,7 +64,7 @@ class Aufzaehlung {
 
 	/** Gibt die Anzahl der gespeicherten Zahlen aus */
 	public int length() {
-		return zahlen.length;
+		return zahlen.length; //
 	}
 
 	/** Gibt die i-te Zufallszahl zurueck */
