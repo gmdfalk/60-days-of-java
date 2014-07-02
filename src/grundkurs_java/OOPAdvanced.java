@@ -32,6 +32,80 @@ public class OOPAdvanced {
 		// private (apart from defining it abstract, obviously).
 		// KreisPlot.main(args);
 		Aufzaehlung.main(args);
+		TestABC.main(args);
+	}
+}
+
+// 9.11
+class MetallPlatte {
+	public double laenge;
+	public double breite;
+
+	public MetallPlatte(double laenge, double breite) {
+		this.laenge = laenge;
+		this.breite = breite;
+	}
+
+	public double flaeche() {
+		return laenge * breite;
+	}
+
+	public boolean schwererAls(MetallPlatte p) {
+		return (this.flaeche() > p.flaeche());
+	}
+}
+
+class GelochtePlatte extends MetallPlatte {
+	private int anzahlLoecher;
+	private double lochLaenge;
+	private double lochBreite;
+	private MetallPlatte[] loch;
+
+	public GelochtePlatte(double laenge, double breite, int anzahlLoecher) {
+		super(laenge, breite);
+		this.anzahlLoecher = anzahlLoecher;
+		loch = new MetallPlatte[anzahlLoecher];
+		lochLaenge = laenge * (1 / anzahlLoecher);
+		lochBreite = breite * (1 / anzahlLoecher);
+	}
+
+	public void neuesLochStanzen() {
+
+	}
+
+	public double flaeche() {
+		double plattenFlaeche = super.flaeche();
+		return plattenFlaeche;
+	}
+}
+
+// 9.10
+class A {
+	A(int i) {
+		System.out.println("A aufgerufen " + i);
+	}
+}
+
+class B {
+	B(int i) {
+		System.out.println("B aufgerufen " + i);
+	}
+}
+
+class C extends A {
+	B b;
+
+	C(int i) {
+		super(i);
+		b = new B(i);
+		System.out.println("C aufgerufen " + i);
+	}
+}
+
+class TestABC {
+	public static void main(String[] args) {
+		// B testB = new B();
+		C c = new C(1);
 	}
 }
 
