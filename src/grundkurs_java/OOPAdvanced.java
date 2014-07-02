@@ -65,17 +65,31 @@ class GelochtePlatte extends MetallPlatte {
 		super(laenge, breite);
 		this.anzahlLoecher = anzahlLoecher;
 		loch = new MetallPlatte[anzahlLoecher];
-		lochLaenge = laenge * (1 / anzahlLoecher);
-		lochBreite = breite * (1 / anzahlLoecher);
+		lochLaenge = laenge * (1.0 / anzahlLoecher);
+		lochBreite = breite * (1.0 / anzahlLoecher);
 	}
 
 	public void neuesLochStanzen() {
 
 	}
 
+	public int getAnzahlLoecher() {
+		return anzahlLoecher;
+	}
+
+	public double getLochLaenge() {
+		return lochLaenge;
+	}
+
+	public double getLochBreite() {
+		return lochBreite;
+	}
+
 	public double flaeche() {
-		double plattenFlaeche = super.flaeche();
-		return plattenFlaeche;
+		double gesamt, ohneLoecher;
+		gesamt = super.flaeche();
+		ohneLoecher = gesamt - (anzahlLoecher * (lochBreite * lochLaenge));
+		return ohneLoecher;
 	}
 }
 
