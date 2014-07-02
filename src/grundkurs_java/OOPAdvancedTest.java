@@ -27,11 +27,12 @@ public class OOPAdvancedTest {
 	@Test
 	public void testMetallplatte() {
 		GelochtePlatte gp = new GelochtePlatte(3, 5, 2);
-		assertEquals("width", 5, gp.breite, 0.1);
-		assertEquals("length", 3, gp.laenge, 0.1);
-		assertEquals("area ohne löcher", 7.5, gp.flaeche(), 0.1);
-		assertEquals("anzahl löcher", gp.getAnzahlLoecher(), 2);
+		assertEquals("breite", 5, gp.breite, 0.1);
+		assertEquals("länge", 3, gp.laenge, 0.1);
+		assertEquals("flaeche ohne löcher", 15, gp.flaeche(), 0.1);
+		assertEquals("anzahl löcher", gp.getAnzahlLoecher(), 0);
 		assertEquals("lochbreite", 2.5, gp.getLochBreite(), 0.1);
 		assertEquals("lochlänge", 1.5, gp.getLochLaenge(), 0.1);
+		gp.neuesLochStanzen();
 	}
 }

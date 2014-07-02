@@ -57,20 +57,29 @@ class MetallPlatte {
 
 class GelochtePlatte extends MetallPlatte {
 	private int anzahlLoecher;
+	public int maxAnzahlLoecher;
 	private double lochLaenge;
 	private double lochBreite;
 	private MetallPlatte[] loch;
 
-	public GelochtePlatte(double laenge, double breite, int anzahlLoecher) {
+	public GelochtePlatte(double laenge, double breite, int maxAnzahlLoecher) {
 		super(laenge, breite);
-		this.anzahlLoecher = anzahlLoecher;
-		loch = new MetallPlatte[anzahlLoecher];
-		lochLaenge = laenge * (1.0 / anzahlLoecher);
-		lochBreite = breite * (1.0 / anzahlLoecher);
+		this.maxAnzahlLoecher = maxAnzahlLoecher;
+		loch = new MetallPlatte[maxAnzahlLoecher];
+		lochLaenge = laenge * (1.0 / maxAnzahlLoecher);
+		lochBreite = breite * (1.0 / maxAnzahlLoecher);
 	}
 
 	public void neuesLochStanzen() {
-
+		System.out.println("Anzahl Löcher: " + anzahlLoecher);
+		System.out.println("Maximale Anzahl Löcher: " + maxAnzahlLoecher);
+		if (loch[maxAnzahlLoecher] instanceof MetallPlatte) {
+			System.out.println("Maximale Anzahl von Löchern bereits erreicht.");
+			return;
+		}
+		System.out.println("Stanze neues Loch.");
+		loch[anzahlLoecher++] = new MetallPlatte(lochLaenge, lochBreite);
+		System.out.println("Anzahl Löcher: " + anzahlLoecher);
 	}
 
 	public int getAnzahlLoecher() {
