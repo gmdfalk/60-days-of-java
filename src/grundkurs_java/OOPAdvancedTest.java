@@ -34,5 +34,10 @@ public class OOPAdvancedTest {
 		assertEquals("lochbreite", 2.5, gp.getLochBreite(), 0.1);
 		assertEquals("lochlänge", 1.5, gp.getLochLaenge(), 0.1);
 		gp.neuesLochStanzen();
+		assertEquals(1, gp.getAnzahlLoecher());
+		gp.neuesLochStanzen();
+		assertEquals(2, gp.getAnzahlLoecher());
+		gp.neuesLochStanzen();
+		assertEquals(2, gp.getAnzahlLoecher());
 	}
 }
