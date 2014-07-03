@@ -36,11 +36,37 @@ public class OOPAdvanced {
 	}
 }
 
-class Bildschirm {
+class DameFigur extends SpielFigur {
 	// 9.12
-	public static void loeschen() {
-		for (int i = 0; i < 100; i++)
-			System.out.println();
+	private final String name = "Dame";
+
+	public DameFigur(char x, int y, String f) {
+		super(x, y, f);
+	}
+
+	public void ziehe(char richtung, int anzahl) {
+		switch (richtung) {
+		case '-':
+			ziehe(anzahl, 0);
+			break;
+
+		case '|':
+			ziehe(0, anzahl);
+			break;
+
+		case '/':
+			ziehe(anzahl, anzahl);
+			break;
+
+		case '\\':
+			ziehe(anzahl, -anzahl);
+			break;
+
+		default:
+			System.out.println("Warnung: unzulaessigs Zeichen!");
+
+		}
+
 	}
 }
 
@@ -88,6 +114,14 @@ class SpielFigur {
 
 	public String toString() {
 		return farbe + "e Figur auf Feld " + xPos + yPos;
+	}
+}
+
+class Bildschirm {
+	// 9.12
+	public static void loeschen() {
+		for (int i = 0; i < 100; i++)
+			System.out.println();
 	}
 }
 
