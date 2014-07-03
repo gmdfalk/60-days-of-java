@@ -36,8 +36,63 @@ public class OOPAdvanced {
 	}
 }
 
-// 9.11
+class Bildschirm {
+	// 9.12
+	public static void loeschen() {
+		for (int i = 0; i < 100; i++)
+			System.out.println();
+	}
+}
+
+class SpielFigur {
+	// 9.12
+	private char xPos;
+	private int yPos;
+	private String farbe;
+
+	public SpielFigur(char x, int y, String f) {
+		xPos = x;
+		yPos = y;
+		farbe = f;
+		korrigierePosition();
+	}
+
+	private void korrigierePosition() {
+		if (xPos < 'A')
+			xPos = 'A';
+		else if (xPos > 'H')
+			xPos = 'H';
+		if (yPos < 1)
+			yPos = 1;
+		else if (yPos > 8)
+			yPos = 8;
+	}
+
+	public char getXpos() {
+		return xPos;
+	}
+
+	public int getYpos() {
+		return yPos;
+	}
+
+	public String getFarbe() {
+		return farbe;
+	}
+
+	public void ziehe(int xF, int yF) {
+		xPos = (char) (xPos + xF);
+		yPos = yPos + yF;
+		korrigierePosition();
+	}
+
+	public String toString() {
+		return farbe + "e Figur auf Feld " + xPos + yPos;
+	}
+}
+
 class MetallPlatte {
+	// 9.11
 	public double laenge;
 	public double breite;
 
@@ -56,6 +111,7 @@ class MetallPlatte {
 }
 
 class GelochtePlatte extends MetallPlatte {
+	// 9.11
 	private int anzahlLoecher;
 	public int maxAnzahlLoecher;
 	private double lochLaenge;
@@ -96,10 +152,10 @@ class GelochtePlatte extends MetallPlatte {
 	}
 
 	public double flaeche() {
-		double gesamt, ohneLoecher;
-		gesamt = super.flaeche();
-		ohneLoecher = gesamt - (anzahlLoecher * (lochBreite * lochLaenge));
-		return ohneLoecher;
+		double f = super.flaeche();
+		for (int i = 0; i < anzahlLoecher; i++)
+			f = f - loch[i].flaeche();
+		return f;
 	}
 }
 
