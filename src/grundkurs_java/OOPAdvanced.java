@@ -1,5 +1,8 @@
 package grundkurs_java;
 
+import java.util.Scanner;
+import java.util.regex.Pattern;
+
 import Prog1Tools.Plotter;
 
 public class OOPAdvanced {
@@ -35,8 +38,29 @@ public class OOPAdvanced {
 		// // KreisPlot.main(args);
 		// Aufzaehlung.main(args);
 		// TestABC.main(args);
-		SpielFigur s = new SpielFigur('H', 8, "red");
-		DameFigur d = new DameFigur('H', 8, "red");
+		DSpiel.main(args);
+	}
+}
+
+class DSpiel {
+	public static void main(String[] args) {
+		Scanner input = new Scanner(System.in);
+		char beuteXpos;
+		int beuteYpos;
+		String beuteFarbe;
+		char jägerXpos;
+		int jägerYpos;
+		String jägerFarbe;
+
+		System.out.println("Please set the treasure X position (A-Z): ");
+		beuteXpos = input.next("^[a-zA-Z]$").charAt(0);
+		System.out.println("Now the Y position (1-8): ");
+		beuteYpos = input.nextInt();
+		System.out.println("And finally the colour (black/white): ");
+		beuteFarbe = input.next("black|white");
+		Bildschirm.loeschen();
+		System.out.println("Treasure is at " + beuteXpos + beuteYpos + " ("
+				+ beuteFarbe + ").");
 	}
 }
 
@@ -69,7 +93,10 @@ class DameFigur extends SpielFigur {
 		default:
 			System.out.println("Warnung: unzulaessigs Zeichen!");
 		}
+	}
 
+	public String toString() {
+		return getFarbe() + "e Dame auf Feld " + getXpos() + getYpos();
 	}
 }
 
