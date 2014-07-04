@@ -5,34 +5,38 @@ import Prog1Tools.Plotter;
 public class OOPAdvanced {
 
 	public static void main(String[] args) {
-		Vater v = new Vater();
-		Vater s = new Sohn(); // but not Sohn s = new Vater();
-		v.zeigeVar(); // 1
-		((Vater) s).zeigeVar(); // 2 (dynamic binding)
-		System.out.println("VATER: " + ((Vater) s).var); // 1 (no dyn binding)
-		// note: polymorphism works for methods only.
-		Kind k = new Kind();
-		Vater vaeterchen = new Vater();
-		Sohn soehnchen = new Sohn();
-		System.out.println(vaeterchen instanceof Sohn);
-		System.out.println(vaeterchen instanceof Vater);
-		// System.out.println(vaeterchen instanceof Waehrung); // incompatible
-		System.out.println(vaeterchen instanceof Object);
-		System.out.println(soehnchen instanceof Sohn);
-		System.out.println(soehnchen instanceof Vater);
-		// System.out.println(soehnchen instanceof Waehrung);
-		System.out.println(soehnchen instanceof Object); // a
-
-		double d = 3.14;
-		Double D = new Double(3.14);
-		System.out.println(d + " " + D);
-		Lire l = new Lire(1000);
-		System.out.println(l);
-		// Note: You can prevent instantiation by making the constructor
-		// private (apart from defining it abstract, obviously).
-		// KreisPlot.main(args);
-		Aufzaehlung.main(args);
-		TestABC.main(args);
+		// Vater v = new Vater();
+		// Vater s = new Sohn(); // but not Sohn s = new Vater();
+		// v.zeigeVar(); // 1
+		// ((Vater) s).zeigeVar(); // 2 (dynamic binding)
+		// System.out.println("VATER: " + ((Vater) s).var); // 1 (no dyn
+		// binding)
+		// // note: polymorphism works for methods only.
+		// Kind k = new Kind();
+		// Vater vaeterchen = new Vater();
+		// Sohn soehnchen = new Sohn();
+		// System.out.println(vaeterchen instanceof Sohn);
+		// System.out.println(vaeterchen instanceof Vater);
+		// // System.out.println(vaeterchen instanceof Waehrung); //
+		// incompatible
+		// System.out.println(vaeterchen instanceof Object);
+		// System.out.println(soehnchen instanceof Sohn);
+		// System.out.println(soehnchen instanceof Vater);
+		// // System.out.println(soehnchen instanceof Waehrung);
+		// System.out.println(soehnchen instanceof Object); // a
+		//
+		// double d = 3.14;
+		// Double D = new Double(3.14);
+		// System.out.println(d + " " + D);
+		// Lire l = new Lire(1000);
+		// System.out.println(l);
+		// // Note: You can prevent instantiation by making the constructor
+		// // private (apart from defining it abstract, obviously).
+		// // KreisPlot.main(args);
+		// Aufzaehlung.main(args);
+		// TestABC.main(args);
+		SpielFigur s = new SpielFigur('H', 8, "red");
+		DameFigur d = new DameFigur('H', 8, "red");
 	}
 }
 
@@ -44,27 +48,26 @@ class DameFigur extends SpielFigur {
 		super(x, y, f);
 	}
 
+	public boolean trifft(SpielFigur s) {
+		return (s.getXpos() + s.getYpos() == getXpos() + getYpos());
+	}
+
 	public void ziehe(char richtung, int anzahl) {
 		switch (richtung) {
 		case '-':
 			ziehe(anzahl, 0);
 			break;
-
 		case '|':
 			ziehe(0, anzahl);
 			break;
-
 		case '/':
 			ziehe(anzahl, anzahl);
 			break;
-
 		case '\\':
 			ziehe(anzahl, -anzahl);
 			break;
-
 		default:
 			System.out.println("Warnung: unzulaessigs Zeichen!");
-
 		}
 
 	}
