@@ -43,6 +43,7 @@ public class OOPAdvanced {
 }
 
 class DSpiel {
+	// 9.13
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
 		char beuteXpos;
@@ -72,10 +73,6 @@ class DameFigur extends SpielFigur {
 		super(x, y, f);
 	}
 
-	public boolean trifft(SpielFigur s) {
-		return (s.getXpos() + s.getYpos() == getXpos() + getYpos());
-	}
-
 	public void ziehe(char richtung, int anzahl) {
 		switch (richtung) {
 		case '-':
@@ -93,6 +90,11 @@ class DameFigur extends SpielFigur {
 		default:
 			System.out.println("Warnung: unzulaessigs Zeichen!");
 		}
+	}
+
+	public boolean trifft(SpielFigur andereFigur) {
+		return andereFigur.getXpos() + andereFigur.getYpos() == getXpos()
+				+ getYpos();
 	}
 
 	public String toString() {
