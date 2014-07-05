@@ -59,9 +59,51 @@ class DSpiel {
 		beuteYpos = input.nextInt();
 		System.out.println("And finally the colour (black/white): ");
 		beuteFarbe = input.next("black|white");
-		Bildschirm.loeschen();
 		System.out.println("Treasure is at " + beuteXpos + beuteYpos + " ("
 				+ beuteFarbe + ").");
+		DameFigur beute = new DameFigur(beuteXpos, beuteYpos, beuteFarbe);
+		Bildschirm.loeschen();
+
+		System.out.println("Please set the hunter X position (A-Z): ");
+		jägerXpos = input.next().charAt(0);
+		System.out.println("Now the Y position (1-8): ");
+		jägerYpos = input.nextInt();
+		System.out
+				.println("And finally the colour of the hunter (black/white): ");
+		jägerFarbe = input.next("black|white");
+		System.out.println("Hunter is at " + jägerXpos + jägerYpos + " ("
+				+ jägerFarbe + ").");
+		DameFigur jäger = new DameFigur(jägerXpos, jägerYpos, jägerFarbe);
+
+		int zug = 0;
+		boolean victory = false;
+		char richtung;
+		int anzahl;
+		if (jäger.trifft(beute))
+			victory = true;
+		while (!jäger.trifft(beute) && zug < 11) {
+			System.out
+					.println("Wollen sie waagrecht (-), senkrecht (|) oder diagonal (/, \\) ziehen?");
+			richtung = input.next().charAt(0);
+			System.out.println("Wieviele Felder wollen Sie ziehen?");
+			anzahl = input.nextInt();
+			jäger.ziehe(richtung, anzahl);
+			zug++;
+			if (jäger.trifft(beute)) {
+				System.out.println("Hit! " + jäger.getXpos() + jäger.getYpos());
+				victory = true;
+				break;
+			} else {
+				System.out
+						.println("Miss: " + jäger.getXpos() + jäger.getYpos());
+			}
+		}
+		if (victory)
+			System.out.println("Congratulations, you've found the treasure in "
+					+ zug + " moves.");
+		else
+			System.out
+					.println("Sorry, you didn't find the treasure in 10 moves.");
 	}
 }
 
