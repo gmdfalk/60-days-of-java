@@ -38,12 +38,197 @@ public class OOPAdvanced {
 		// // KreisPlot.main(args);
 		// Aufzaehlung.main(args);
 		// TestABC.main(args);
-		DSpiel.main(args);
+		// DSpiel.main(args);
+		Sandwich.main(args);
+		AutoTest.main(args);
+		ElchTest.main(args);
+		RunStrecke.main(args);
 	}
 }
 
+// 9.17
+class RunStrecke {
+	public static void main(String[] args) {
+		Punkt a = new Punkt(1, 1);
+		Punkt b = new Punkt(3, 3);
+		Strecke s = new Strecke(a, b);
+		System.out.println(s);
+		double winkel = 0.14;
+		s.turn(winkel);
+		System.out.println(s.getLaenge());
+	}
+}
+
+class Strecke {
+	private Punkt p;
+	private Punkt q;
+
+	public Strecke(Punkt p, Punkt q) {
+		this.p = p;
+		this.q = q;
+	}
+
+	public String toString() {
+		return p + "_" + q;
+	}
+
+	public double getLaenge() {
+		return p.distance(p, q);
+	}
+
+	public void turn(double phi) {
+		q.turn(phi);
+		p.turn(phi);
+	}
+}
+
+/** Klasse fuer Punkte (x,y) in der Ebene */
+class Punkt {
+	private double x;
+	private double y;
+
+	public Punkt(double x, double y) {
+		this.x = x;
+		this.y = y;
+	}
+
+	public double getX() {
+		return x;
+	}
+
+	public double getY() {
+		return y;
+	}
+
+	public void turn(double phi) {
+		// dreht das Point-Objekt um den Winkel phi
+		double xAlt = x;
+		x = xAlt * Math.cos(phi) - y * Math.sin(phi);
+		y = xAlt * Math.sin(phi) + y * Math.cos(phi);
+	}
+
+	public static double distance(Punkt p, Punkt q) {
+		// liefert den Abstand zwischen p und q
+		double xdiff = p.getX() - q.getX();
+		double ydiff = p.getY() - q.getY();
+		return Math.sqrt(xdiff * xdiff + ydiff * ydiff);
+	}
+
+	public String toString() {
+		// liefert die String-Darstellung des Point-Objekts
+		return "(" + x + "," + y + ")";
+	}
+}
+
+// 9.15 a)
+class Fahrzeuga {
+	void fahre() {
+		System.out.println("Das Fahrzeug faehrt");
+	}
+}
+
+class Auto extends Fahrzeuga {
+	void fahre() {
+		System.out.println("Das Auto faehrt");
+	}
+}
+
+class AutoTest {
+	public static void main(String[] args) {
+		Fahrzeuga f;
+		Auto a = new Auto();
+		f = a;
+		f.fahre();
+	}
+}
+
+// 9.15 b)
+class AKlasse {
+	public int wert = 0;
+
+	public int wert() {
+		return this.wert;
+	}
+}
+
+class CKlasse extends AKlasse {
+	public int wert = 1;
+
+	public int wert() {
+		return this.wert;
+	}
+}
+
+class ElchTest {
+	public static void main(String argv[]) {
+		AKlasse a = new AKlasse();
+		System.out.println("Wert von a ist: " + a.wert);
+		System.out.println("Wert von a ist: " + a.wert());
+		CKlasse b = new CKlasse();
+		System.out.println("Wert von b ist: " + b.wert);
+		System.out.println("Wert von b ist: " + b.wert());
+
+		AKlasse c = b;
+		System.out.println("Wert von c ist: " + c.wert);
+
+		System.out.println("Wert von c ist: " + c.wert());
+
+	}
+}
+
+// 9.14
+class Mahlzeit {
+	Mahlzeit() {
+		System.out.println("Mahlzeit()");
+	}
+}
+
+class Brot {
+	Brot() {
+		System.out.println("Brot()");
+	}
+}
+
+class Wurst {
+	Wurst() {
+		System.out.println("Wurst()");
+	}
+}
+
+class Salat {
+	Salat() {
+		System.out.println("Salat()");
+	}
+}
+
+class Mittagessen extends Mahlzeit {
+	Mittagessen() {
+		System.out.println("Mittagessen()");
+	}
+}
+
+class Vesper extends Mittagessen {
+	Vesper() {
+		System.out.println("Vesper()");
+	}
+}
+
+class Sandwich extends Vesper {
+	Brot b = new Brot();
+	Wurst w = new Wurst();
+	Salat s = new Salat();
+
+	Sandwich() {
+		System.out.println("Sandwich()");
+	}
+
+	public static void main(String[] args) {
+		new Sandwich();
+	}
+}
+
+// 9.13
 class DSpiel {
-	// 9.13
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
 		char beuteXpos;
