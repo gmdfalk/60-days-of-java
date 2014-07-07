@@ -19,21 +19,39 @@ public class Exceptions {
 
 }
 
+class DigitException extends RuntimeException {
+	public DigitException(String message) {
+		super(message);
+	}
+}
+
 class ReadMe {
+
+	public static void check(int z) {
+		if (z >= '0' && z <= '9') {
+			DigitException de = new DigitException(
+					"Fehler beim Lesen: Ziffer aufgetreten!");
+			throw de;
+		}
+	}
+
 	public static void main(String[] args) {
 		try {
-			FileReader filereader = new FileReader("/home/demian/RADME");
+			FileReader filereader = new FileReader("/home/demian/README");
 
 			while (true) {
 				int gelesen = filereader.read();
 				if (gelesen == -1)
 					break;
+				check(gelesen);
 				System.out.print((char) gelesen);
 			}
 
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found: " + e.getMessage());
 		} catch (IOException e) {
+			System.out.println(e);
+		} catch (DigitException e) {
 			System.out.println(e);
 		}
 	}
