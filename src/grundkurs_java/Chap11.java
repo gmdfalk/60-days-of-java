@@ -15,8 +15,8 @@ public class Chap11 {
 		Peter.setNummer(12345);
 		Peter.setFach(Fach.BWL);
 		System.out.println(Peter);
-		// System.out.println("Regelstudienzeit fuer sein Studium: " +
-		// Peter.getFach().regelstudienzeit() + " Semester.");
+		System.out.println("Regelstudienzeit fuer sein Studium: "
+				+ Peter.getFach().regelstudienzeit() + " Semester.");
 	}
 
 	public enum Jahreszeit {
@@ -61,7 +61,8 @@ enum Fach {
 			return 13;
 		default:
 			return -1;
-		
+
+		}
 	}
 }
 
