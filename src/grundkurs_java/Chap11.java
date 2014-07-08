@@ -42,6 +42,57 @@ public class Chap11 {
 
 }
 
+class EsWarEinmal {
+	public static void absatz(Object... elemente) {
+		for (Object element : elemente)
+			System.out.print(String.valueOf(element));
+		System.out.println();
+	}
+
+	public static void main(String... args) {
+		Nom rotkaeppchen = new Nom(Geschlecht.SAECHLICH, "Rotkaeppchen");
+		Nom wolf = new Nom(Geschlecht.MAENNLICH, "Wolf");
+		Nom oma = new Nom(Geschlecht.WEIBLICH, "Grossmutter");
+		absatz("Es war einmal ",
+				rotkaeppchen.mitArtikel(Fall.NOMINATIV, false),
+				", das wollte einen Ausflug zu ",
+				oma.mitArtikel(Fall.DATIV, true), " machen.");
+		absatz("Im Wald jedoch begegnete es ",
+				wolf.mitArtikel(Fall.DATIV, false),
+				", und damit beginnt unsere schaurige Geschichte...");
+	}
+}
+
+enum Geschlecht {
+	MAENNLICH, WEIBLICH, SAECHLICH;
+}
+
+enum Fall {
+	NOMINATIV, GENITIV, DATIV, AKKUSATIV;
+
+	public String getBestimmterArtikel(Geschlecht geschlecht) {
+		String artikel;
+		if (geschlecht == Geschlecht.MAENNLICH)
+			artikel = "der";
+		else if (geschlecht == Geschlecht.WEIBLICH)
+			artikel = "die";
+		else
+			artikel = "das";
+		return artikel;
+	}
+
+	public String getUnbestimmterArtikel(Geschlecht geschlecht) {
+		String artikel;
+		if (geschlecht == Geschlecht.MAENNLICH)
+			artikel = "der";
+		else if (geschlecht == Geschlecht.WEIBLICH)
+			artikel = "die";
+		else
+			artikel = "das";
+		return artikel;
+	}
+}
+
 enum Fach {
 	MATHE, INFORMATIK, ARCHITEKTUR, BWL, BIOLOGIE, GESCHICHTE, GERMANISTIK, POLITOLOGIE, PHYSIK;
 
