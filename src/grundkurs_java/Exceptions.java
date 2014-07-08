@@ -28,7 +28,7 @@ class AssertionTest {
 	}
 
 	public static void main(String[] args) {
-		double x = 123.45;
+		double x = 0;
 		try {
 			System.out.println(kehrwert(x));
 
