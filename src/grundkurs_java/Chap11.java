@@ -10,13 +10,18 @@ public class Chap11 {
 		// Noten g = Noten.G;
 		// System.out.println(g.liegtAufSchwarzerTaste());
 		// System.out.println(Noten.AIS.liegtAufSchwarzerTaste());
-		StudentNeu Peter = new StudentNeu();
-		Peter.setName("Peter Honig");
-		Peter.setNummer(12345);
-		Peter.setFach(Fach.BWL);
-		System.out.println(Peter);
-		System.out.println("Regelstudienzeit fuer sein Studium: "
-				+ Peter.getFach().regelstudienzeit() + " Semester.");
+		// StudentNeu Peter = new StudentNeu();
+		// Peter.setName("Peter Honig");
+		// Peter.setNummer(12345);
+		// Peter.setFach(Fach.BWL);
+		// System.out.println(Peter);
+		// System.out.println("Regelstudienzeit fuer sein Studium: "
+		// + Peter.getFach().regelstudienzeit() + " Semester.");
+		System.out.println(('a' == 'a') && (2 > 3)); // false
+		System.out.println(("ab" + "cd") == "abcd"); // true
+		System.out.println((10 / 4 == 1) || ('a' == 'b')); // false
+		System.out.println((13 / 3 - 3) * 123456789123L); // 123456789123
+		System.out.println('Q' != 'q'); // true
 	}
 
 	public enum Jahreszeit {
