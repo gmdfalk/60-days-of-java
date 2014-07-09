@@ -22,6 +22,7 @@ public class Chap11 {
 		System.out.println((10 / 4 == 1) || ('a' == 'b')); // false
 		System.out.println((13 / 3 - 3) * 123456789123L); // 123456789123
 		System.out.println('Q' != 'q'); // true
+		EsWarEinmal.main(args);
 	}
 
 	public enum Jahreszeit {
@@ -68,6 +69,23 @@ class EsWarEinmal {
 	}
 }
 
+class Nom {
+	public String name;
+	public Geschlecht geschlecht;
+
+	public Nom(Geschlecht geschlecht, String name) {
+		this.name = name;
+		this.geschlecht = geschlecht;
+	}
+
+	public String mitArtikel(Fall fall, boolean bestimmt) {
+		final String artikel = (bestimmt ? fall
+				.getBestimmterArtikel(geschlecht) : fall
+				.getUnbestimmterArtikel(geschlecht));
+		return artikel + " " + name;
+	}
+}
+
 enum Geschlecht {
 	MAENNLICH, WEIBLICH, SAECHLICH;
 }
@@ -75,26 +93,17 @@ enum Geschlecht {
 enum Fall {
 	NOMINATIV, GENITIV, DATIV, AKKUSATIV;
 
+	private final static String[] ARTIKEL = { "der", "die", "das", "des",
+			"der", "des", "dem", "der", "dem", "den", "die", "das", "ein",
+			"eine", "ein", "eines", "einer", "eines", "einem", "einer",
+			"einem", "einen", "eine", "ein" };
+
 	public String getBestimmterArtikel(Geschlecht geschlecht) {
-		String artikel;
-		if (geschlecht == Geschlecht.MAENNLICH)
-			artikel = "der";
-		else if (geschlecht == Geschlecht.WEIBLICH)
-			artikel = "die";
-		else
-			artikel = "das";
-		return artikel;
+		return ARTIKEL[geschlecht.ordinal() + this.ordinal() * 3];
 	}
 
 	public String getUnbestimmterArtikel(Geschlecht geschlecht) {
-		String artikel;
-		if (geschlecht == Geschlecht.MAENNLICH)
-			artikel = "der";
-		else if (geschlecht == Geschlecht.WEIBLICH)
-			artikel = "die";
-		else
-			artikel = "das";
-		return artikel;
+		return ARTIKEL[12 + geschlecht.ordinal() + this.ordinal() * 3];
 	}
 }
 
