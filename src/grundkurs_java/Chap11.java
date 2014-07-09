@@ -1,30 +1,6 @@
 package grundkurs_java;
 
 public class Chap11 {
-
-	public static void main(String[] args) {
-		// System.out.println(Jahreszeit.WINTER.ordinal());
-		// System.out.println(Jahreszeit.WINTER.equals(Jahreszeit.FRUEHLING));
-		// for (Jahreszeit jz : Jahreszeit.values())
-		// System.out.println(jz + " hat den Wert " + jz.ordinal());
-		// Noten g = Noten.G;
-		// System.out.println(g.liegtAufSchwarzerTaste());
-		// System.out.println(Noten.AIS.liegtAufSchwarzerTaste());
-		// StudentNeu Peter = new StudentNeu();
-		// Peter.setName("Peter Honig");
-		// Peter.setNummer(12345);
-		// Peter.setFach(Fach.BWL);
-		// System.out.println(Peter);
-		// System.out.println("Regelstudienzeit fuer sein Studium: "
-		// + Peter.getFach().regelstudienzeit() + " Semester.");
-		System.out.println(('a' == 'a') && (2 > 3)); // false
-		System.out.println(("ab" + "cd") == "abcd"); // true
-		System.out.println((10 / 4 == 1) || ('a' == 'b')); // false
-		System.out.println((13 / 3 - 3) * 123456789123L); // 123456789123
-		System.out.println('Q' != 'q'); // true
-		EsWarEinmal.main(args);
-	}
-
 	public enum Jahreszeit {
 		FRUEHLING, SOMMER, HERBST, WINTER;
 	}
@@ -46,6 +22,85 @@ public class Chap11 {
 		}
 	}
 
+	public static void main(String[] args) {
+		// System.out.println(Jahreszeit.WINTER.ordinal());
+		// System.out.println(Jahreszeit.WINTER.equals(Jahreszeit.FRUEHLING));
+		// for (Jahreszeit jz : Jahreszeit.values())
+		// System.out.println(jz + " hat den Wert " + jz.ordinal());
+		// Noten g = Noten.G;
+		// System.out.println(g.liegtAufSchwarzerTaste());
+		// System.out.println(Noten.AIS.liegtAufSchwarzerTaste());
+		// StudentNeu Peter = new StudentNeu();
+		// Peter.setName("Peter Honig");
+		// Peter.setNummer(12345);
+		// Peter.setFach(Fach.BWL);
+		// System.out.println(Peter);
+		// System.out.println("Regelstudienzeit fuer sein Studium: "
+		// + Peter.getFach().regelstudienzeit() + " Semester.");
+		// System.out.println(('a' == 'a') && (2 > 3)); // false
+		// System.out.println(("ab" + "cd") == "abcd"); // true
+		// System.out.println((10 / 4 == 1) || ('a' == 'b')); // false
+		// System.out.println((13 / 3 - 3) * 123456789123L); // 123456789123
+		// System.out.println('Q' != 'q'); // true
+		// EsWarEinmal.main(args);
+		Socke s1 = new Socke();
+		Socke s2 = new Socke();
+		Ohrring o1 = new Ohrring();
+		Ohrring o2 = new Ohrring();
+
+		// without generics (not type safe)
+		Paar sockenPaar = new Paar(s1, s2);
+		System.out.println("1. Paar: " + sockenPaar);
+		Paar ohrringPaar = new Paar(o1, o2);
+		System.out.println("2. Paar: " + ohrringPaar);
+		Socke s = (Socke) sockenPaar.getL();
+		System.out.println("Links in Paar 1: " + s);
+
+		// using generics
+		GenPaar<Socke> genSockenPaar = new GenPaar<Socke>(s1, s2);
+		System.out.println("1. Paar: " + genSockenPaar);
+		GenPaar<Ohrring> genOhrringPaar = new GenPaar<Ohrring>(o1, o2);
+		System.out.println("2. Paar: " + genOhrringPaar);
+		Socke gS = genSockenPaar.getL();
+		System.out.println(gS);
+
+	}
+}
+
+class Kleidung {
+}
+
+class Hemd extends Kleidung {
+	public String toString() {
+		return "Hemd";
+	}
+}
+
+class Hose extends Kleidung {
+	public String toString() {
+		return "Hose";
+	}
+}
+
+class TollesPaar<T extends Kleidung> {
+	private T l, r;
+
+	public TollesPaar(T l, T r) {
+		this.l = l;
+		this.r = r;
+	}
+
+	public T getL() {
+		return l;
+	}
+
+	public T getR() {
+		return r;
+	}
+
+	public String toString() {
+		return "(l,r) = (" + l + "," + r + ")";
+	}
 }
 
 class Ohrring {
@@ -60,6 +115,29 @@ class Socke {
 	}
 }
 
+// generics (type safe, since Java 5)
+class GenPaar<T> {
+	private T l, r;
+
+	public GenPaar(T l, T r) {
+		this.l = l;
+		this.r = r;
+	}
+
+	public T getL() {
+		return l;
+	}
+
+	public T getR() {
+		return r;
+	}
+
+	public String toString() {
+		return "(l,r) = (" + l + "," + r + ")";
+	}
+}
+
+// generics (without type safety)
 class Paar {
 	private Object l, r;
 
