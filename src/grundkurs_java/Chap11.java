@@ -66,6 +66,31 @@ public class Chap11 {
 
 		TollesPaarTestWild2.main(args);
 		GenPaarTestWild1.main(args);
+		GenPaarTestWild2.main(args);
+		GenPaarTest3.main(args);
+	}
+}
+
+class GenPaarTest3 {
+	public static <T> boolean linksGleichRechts(GenPaar<T> x) {
+		return x.getL().equals(x.getR());
+	}
+
+	public static <T> T links(GenPaar<T> x) {
+		return x.getL();
+	}
+
+	public static <T> T rechts(GenPaar<T> x) {
+		return x.getR();
+	}
+
+	public static void main(String[] args) {
+		Hose h1 = new Hose();
+		Jeans j1 = new Jeans();
+		GenPaar<Hose> p1 = new GenPaar<Hose>(h1, j1);
+		System.out.println(linksGleichRechts(p1));
+		System.out.println(links(p1));
+		System.out.println(rechts(p1));
 	}
 }
 
@@ -75,7 +100,28 @@ class Jeans extends Hose {
 	}
 }
 
+class Chinos extends Hose {
+	public String toString() {
+		return "Chino";
+	}
+}
+
+class GenPaarTestWild2 {
+	// lower bound wildcard
+	public static void genPaarAusgeben2(GenPaar<? super Hose> gp) {
+		System.out.println(gp);
+	}
+
+	public static void main(String[] args) {
+		Kleidung k1 = new Kleidung();
+		Kleidung k2 = new Kleidung();
+		GenPaar<Kleidung> p1 = new GenPaar<Kleidung>(k1, k2);
+		genPaarAusgeben2(p1);
+	}
+}
+
 class GenPaarTestWild1 {
+	// upper bound wildcard
 	public static void genPaarAusgeben1(GenPaar<? extends Hose> gp) {
 		System.out.println(gp);
 	}
@@ -85,6 +131,10 @@ class GenPaarTestWild1 {
 		Jeans j2 = new Jeans();
 		GenPaar<Jeans> p1 = new GenPaar<Jeans>(j1, j2);
 		genPaarAusgeben1(p1);
+		Chinos c1 = new Chinos();
+		Chinos c2 = new Chinos();
+		GenPaar<Chinos> p2 = new GenPaar<Chinos>(c1, c2);
+		genPaarAusgeben1(p2);
 	}
 }
 
