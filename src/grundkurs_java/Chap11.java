@@ -91,14 +91,14 @@ public class Chap11 {
 
 // 11.6
 class RateMal {
-	public static void ausgabe(Object... eingabe) {
+	public static <T> void ausgabe(T... eingabe) {
 		System.out.print("Ausgabe: ");
 		for (Object o : eingabe)
 			System.out.print(o + " ");
 		System.out.println();
 	}
 
-	public static <T extends Comparable> T[] tueWas(T... eingabe) {
+	public static <T extends Comparable<T>> T[] tueWas(T... eingabe) {
 		eingabe = eingabe.clone();
 		for (int i = eingabe.length - 1; i > 0; i--)
 			for (int j = 0; j < i; j++)
