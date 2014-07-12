@@ -69,8 +69,93 @@ public class Chap11 {
 		GenPaarTestWild2.main(args);
 		GenPaarTest3.main(args);
 		GenPaarTest5.main(args);
+		// type mismatch
+		// TierKaefig<Tier> kaefig = new TierKaefig<Katze>();
+		// TierKaefig<Hund> kaefig = new TierKaefig<Tier>();
+		// TierKaefig<?> kaefig = new TierKaefig<Katze>();
+		// kaefig.setInsasse(new Katze());
+		// not type safe
+		TiersKaefig kaefig = new TiersKaefig();
+		kaefig.setInsasse(new Hunds());
+		Tierleben.main(args);
 	}
 }
+
+// 11.5
+interface Tier {
+}
+
+interface Haustier extends Tier {
+}
+
+interface Wildtier extends Tier {
+}
+
+class Katz implements Tier {
+	public String toString() {
+		return getClass().getName();
+	}
+}
+
+class Hauskatze extends Katz implements Haustier {
+}
+
+class Wildkatze extends Katz implements Wildtier {
+}
+
+class Tierleben {
+
+	// public static void gibAus(Object tier) {
+	// System.out.println("Objekt: " + tier);
+	// }
+
+	// public static void gibAus(Katz tier) {
+	// System.out.println("Katz: " + tier);
+	// }
+
+	public static <T> void gibAus(T tier) {
+		System.out.println("Unbekannt: " + tier);
+	}
+
+	public static <T extends Tier> void gibAus(T tier) {
+		System.out.println("Tier: " + tier);
+	}
+
+	public static <T extends Haustier> void gibAus(T tier) {
+		System.out.println("Haustier: " + tier);
+	}
+
+	public static void main(String... args) {
+		gibAus("Amoebe");
+		gibAus(new Katz()); // Unbekannt: grundkurs_java.Katz
+		gibAus(new Hauskatze()); // Haustier:
+		gibAus(new Wildkatze()); // Tier:
+	}
+}
+
+// 11.4
+class TiersKaefig<E> {
+	private E insasse;
+
+	public void setInsasse(E x) {
+		insasse = x;
+	}
+
+	public E getInsasse() {
+		return insasse;
+	}
+}
+
+class Tiers {
+}
+
+class Katzes extends Tiers {
+}
+
+class Hunds extends Tiers {
+}
+
+// \\
 
 class GenPaarTest5 {
 	public static <T, S extends T> GenPaar<T> linksPaar(GenPaar<T> x,
