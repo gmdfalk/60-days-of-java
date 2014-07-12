@@ -43,32 +43,32 @@ public class Chap11 {
 		// System.out.println((13 / 3 - 3) * 123456789123L); // 123456789123
 		// System.out.println('Q' != 'q'); // true
 		// EsWarEinmal.main(args);
-		Socke s1 = new Socke();
-		Socke s2 = new Socke();
-		Ohrring o1 = new Ohrring();
-		Ohrring o2 = new Ohrring();
-
-		// without generics (not type safe)
-		Paar sockenPaar = new Paar(s1, s2);
-		System.out.println("1. Paar: " + sockenPaar);
-		Paar ohrringPaar = new Paar(o1, o2);
-		System.out.println("2. Paar: " + ohrringPaar);
-		Socke s = (Socke) sockenPaar.getL();
-		System.out.println("Links in Paar 1: " + s);
-
-		// using generics
-		GenPaar<Socke> genSockenPaar = new GenPaar<Socke>(s1, s2);
-		System.out.println("1. Paar: " + genSockenPaar);
-		GenPaar<Ohrring> genOhrringPaar = new GenPaar<Ohrring>(o1, o2);
-		System.out.println("2. Paar: " + genOhrringPaar);
-		Socke gS = genSockenPaar.getL();
-		System.out.println(gS);
-
-		TollesPaarTestWild2.main(args);
-		GenPaarTestWild1.main(args);
-		GenPaarTestWild2.main(args);
-		GenPaarTest3.main(args);
-		GenPaarTest5.main(args);
+		// Socke s1 = new Socke();
+		// Socke s2 = new Socke();
+		// Ohrring o1 = new Ohrring();
+		// Ohrring o2 = new Ohrring();
+		//
+		// // without generics (not type safe)
+		// Paar sockenPaar = new Paar(s1, s2);
+		// System.out.println("1. Paar: " + sockenPaar);
+		// Paar ohrringPaar = new Paar(o1, o2);
+		// System.out.println("2. Paar: " + ohrringPaar);
+		// Socke s = (Socke) sockenPaar.getL();
+		// System.out.println("Links in Paar 1: " + s);
+		//
+		// // using generics
+		// GenPaar<Socke> genSockenPaar = new GenPaar<Socke>(s1, s2);
+		// System.out.println("1. Paar: " + genSockenPaar);
+		// GenPaar<Ohrring> genOhrringPaar = new GenPaar<Ohrring>(o1, o2);
+		// System.out.println("2. Paar: " + genOhrringPaar);
+		// Socke gS = genSockenPaar.getL();
+		// System.out.println(gS);
+		//
+		// TollesPaarTestWild2.main(args);
+		// GenPaarTestWild1.main(args);
+		// GenPaarTestWild2.main(args);
+		// GenPaarTest3.main(args);
+		// GenPaarTest5.main(args);
 		// type mismatch
 		// TierKaefig<Tier> kaefig = new TierKaefig<Katze>();
 		// TierKaefig<Hund> kaefig = new TierKaefig<Tier>();
@@ -78,7 +78,7 @@ public class Chap11 {
 		// TiersKaefig kaefig = new TiersKaefig();
 		// kaefig.setInsasse(new Hunds());
 		// Tierleben.main(args);
-		RateMal.main(args);
+		// RateMal.main(args);
 		// System.out.println(Boolean.TRUE.compareTo(Boolean.FALSE) > 0);
 		// System.out.println("welt".compareTo("schoene")); // 4
 		// System.out.println("welt".compareTo("du")); // 19
@@ -86,6 +86,64 @@ public class Chap11 {
 		// System.out.println("schoene".compareTo("du")); // 15
 		// System.out.println("schoene".compareTo("hallo")); // 11
 		// System.out.println("du".compareTo("hallo")); // -4
+		Konzert.main(args);
+	}
+}
+
+// 11.7
+class Persona {
+}
+
+class Performer extends Persona {
+}
+
+class Star extends Performer {
+}
+
+class Zuschauer extends Persona {
+}
+
+class Groupie extends Zuschauer {
+}
+
+class HuebschesGroupie extends Groupie {
+}
+
+class Roadie<T extends Persona> {
+	public void gewaehreEinlass(T person) {
+		System.out.println("Willkommen, " + person);
+	}
+}
+
+class Konzert {
+	private Roadie<? extends Zuschauer> vorderEingang;
+	private Roadie<? extends Performer> hinterEingang;
+	private Roadie<? extends Groupie> backstage;
+
+	public Konzert(Roadie<? extends Zuschauer> vorderEingang,
+			Roadie<? extends Performer> hinterEingang,
+			Roadie<? extends Groupie> backstage) {
+		this.vorderEingang = vorderEingang;
+		this.hinterEingang = hinterEingang;
+		this.backstage = backstage;
+	}
+
+	public static void main(String[] args) {
+		final Roadie<Zuschauer> roadie1 = new Roadie<Zuschauer>();
+		final Roadie<Performer> roadie2 = new Roadie<Performer>();
+		final Roadie<HuebschesGroupie> roadie3 = new Roadie<HuebschesGroupie>();
+		final Roadie<Groupie> roadie4 = new Roadie<Groupie>();
+		final Roadie<Star> roadie5 = new Roadie<Star>();
+		final Roadie<Persona> roadie6 = new Roadie<Persona>();
+		final Roadie roadie7 = new Roadie();
+		Konzert konzert1 = new Konzert(roadie1, roadie2, roadie3);
+		Konzert konzert2 = new Konzert(roadie1, roadie2, roadie3);
+		Konzert konzert3 = new Konzert(roadie1, roadie5, roadie4);
+		Konzert konzert4 = new Konzert(roadie1, roadie5, roadie4);
+		Konzert konzert5 = new Konzert(roadie4, roadie5, roadie4);
+		Konzert konzert6 = new Konzert(roadie4, roadie2, roadie3);
+		Konzert besondersExklusiv = new Konzert(roadie3, roadie5, roadie3);
+		Konzert besondersLax = new Konzert(roadie7, roadie7, roadie7);
 	}
 }
 
