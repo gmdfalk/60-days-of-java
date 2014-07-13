@@ -1,16 +1,40 @@
 package grundkurs_java;
 
+import java.util.regex.Pattern;
+
 public class Chap12 {
 
 	public static void main(String[] args) {
 		StringTiming.main(args);
 		StringManipulation
 				.main("In diesem Grundkurs haben wir so viel gelernt");
+		AutoBoxingDangers.main(args);
 	}
 
 }
 
+class AutoBoxingDangers {
+	public static void main(String[] args) {
+		Double u = 1.0;
+		Double v = 1.0;
+		System.out.println(u == v);
+		Integer i = 126;
+		Integer j = 126;
+		System.out.println(i == j);
+		i++;
+		j++;
+		System.out.println(i == j);
+		i++;
+		j++;
+		System.out.println(i == j);
+		i = new Integer("1");
+		j = new Integer("1");
+		System.out.println(i == j);
+	}
+}
+
 class StringManipulation {
+	// 12.2
 	public static void main(String sentence) {
 		StringBuffer result = new StringBuffer();
 		for (int i = 0; i < sentence.length(); i++) {
