@@ -1,5 +1,6 @@
 package grundkurs_java;
 
+import java.util.Arrays;
 import java.util.regex.Pattern;
 
 public class Chap12 {
@@ -9,12 +10,89 @@ public class Chap12 {
 		StringManipulation
 				.main("In diesem Grundkurs haben wir so viel gelernt");
 		AutoBoxingDangers.main(args);
+		GrößterGemeinsamerTeiler.main(40, 30);
+		String[] rechnung = { "9", "-", "7" };
+		Berechne.main(rechnung);
 	}
+}
 
+class Berechne {
+
+	private final static String HILFE = "Anwendung: java Berechne <zahl1> +|-|*|/ <zahl2>";
+
+	public static void main(String[] args) {
+
+		// Stimmt die Zahl der Argumente?
+		if (args.length != 3) {
+			System.out.println(HILFE);
+			return;
+		}
+
+		// Ist das erste Argument gueltig?
+		double z1 = 0;
+		try {
+			z1 = Double.parseDouble(args[0]);
+		} catch (NumberFormatException e) {
+			System.out.println("zahl1 ungueltig");
+			return;
+		}
+
+		// Ist das zweite Argument gueltig?
+		args[1] = args[1].trim();
+		if (!Arrays.asList(new String[] { "+", "-", "*", "/" }).contains(
+				args[1])) {
+			System.out.println("operator ungueltig: " + args[1]);
+			System.out.println(HILFE);
+			return;
+		}
+
+		// Ist das dritte Argument gueltig?
+		double z2 = 0;
+		try {
+			z2 = Double.parseDouble(args[2]);
+		} catch (NumberFormatException e) {
+			System.out.println("zahl2 ungueltig");
+			return;
+		}
+
+		// Fuehre die Operation aus
+		switch (args[1].charAt(0)) {
+		case '+':
+			System.out.println(z1 + z2);
+			break;
+		case '-':
+			System.out.println(z1 - z2);
+			break;
+		case '*':
+			System.out.println(z1 * z2);
+			break;
+		case '/':
+			System.out.println(z1 / z2);
+			break;
+		}
+
+	}
+}
+
+class GrößterGemeinsamerTeiler {
+	// 12.3
+	public static void main(int a, int b) {
+		int z = a;
+		int n = b;
+		while (z != n) {
+			if (z > n)
+				z = z - n;
+			else
+				n = n - z;
+		}
+		System.out.println("ggT(" + a + "," + b + ") = " + z);
+	}
 }
 
 class AutoBoxingDangers {
 	public static void main(String[] args) {
+		// true, false, byte, chars (unicode to 007F), int and short from -128
+		// to 127 is always the same Object/reference
 		Double u = 1.0;
 		Double v = 1.0;
 		System.out.println(u == v);
