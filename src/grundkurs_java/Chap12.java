@@ -11,8 +11,13 @@ public class Chap12 {
 				.main("In diesem Grundkurs haben wir so viel gelernt");
 		AutoBoxingDangers.main(args);
 		GrößterGemeinsamerTeiler.main(40, 30);
-		String[] rechnung = { "9", "-", "7" };
-		Berechne.main(rechnung);
+		Berechne.main(new String[] { "9", "-", "7" });
+	}
+}
+
+class Faculty {
+	public static void main(long n) {
+
 	}
 }
 
