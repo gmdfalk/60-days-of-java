@@ -1,7 +1,10 @@
 package grundkurs_java;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.regex.Pattern;
+
+import sun.security.util.BigInt;
 
 public class Chap12 {
 
@@ -12,12 +15,24 @@ public class Chap12 {
 		AutoBoxingDangers.main(args);
 		GrößterGemeinsamerTeiler.main(40, 30);
 		Berechne.main(new String[] { "9", "-", "7" });
+		Faculty.main(args);
 	}
 }
 
 class Faculty {
-	public static void main(long n) {
+	public static void main(String[] args) {
+		// BigInteger two = new BigInteger("2");
+		// BigInteger three = new BigInteger("3");
+		// System.out.println(two.add(three));
+		iterative(6);
+	}
 
+	public static void iterative(int n) {
+		BigInteger result = BigInteger.valueOf(n);
+		while (n > 1) {
+			result = result.multiply(BigInteger.valueOf(n-- - 1));
+		}
+		System.out.println(result);
 	}
 }
 
