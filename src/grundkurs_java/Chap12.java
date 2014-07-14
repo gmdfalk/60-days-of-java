@@ -21,18 +21,25 @@ public class Chap12 {
 
 class Faculty {
 	public static void main(String[] args) {
-		// BigInteger two = new BigInteger("2");
-		// BigInteger three = new BigInteger("3");
-		// System.out.println(two.add(three));
-		iterative(6);
+		BigInteger n = new BigInteger("4");
+		System.out.println(iterative(n));
+		System.out.println(recursive(n));
 	}
 
-	public static void iterative(int n) {
-		BigInteger result = BigInteger.valueOf(n);
-		while (n > 1) {
-			result = result.multiply(BigInteger.valueOf(n-- - 1));
+	public static BigInteger iterative(BigInteger n) {
+		BigInteger result = n;
+		while (n.longValue() > 1) {
+			n = n.subtract(new BigInteger("1"));
+			result = result.multiply(n);
 		}
-		System.out.println(result);
+		return result;
+	}
+
+	public static BigInteger recursive(BigInteger n) {
+		if (n.longValue() < 2) {
+			return BigInteger.valueOf(1);
+		}
+		return n.multiply(recursive(n.subtract(BigInteger.valueOf(1))));
 	}
 }
 
