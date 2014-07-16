@@ -4,19 +4,78 @@ import java.math.BigInteger;
 import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.concurrent.Callable;
+import java.math.BigDecimal;
 
 public class Chap12 {
 
 	public static void main(String[] args) {
-		StringTiming.main(args);
-		StringManipulation
-				.main("In diesem Grundkurs haben wir so viel gelernt");
-		AutoBoxingDangers.main(args);
-		GrößterGemeinsamerTeiler.main(40, 30);
-		Berechne.main(new String[] { "9", "-", "7" });
-		Faculty.main(args);
-		Binomialkoeffizient.main(args);
+		// StringTiming.main(args);
+		// StringManipulation
+		// .main("In diesem Grundkurs haben wir so viel gelernt");
+		// AutoBoxingDangers.main(args);
+		// GrößterGemeinsamerTeiler.main(40, 30);
+		// Berechne.main(new String[] { "9", "-", "7" });
+		// Faculty.main(args);
+		// Binomialkoeffizient.main(args);
+		ProduktSummeDouble.main(args);
+		ProduktSummeBigDec.main(args);
+	}
+}
 
+class ProduktSummeBigDec {
+	// double can only handle 15 places so for some cases we need BigDecimal
+	public static void main(String[] args) {
+		BigDecimal[] x = new BigDecimal[6];
+		BigDecimal[] y = new BigDecimal[6];
+		BigDecimal p, s;
+		x[0] = new BigDecimal("1e16");
+		x[1] = new BigDecimal("0.1223");
+		x[2] = new BigDecimal("1e14");
+		x[3] = new BigDecimal("1e15");
+		x[4] = new BigDecimal("3.0");
+		x[5] = new BigDecimal("-1e12");
+		y[0] = new BigDecimal("1e20");
+		y[1] = new BigDecimal("2.0");
+		y[2] = new BigDecimal("-1e22");
+		y[3] = new BigDecimal("1e9");
+		y[4] = new BigDecimal("0.2111");
+		y[5] = new BigDecimal("1e12");
+		s = new BigDecimal("0");
+		System.out.println("s = " + s);
+		for (int i = 0; i < 6; i++) {
+			p = x[i].multiply(y[i]);
+			System.out.println(" + " + p + " liefert");
+			s = s.add(p);
+			System.out.println("s = " + s);
+		}
+	}
+}
+
+class ProduktSummeDouble {
+	public static void main(String[] args) {
+		double[] x = new double[6];
+		double[] y = new double[6];
+		double p, s;
+		x[0] = 1e16;
+		x[1] = 0.1223;
+		x[2] = 1e14;
+		x[3] = 1e15;
+		x[4] = 3.0;
+		x[5] = -1e12;
+		y[0] = 1e20;
+		y[1] = 2.0;
+		y[2] = -1e22;
+		y[3] = 1e9;
+		y[4] = 0.2111;
+		y[5] = 1e12;
+		s = 0;
+		System.out.println("s = " + s);
+		for (int i = 0; i < 6; i++) {
+			p = x[i] * y[i];
+			System.out.println(" + " + p + " liefert");
+			s = s + p;
+			System.out.println("s = " + s);
+		}
 	}
 }
 
