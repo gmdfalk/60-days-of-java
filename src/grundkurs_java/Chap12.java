@@ -1,6 +1,7 @@
 package grundkurs_java;
 
 import java.math.BigInteger;
+import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.concurrent.Callable;
 
@@ -14,18 +15,19 @@ public class Chap12 {
 		GrößterGemeinsamerTeiler.main(40, 30);
 		Berechne.main(new String[] { "9", "-", "7" });
 		Faculty.main(args);
-		System.out.println(Binomialkoeffizient.main(8, 3));
-		Binomialkoeffizient.timeIt(new ExtendedCallable(), 100);
+		Binomialkoeffizient.main(args);
+
 	}
 }
 
-interface ExtendedCallable<V> extends Callable {
-	public V call(int a, int b);
+interface BinomialWrapper {
+	BigInteger call(int m, int k);
+
 }
 
 class Binomialkoeffizient {
 
-	public static BigInteger main(int m, int k) {
+	public static BigInteger standard(int m, int k) {
 		BigInteger bigM = BigInteger.valueOf(m);
 		BigInteger bigK = BigInteger.valueOf(k);
 		BigInteger bigKM = bigM.subtract(bigK);
@@ -39,15 +41,28 @@ class Binomialkoeffizient {
 		return result;
 	}
 
-	public static void timeIt(ExtendedCallable<BigInteger> callable,
-			int iterations) {
-		final long startTime = System.currentTimeMillis();
-		String str = "";
+	public static void timeIt(BinomialWrapper bw, int iterations) {
+		long startTime = System.nanoTime();
 		for (int i = 0; i < iterations; i++)
-			callable.call(6, 3);
-		System.out.println(callable + " ran for "
-				+ (System.currentTimeMillis() - startTime) + " seconds " + "("
-				+ iterations + " iterations).");
+			bw.call(6, 3);
+		long endTime = System.nanoTime();
+		long differenceNano = endTime - startTime;
+		double differenceSecs = differenceNano / 1000000000.0;
+		NumberFormat nf = NumberFormat.getInstance();
+		nf.setMaximumFractionDigits(7);
+		System.out.println(iterations + " iterations: " + differenceNano
+				+ " nanoseconds " + "(" + nf.format(differenceSecs) + "s, "
+				+ bw);
+	}
+
+	public static void main(String[] args) {
+		timeIt(new BinomialWrapper() {
+
+			@Override
+			public BigInteger call(int m, int k) {
+				return null;
+			}
+		}, 300);
 	}
 
 }
