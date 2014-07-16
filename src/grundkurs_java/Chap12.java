@@ -2,9 +2,7 @@ package grundkurs_java;
 
 import java.math.BigInteger;
 import java.util.Arrays;
-import java.util.regex.Pattern;
-
-import sun.security.util.BigInt;
+import java.util.concurrent.Callable;
 
 public class Chap12 {
 
@@ -17,10 +15,16 @@ public class Chap12 {
 		Berechne.main(new String[] { "9", "-", "7" });
 		Faculty.main(args);
 		System.out.println(Binomialkoeffizient.main(8, 3));
+		Binomialkoeffizient.timeIt(new ExtendedCallable(), 100);
 	}
 }
 
+interface ExtendedCallable<V> extends Callable {
+	public V call(int a, int b);
+}
+
 class Binomialkoeffizient {
+
 	public static BigInteger main(int m, int k) {
 		BigInteger bigM = BigInteger.valueOf(m);
 		BigInteger bigK = BigInteger.valueOf(k);
@@ -33,6 +37,17 @@ class Binomialkoeffizient {
 	public static BigInteger alternative(int m, int k) {
 		BigInteger result = new BigInteger("0");
 		return result;
+	}
+
+	public static void timeIt(ExtendedCallable<BigInteger> callable,
+			int iterations) {
+		final long startTime = System.currentTimeMillis();
+		String str = "";
+		for (int i = 0; i < iterations; i++)
+			callable.call(6, 3);
+		System.out.println(callable + " ran for "
+				+ (System.currentTimeMillis() - startTime) + " seconds " + "("
+				+ iterations + " iterations).");
 	}
 
 }
