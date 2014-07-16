@@ -16,10 +16,24 @@ public class Chap12 {
 		GrößterGemeinsamerTeiler.main(40, 30);
 		Berechne.main(new String[] { "9", "-", "7" });
 		Faculty.main(args);
+		System.out.println(Binomialkoeffizient.main(8, 3));
 	}
 }
 
 class Binomialkoeffizient {
+	public static BigInteger main(int m, int k) {
+		BigInteger bigM = BigInteger.valueOf(m);
+		BigInteger bigK = BigInteger.valueOf(k);
+		BigInteger bigKM = bigM.subtract(bigK);
+		System.out.println(bigKM);
+		return Faculty.iterative(bigM).divide(
+				(Faculty.iterative(bigK).multiply(Faculty.iterative(bigKM))));
+	}
+
+	public static BigInteger alternative(int m, int k) {
+		BigInteger result = new BigInteger("0");
+		return result;
+	}
 
 }
 
