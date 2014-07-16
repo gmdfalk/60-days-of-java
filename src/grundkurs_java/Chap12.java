@@ -22,7 +22,6 @@ public class Chap12 {
 
 interface BinomialWrapper {
 	BigInteger call(int m, int k);
-
 }
 
 class Binomialkoeffizient {
@@ -30,18 +29,25 @@ class Binomialkoeffizient {
 	public static BigInteger standard(int m, int k) {
 		BigInteger bigM = BigInteger.valueOf(m);
 		BigInteger bigK = BigInteger.valueOf(k);
-		BigInteger bigKM = bigM.subtract(bigK);
-		System.out.println(bigKM);
-		return Faculty.iterative(bigM).divide(
-				(Faculty.iterative(bigK).multiply(Faculty.iterative(bigKM))));
+		BigInteger differenz = bigM.subtract(bigK);
+		return Faculty.iterative(bigM)
+				.divide((Faculty.iterative(bigK).multiply(Faculty
+						.iterative(differenz))));
 	}
 
 	public static BigInteger alternative(int m, int k) {
-		BigInteger result = new BigInteger("0");
+		BigInteger bigM = BigInteger.valueOf(m);
+		BigInteger bigK = BigInteger.valueOf(k);
+		BigInteger one = BigInteger.valueOf(1);
+		BigInteger result = one;
+		for (BigInteger i = one; i.compareTo(bigK) <= 0; i = i.add(one)) {
+			result = result.multiply(bigM).divide(i);
+			bigM = bigM.subtract(one);
+		}
 		return result;
 	}
 
-	public static void timeIt(BinomialWrapper bw, int iterations) {
+	public static void timeIt(BinomialWrapper bw, long iterations) {
 		long startTime = System.nanoTime();
 		for (int i = 0; i < iterations; i++)
 			bw.call(6, 3);
@@ -50,19 +56,27 @@ class Binomialkoeffizient {
 		double differenceSecs = differenceNano / 1000000000.0;
 		NumberFormat nf = NumberFormat.getInstance();
 		nf.setMaximumFractionDigits(7);
-		System.out.println(iterations + " iterations: " + differenceNano
-				+ " nanoseconds " + "(" + nf.format(differenceSecs) + "s, "
-				+ bw);
+		System.out.println(iterations + " iterations: "
+				+ nf.format(differenceSecs) + "s " + "(" + differenceNano
+				+ " nanoseconds, " + bw);
 	}
 
 	public static void main(String[] args) {
+		int iterations = 1000;
 		timeIt(new BinomialWrapper() {
 
 			@Override
 			public BigInteger call(int m, int k) {
-				return null;
+				return standard(m, k);
 			}
-		}, 300);
+		}, iterations);
+		timeIt(new BinomialWrapper() {
+
+			@Override
+			public BigInteger call(int m, int k) {
+				return alternative(m, k);
+			}
+		}, iterations);
 	}
 
 }
