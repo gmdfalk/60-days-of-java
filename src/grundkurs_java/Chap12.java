@@ -17,10 +17,49 @@ public class Chap12 {
 		// Berechne.main(new String[] { "9", "-", "7" });
 		// Faculty.main(args);
 		// Binomialkoeffizient.main(args);
-		ProduktSummeDouble.main(args);
-		ProduktSummeBigDec.main(args);
-		long a = 9223372036854775807L; // 2^+-63 (64bit limit)
+		// ProduktSummeDouble.main(args);
+		// ProduktSummeBigDec.main(args);
+		// long a = 9223372036854775807L; // 2^+-63 (64bit limit)
 		DoubleCalc.main();
+		BigDecimalCalc.main();
+		Formel.main(args);
+		BigNewton.main(args);
+	}
+}
+
+// 12.8
+class BigNewton {
+	public static BigDecimal zwei = new BigDecimal("2");
+
+	public static BigDecimal f(BigDecimal x) {
+		// berechnet f(x)
+		return (x.multiply(x)).subtract(zwei);
+		// x*x - 2
+	}
+
+	public static BigDecimal fstrich(BigDecimal x) { // berechnet f’(x)
+		return x.multiply(zwei);
+		// x*2
+	}
+
+	public static void main(String[] args) {
+		System.out.println("Wurzel-2-Berechnung mit Newton-Verfahren");
+		String start = "13";
+		int stellen = 50;
+		BigDecimal xAlt, xNeu = new BigDecimal(start);
+		BigDecimal fx, fsx;
+		int runden = BigDecimal.ROUND_HALF_DOWN;
+		int k = 0;
+		System.out.println("x = " + xNeu);
+		do {
+			// Newton-Iteration
+			k = k + 1;
+			xAlt = xNeu;
+			fx = f(xAlt);
+			fsx = fstrich(xAlt);
+			xNeu = xAlt.subtract(fx.divide(fsx, stellen, runden));
+			System.out.println("x = " + xNeu);
+		} while (!(xNeu.compareTo(xAlt) == 0) && (k < 100));
 	}
 }
 
@@ -43,21 +82,63 @@ class DoubleCalc {
 	}
 }
 
+class Formel {
+
+	/** Berechnung mit double-Werten */
+	public static double berechne(double x, double y) {
+		double xh2 = x * x;
+		double yh2 = y * y;
+		return (1682 * x * yh2 * yh2 + 3 * xh2 * x + 29 * x * yh2 - 2 * xh2
+				* xh2 * x + 832) / 107751;
+	}
+
+	/** Berechnung mit BigDecimal-Werten */
+	public static BigDecimal berechne(BigDecimal x, BigDecimal y) {
+		BigDecimal xh2 = x.multiply(x);
+		BigDecimal yh2 = y.multiply(y);
+		return (BigDecimal.valueOf(1682).multiply(x).multiply(yh2)
+				.multiply(yh2))
+				.add(BigDecimal.valueOf(3).multiply(xh2).multiply(x))
+				.add(BigDecimal.valueOf(29).multiply(x).multiply(yh2))
+				.subtract(
+						BigDecimal.valueOf(2).multiply(xh2).multiply(xh2)
+								.multiply(x)).add(BigDecimal.valueOf(832))
+				.divide(BigDecimal.valueOf(107751), BigDecimal.ROUND_HALF_UP);
+	}
+
+	public static void main(String[] args) {
+		double z = berechne(192119201, 35675640);
+		System.out.println("Variante 1: z = " + z);
+		BigDecimal z2 = berechne(BigDecimal.valueOf(192119201),
+				BigDecimal.valueOf(35675640));
+		System.out.println("Variante 2: z = " + z2);
+	}
+
+}
+
 class BigDecimalCalc {
 	static BigDecimal a = BigDecimal.valueOf(1.0).divide(
-			BigDecimal.valueOf(107751.0));
+			BigDecimal.valueOf(107751.0), BigDecimal.ROUND_HALF_UP);
 	static BigDecimal y = BigDecimal.valueOf(35675640.0);
 	static BigDecimal x = BigDecimal.valueOf(192119201.0);
 	static BigDecimal y2 = y.multiply(y);
 	static BigDecimal y4 = y2.multiply(y2);
 	static BigDecimal x2 = x.multiply(x);
+	static BigDecimal x3 = x2.multiply(x);
 	static BigDecimal x4 = x2.multiply(x2);
+	static BigDecimal x5 = x4.multiply(x);
+	static BigDecimal xy2 = x.multiply(y2);
+	static BigDecimal xy4 = x.multiply(y4);
+	static BigDecimal s1 = xy4.multiply(BigDecimal.valueOf(1682));
+	static BigDecimal s2 = x3.multiply(BigDecimal.valueOf(3));
+	static BigDecimal s3 = xy2.multiply(BigDecimal.valueOf(29));
+	static BigDecimal s4 = x5.multiply(BigDecimal.valueOf(2));
+	static BigDecimal s5 = BigDecimal.valueOf(832);
 
 	public static void main() {
-		BigDecimal z;
-		z = a.multiply
-				* ((1682 * x * y4) + (3 * x2 * x) + (29 * x * y2)
-						- (2 * x4 * x) + 832);
+		BigDecimal z, parens;
+		parens = s1.add(s2.add(s3.subtract(s4.add(s5))));
+		z = a.multiply(parens);
 		System.out.println(z);
 	}
 }
