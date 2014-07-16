@@ -19,6 +19,46 @@ public class Chap12 {
 		// Binomialkoeffizient.main(args);
 		ProduktSummeDouble.main(args);
 		ProduktSummeBigDec.main(args);
+		long a = 9223372036854775807L; // 2^+-63 (64bit limit)
+		DoubleCalc.main();
+	}
+}
+
+// 12.7
+class DoubleCalc {
+	static double a = 1.0 / 107751.0;
+	static double y = 35675640.0;
+	static double x = 192119201.0;
+	static double y2 = y * y;
+	static double y4 = y2 * y2;
+	static double x2 = x * x;
+	static double x4 = x2 * x2;
+
+	public static void main() {
+		double z;
+		z = a
+				* ((1682 * x * y4) + (3 * x2 * x) + (29 * x * y2)
+						- (2 * x4 * x) + 832);
+		System.out.println(z);
+	}
+}
+
+class BigDecimalCalc {
+	static BigDecimal a = BigDecimal.valueOf(1.0).divide(
+			BigDecimal.valueOf(107751.0));
+	static BigDecimal y = BigDecimal.valueOf(35675640.0);
+	static BigDecimal x = BigDecimal.valueOf(192119201.0);
+	static BigDecimal y2 = y.multiply(y);
+	static BigDecimal y4 = y2.multiply(y2);
+	static BigDecimal x2 = x.multiply(x);
+	static BigDecimal x4 = x2.multiply(x2);
+
+	public static void main() {
+		BigDecimal z;
+		z = a.multiply
+				* ((1682 * x * y4) + (3 * x2 * x) + (29 * x * y2)
+						- (2 * x4 * x) + 832);
+		System.out.println(z);
 	}
 }
 
