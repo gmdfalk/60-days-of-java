@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 import java.util.concurrent.Callable;
@@ -35,6 +36,37 @@ public class Chap12 {
 		// FestPunktFormat a = new FestPunktFormat(3);
 		// System.out.println(a.format(-100.0));
 		Stoppuhr.main(args);
+		CalArith.main(args);
+	}
+}
+
+class CalArith {
+	/** Methode zur Ausgabe eines Zeitpunkts */
+	public static void drucke(Calendar t) {
+		System.out.println("Zeitpunkt: " + t.get(Calendar.DAY_OF_MONTH) + "."
+				+ (t.get(Calendar.MONTH) + 1) + "." + t.get(Calendar.YEAR)
+				+ ", " + t.get(Calendar.HOUR_OF_DAY) + ":"
+				+ t.get(Calendar.MINUTE) + " Uhr");
+	}
+
+	/** Test-Methode */
+	public static void main(String[] args) {
+		// Aktuellen Zeitpunkt erzeugen380
+		Calendar zeit = Calendar.getInstance();
+		// Zeitpunkt ausgeben
+		drucke(zeit);
+		// Zeitpunkt 27 Tage in die Zukunft verlegen
+		zeit.add(Calendar.DAY_OF_MONTH, 27);
+		// Zeitpunkt ausgeben
+		drucke(zeit);
+		// Zeitpunkt 4 Jahre in die Vergangenheit verlegen
+		zeit.add(Calendar.YEAR, -4);
+		// Zeitpunkt ausgeben
+		drucke(zeit);
+		// Zeitpunkt auf den 11.11.1111, 11.11 Uhr
+		zeit.set(1111, 10, 11, 11, 11);
+		// Zeitpunkt ausgeben
+		drucke(zeit);
 	}
 }
 
