@@ -26,7 +26,83 @@ public class Chap12 {
 		// Formel.main(args);
 		// BigNewton.main(args);
 		// BigNewton2.main(args);
-		StandardFormat.main(args);
+		// StandardFormat.main(args);
+		// MyFormats.main(args);
+		// Ausgaben.main(args);
+		FestPunktFormat a = new FestPunktFormat(3);
+		System.out.println(a.format(-100.0));
+	}
+}
+
+class FestPunktFormat {
+	// 12.9 + 12.10
+	DecimalFormat f1, f2, f3;
+
+	public FestPunktFormat(int decimalPoints) {
+		String dPoints = "";
+		if (decimalPoints > 0 && decimalPoints < 13) {
+			for (int i = 0; i < decimalPoints; i++)
+				dPoints += "0";
+		} else {
+			System.out
+					.println("Decimal points have to be between 1 and 12. Choosing 9.");
+			dPoints = "000000000";
+		}
+		f1 = new DecimalFormat("0." + dPoints);
+		f2 = new DecimalFormat(" 0." + dPoints);
+		f3 = new DecimalFormat("+0." + dPoints);
+	}
+
+	public String format(double x) {
+		String result;
+		if (x < 0)
+			result = f1.format(x);
+		else if (x == 0)
+			result = f2.format(x);
+		else
+			result = f3.format(x);
+		return result;
+	}
+}
+
+class Ausgaben {
+	public static void main(String[] args) {
+		String format = "Ergebnis der Division: % 15.10e\n";
+		System.out.printf(format, 3.5 / 7.1);
+		System.out.printf(format, -2 / 3.0);
+		System.out.printf(format, 123597.3 / 4);
+	}
+}
+
+class MyFormats {
+	// Verschiedene Formate als Konstanten definieren
+	public static final DecimalFormat kurz = new DecimalFormat("0.0"),
+			lang = new DecimalFormat("00000.00000000000"),
+			euro = new DecimalFormat("EUR #0.00"), wiss = new DecimalFormat(
+					"#.#E000"), naja = new DecimalFormat("#,###,##0.00"),
+			proz = new DecimalFormat("Anteilig: 0.0%");
+
+	// Methode zur formatierten Ausgabe
+	public static void println(double d, DecimalFormat f) {
+		System.out.println(f.format(d));
+	}
+
+	// Einige Tests
+	public static void main(String[] args) {
+		double x = 987.654321;
+		double y = 0.12345678;
+		println(x, kurz);
+		println(x, lang);
+		println(x, euro);
+		println(x, wiss);
+		println(x, naja);
+		println(x, proz);
+		println(y, kurz);
+		println(y, lang);
+		println(y, euro);
+		println(y, wiss);
+		println(y, naja);
+		println(y, proz);
 	}
 }
 
