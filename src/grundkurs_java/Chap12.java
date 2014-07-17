@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -37,7 +38,36 @@ public class Chap12 {
 		// System.out.println(a.format(-100.0));
 		// Stoppuhr.main(args);
 		// CalArith.main(args);
-		CalStoppuhr.main(args);
+		// CalStoppuhr.main(args);
+		MyDateFormats.main(args);
+	}
+}
+
+class MyDateFormats {
+	// Verschiedene Formate als Konstanten definieren
+	public static final SimpleDateFormat eins = new SimpleDateFormat(
+			"dd.MM.yyyy' um 'HH:mm:ss:S"), zwei = new SimpleDateFormat(
+			"EE, MMM d, ''yy"), drei = new SimpleDateFormat("H:mm"),
+			vier = new SimpleDateFormat("H' Uhr und 'm' Minuten'"),
+			fuen = new SimpleDateFormat("d. MMMM yyyy' 'HH:mm"),
+			sech = new SimpleDateFormat("EE, d. MMM yyyy HH:mm:ss"),
+			sieb = new SimpleDateFormat("yyMMddHHmmssS");
+
+	// Methode zur formatierten Ausgabe
+	public static void println(Date d, SimpleDateFormat f) {
+		System.out.println(f.format(d));
+	}
+
+	// Einige Tests
+	public static void main(String[] args) {
+		Date d = new Date();
+		println(d, eins);
+		println(d, zwei);
+		println(d, drei);
+		println(d, vier);
+		println(d, fuen);
+		println(d, sech);
+		println(d, sieb);
 	}
 }
 
@@ -243,7 +273,7 @@ class BigNewton {
 		// x*x - 2
 	}
 
-	public static BigDecimal fstrich(BigDecimal x) { // berechnet f’(x)
+	public static BigDecimal fstrich(BigDecimal x) { // berechnet f'(x)
 		return x.multiply(zwei);
 		// x*2
 	}
@@ -255,7 +285,7 @@ class BigNewton {
 		// x*x*x*x - x*x*3 - 10
 	}
 
-	public static BigDecimal fstrichbig(BigDecimal x) { // berechnet f’(x)
+	public static BigDecimal fstrichbig(BigDecimal x) { // berechnet f'(x)
 		BigDecimal x2 = x.multiply(x);
 		return BigDecimal.valueOf(4).multiply(x).multiply(x2)
 				.subtract(BigDecimal.valueOf(6).multiply(x));
