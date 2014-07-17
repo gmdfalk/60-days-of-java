@@ -1,9 +1,12 @@
 package grundkurs_java;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.Scanner;
 import java.util.concurrent.Callable;
 import java.math.BigDecimal;
 
@@ -29,8 +32,40 @@ public class Chap12 {
 		// StandardFormat.main(args);
 		// MyFormats.main(args);
 		// Ausgaben.main(args);
-		FestPunktFormat a = new FestPunktFormat(3);
-		System.out.println(a.format(-100.0));
+		// FestPunktFormat a = new FestPunktFormat(3);
+		// System.out.println(a.format(-100.0));
+		Stoppuhr.main(args);
+	}
+}
+
+class Stoppuhr {
+	public static void main(String[] args) {
+		// Auf Betaetigen der Eingabetaste warten
+		// Aktuellen Zeitpunkt im Date-Objekt start festhalten
+		Date start = new Date();
+		// Zeitpunkt ausgeben
+		System.out.println("Startzeitpunkt: " + start);
+		System.out.println();
+		// Statusmeldung anzeigen
+		System.out
+				.println("Die Stoppuhr laeuft. Enter drücken, um die Stoppuhr zu beenden.");
+		System.out.println();
+		// Auf Betaetigen der Eingabetaste warten
+		try {
+			System.in.read();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// Aktuellen Zeitpunkt im Date-Objekt stopp festhalten
+		Date stopp = new Date();
+		// Zeitpunkt ausgeben
+		System.out.println("Stoppzeitpunkt: " + stopp);
+		System.out.println();
+		// Laufzeit als Differenz von stopp und start bestimmen
+		long laufzeit = stopp.getTime() - start.getTime();
+		// Laufzeit ausgeben
+		System.out.println("Gesamtlaufzeit: " + laufzeit + " ms");
 	}
 }
 
