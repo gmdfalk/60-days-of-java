@@ -35,8 +35,51 @@ public class Chap12 {
 		// Ausgaben.main(args);
 		// FestPunktFormat a = new FestPunktFormat(3);
 		// System.out.println(a.format(-100.0));
-		Stoppuhr.main(args);
-		CalArith.main(args);
+		// Stoppuhr.main(args);
+		// CalArith.main(args);
+		CalStoppuhr.main(args);
+	}
+}
+
+class CalStoppuhr {
+	public static void main(String[] args) {
+		// Auf Betaetigen der Eingabetaste warten12.5 Die Klassen Date und
+		// Calendar
+		// Aktuellen Zeitpunkt im Calendar-Objekt start festhalten
+		Calendar start = Calendar.getInstance();
+		// Zeitpunkt ausgeben
+		System.out.println("Startzeitpunkt: " + start.get(Calendar.HOUR_OF_DAY)
+				+ ":" + start.get(Calendar.MINUTE) + ":"
+				+ start.get(Calendar.SECOND) + ":"
+				+ start.get(Calendar.MILLISECOND));
+		System.out.println();
+		// Statusmeldung anzeigen
+		System.out.println("Die Stoppuhr laeuft ...");
+		System.out.println();
+		// Auf Betaetigen der Eingabetaste warten
+		try {
+			System.in.read();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		// Aktuellen Zeitpunkt im Calendar-Objekt stopp festhalten
+		Calendar stopp = Calendar.getInstance();
+		// Zeitpunkt ausgeben
+		System.out.println("Stoppzeitpunkt: " + stopp.get(Calendar.HOUR_OF_DAY)
+				+ ":" + stopp.get(Calendar.MINUTE) + ":"
+				+ stopp.get(Calendar.SECOND) + ":"
+				+ stopp.get(Calendar.MILLISECOND));
+		System.out.println();
+		// Laufzeit als Differenz von stopp und start bestimmen
+		long laufzeit = stopp.getTimeInMillis() - start.getTimeInMillis();
+		// Laufzeit ausgeben
+		System.out.println("Gesamtlaufzeit: " + laufzeit + " ms");
+		// Laufzeit als Zeitpunkt darstellen
+		stopp.setTimeInMillis(laufzeit);
+		// Zeitpunkt ausgeben
+		System.out.println("Gesamtlaufzeit (min:sec:ms): "
+				+ stopp.get(Calendar.MINUTE) + ":" + stopp.get(Calendar.SECOND)
+				+ ":" + stopp.get(Calendar.MILLISECOND));
 	}
 }
 
