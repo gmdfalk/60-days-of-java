@@ -1,6 +1,7 @@
 package grundkurs_java;
 
 import java.math.BigInteger;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.concurrent.Callable;
@@ -23,46 +24,26 @@ public class Chap12 {
 		// DoubleCalc.main();
 		// BigDecimalCalc.main();
 		// Formel.main(args);
-		BigNewton.main(args);
+		// BigNewton.main(args);
 		// BigNewton2.main(args);
+		StandardFormat.main(args);
 	}
 }
 
-class BigNewton2 {
-	public static BigDecimal drei = new BigDecimal("3");
-	public static BigDecimal vier = new BigDecimal("4");
-	public static BigDecimal sechs = new BigDecimal("6");
-	public static BigDecimal zehn = new BigDecimal("10");
-
-	public static BigDecimal f(BigDecimal x) { // berechnet f(x)
-		BigDecimal xh2 = x.multiply(x);
-		return xh2.multiply(xh2).subtract(drei.multiply(xh2)).subtract(zehn);
-	}
-
-	public static BigDecimal fstrich(BigDecimal x) { // berechnet f'(x)
-		BigDecimal xh2 = x.multiply(x);
-		return vier.multiply(x).multiply(xh2).subtract(sechs.multiply(x));
-	}
-
+class StandardFormat {
 	public static void main(String[] args) {
-		System.out.println("Newton-Verfahren fuer x^4-3x^2-10");
-
-		String start = "13";
-		int stellen = 50;
-
-		BigDecimal xAlt, xNeu = new BigDecimal(start);
-		BigDecimal fx, fsx;
-		int runden = BigDecimal.ROUND_HALF_DOWN;
-		int k = 0;
-		System.out.println("x = " + xNeu);
-		do { // Newton-Iteration
-			k = k + 1;
-			xAlt = xNeu;
-			fx = f(xAlt);
-			fsx = fstrich(xAlt);
-			xNeu = xAlt.subtract(fx.divide(fsx, stellen, runden));
-			System.out.println("x = " + xNeu);
-		} while (!(xNeu.compareTo(xAlt) == 0) && (k < 100));
+		double x = 1e-15;
+		// NumberFormat nf = NumberFormat.getInstance();
+		// nf.setMinimumFractionDigits(7);
+		// nf.setMaximumFractionDigits(7);
+		DecimalFormat f2 = new DecimalFormat("Wert: ###,###.#####");
+		for (int i = 1; i <= 15; i++) {
+			// System.out.println(nf.format(x));
+			// System.out.printf("%.9f", x);
+			// System.out.println();
+			System.out.println(f2.format(x));
+			x = 111 * x;
+		}
 	}
 }
 
