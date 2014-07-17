@@ -2,12 +2,15 @@ package grundkurs_java;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Scanner;
 import java.util.concurrent.Callable;
 import java.math.BigDecimal;
@@ -40,6 +43,58 @@ public class Chap12 {
 		// CalArith.main(args);
 		// CalStoppuhr.main(args);
 		MyDateFormats.main(args);
+		// MyStandardDateFormats.main(args);
+		SimpleTime.main(args);
+	}
+}
+
+class SimpleTime {
+	// 12.13
+	public static void main(String[] args) {
+		SimpleDateFormat eins = new SimpleDateFormat(
+				"'Heute ist 'EEEE', der 'd.' 'MMMM.");
+		SimpleDateFormat zwei = new SimpleDateFormat(
+				"'Die Uhr zeigt gerade: 'HH' Uhr und 'MM' Minuten.'");
+		Date d = new Date();
+		System.out.println(eins.format(d));
+		System.out.println(zwei.format(d));
+	}
+}
+
+class MyStandardDateFormats {
+	// Verschiedene Stanard-Formate als Konstanten definieren
+	public static final DateFormat eins = DateFormat.getDateInstance(),
+			zwei = DateFormat.getDateInstance(DateFormat.SHORT),
+			drei = DateFormat.getDateInstance(DateFormat.LONG, Locale.FRANCE),
+			vier = DateFormat.getTimeInstance(), fuen = DateFormat
+					.getTimeInstance(DateFormat.LONG), sech = DateFormat
+					.getTimeInstance(DateFormat.FULL, Locale.US),
+			sieb = DateFormat.getDateTimeInstance(), acht = DateFormat
+					.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT),
+			neun = DateFormat.getDateTimeInstance(DateFormat.LONG,
+					DateFormat.LONG, Locale.ITALY);
+
+	// Methode zur formatierten Ausgabe
+	public static void println(Date d, DateFormat f) {
+		System.out.println(f.format(d));
+	}
+
+	// Einige Tests
+	public static void main(String[] args) {
+		try {
+			Date d = acht.parse("11.11.2004 11:11");
+			println(d, eins);
+			println(d, zwei);
+			println(d, drei);
+			println(d, vier);
+			println(d, fuen);
+			println(d, sech);
+			println(d, sieb);
+			println(d, acht);
+			println(d, neun);
+		} catch (ParseException pe) {
+			System.out.println(pe);
+		}
 	}
 }
 
