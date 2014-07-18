@@ -42,7 +42,43 @@ public class Chap12 {
 		// SortierteZahlenListe.main(args);
 		// Lotto.main(args);
 		// Primes.main(args);
-		Sieb.main(args);
+		// Sieb.main(args);
+		StringTokens.main(args);
+	}
+}
+
+class StringTokens {
+	/** Methode zur Ausgabe einer String-Zerlegung */
+	public static void print(StringTokenizer st) {
+		while (st.hasMoreTokens())
+			System.out.println(st.nextToken());
+		System.out.println();
+	}
+
+	/** Beispielprogramm fuer StringTokenizer-Benutzung */
+	public static void main(String[] args) {
+		// Zu zerlegende Zeichenkette festlegen und ausgeben
+		String text = "Dies ist ein ganz toller Text";
+		System.out.println("Text als Original-Zeichenkette:");
+		System.out.println(text);
+		System.out.println();
+		// Einen Standard-StringTokenizer erzeugen
+		StringTokenizer st1 = new StringTokenizer(text);
+		// Text mit Hilfe des Tokenizer-Objekts zerlegen und ausgeben
+		System.out.println("Text mit Standard-Tokenizer zerlegt:");
+		print(st1);
+		// Spezielle Token-Trennzeichen definieren
+		String trenner = "eo";
+		// Einen StringTokenizer mit diesen Trennzeichen erzeugen
+		StringTokenizer st2 = new StringTokenizer(text, trenner);
+		// Text mit Hilfe des Tokenizer-Objekts zerlegen und ausgeben
+		System.out.println("Text mit e-o-Tokenizer zerlegt:");
+		print(st2);
+		// Einen StringTokenizer mit diesen Trennzeichen erzeugen
+		StringTokenizer st3 = new StringTokenizer(text, trenner, true);
+		// Text mit Hilfe des Tokenizer-Objekts zerlegen und ausgeben
+		System.out.println("Text mit e-o-Tokenizer zerlegt mit Trenner:");
+		print(st3);
 	}
 }
 
