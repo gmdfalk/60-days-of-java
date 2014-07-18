@@ -36,7 +36,99 @@ public class Chap12 {
 		// MyDateFormats.main(args);
 		// MyStandardDateFormats.main(args);
 		// SimpleTime.main(args);
-		ZahlenMenge.main(args);
+		// ZahlenMenge.main(args);
+		// SortierteZahlenMenge.main(args);
+		// ZahlenListe.main(args);
+		// SortierteZahlenListe.main(args);
+		Lotto.main(args);
+	}
+}
+
+class Lotto {
+	// 12.14
+
+	public static int randInt(int min, int max) {
+
+		// NOTE: Usually this should be a field rather than a method
+		// variable so that it is not re-seeded every call.
+		Random rand = new Random();
+
+		// nextInt is normally exclusive of the top value,
+		// so add 1 to make it inclusive
+		int randomNum = rand.nextInt((max - min) + 1) + min;
+
+		return randomNum;
+	}
+
+	public static void main(String[] args) {
+		Collection<Integer> c = new HashSet<Integer>();
+		while (c.size() < 7) {
+			c.add(randInt(1, 49));
+			// c.add(new Integer(1 + (int) (48 * Math.random())));
+		}
+		System.out.println(c);
+
+	}
+}
+
+class SortierteZahlenListe {
+	/** Methode zur Ausgabe der Listenelemente */
+	public static void printList(List l) {
+		System.out.println("Die Liste enthaelt die Elemente");
+		for (Iterator i = l.iterator(); i.hasNext();)
+			System.out.print(i.next() + " ");
+		System.out.println();
+		System.out.println();
+	}
+
+	/** Aufbau und Modifikation einer Liste */
+	public static void main(String[] args) {
+		List<Double> l = new ArrayList<Double>();
+		l.add(new Double(2.2));
+		l.add(new Double(1.1));
+		l.add(new Double(3.3));
+		l.add(new Double(0.0));
+		l.add(new Double(7.7));
+		l.add(new Double(3.3));
+		printList(l);
+		Collections.sort(l);
+		printList(l);
+		System.out.println("Index des Elements mit Wert 0.0: "
+				+ Collections.binarySearch(l, new Double(0.0)));
+		System.out.println("Index des Elements mit Wert 2.2: "
+				+ Collections.binarySearch(l, new Double(2.2)));
+		System.out.println("Index des Elements mit Wert 5.5: "
+				+ Collections.binarySearch(l, new Double(5.5)));
+	}
+}
+
+class ZahlenListe {
+	/** Methode zur Ausgabe von Infos ueber eine Collection */
+	public static void printInfo(Collection c) {
+		System.out.println("Die Liste enthaelt " + c.size() + " Elemente");
+		System.out.println("Ist 3.3 in der Liste enthalten? "
+				+ c.contains(new Double(3.3)));
+		System.out.println("Alle Elemente der Liste:");
+		for (Iterator i = c.iterator(); i.hasNext();)
+			System.out.print(i.next() + " ");
+		System.out.println();
+		System.out.println();
+	}
+
+	/** Aufbau und Modifikation einer Collection */
+	public static void main(String[] args) {
+		Collection<Double> c = new ArrayList<Double>();
+		c.add(new Double(1.1));
+		c.add(new Double(2.2));
+		c.add(new Double(3.3));
+		c.add(new Double(0.0));
+		c.add(new Double(3.3));
+		c.add(new Double(4.4));
+		printInfo(c);
+		c.remove(new Double(3.3));
+		c.remove(new Double(0.0));
+		c.remove(new Double(4.4));
+		printInfo(c);
 	}
 }
 
@@ -48,7 +140,7 @@ class SortierteZahlenMenge {
 				+ c.contains(new Double(3.3)));
 		System.out.println("Alle Elemente der Menge:");
 		for (Iterator i = c.iterator(); i.hasNext();)
-			System.out.print(i.next() + "");
+			System.out.print(i.next() + " ");
 		System.out.println();
 		System.out.println();
 	}
@@ -78,7 +170,7 @@ class ZahlenMenge {
 				+ c.contains(new Double(3.3)));
 		System.out.println("Alle Elemente der Menge:");
 		for (Iterator i = c.iterator(); i.hasNext();)
-			System.out.print(i.next() + "");
+			System.out.print(i.next() + " ");
 		System.out.println();
 		System.out.println();
 	}
