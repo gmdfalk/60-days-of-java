@@ -40,7 +40,31 @@ public class Chap12 {
 		// SortierteZahlenMenge.main(args);
 		// ZahlenListe.main(args);
 		// SortierteZahlenListe.main(args);
-		Lotto.main(args);
+		// Lotto.main(args);
+		Primes.main(args);
+	}
+}
+
+class Primes {
+	public static void main(String[] args) {
+		int n = 13;
+		Collection<Integer> T = new TreeSet<Integer>();
+		Collection<Integer> S = new TreeSet<Integer>();
+		int p = 2;
+		while (p * p < n) {
+			for (int i = 2; i < n; i++) {
+				S.add(i * p);
+			}
+			if (p == 2) {
+				p = 3;
+			} else {
+				while (S.contains(p)) {
+					p += 2;
+				}
+			}
+		}
+		System.out.println(T + " " + S);
+
 	}
 }
 
