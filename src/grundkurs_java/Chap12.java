@@ -51,20 +51,26 @@ class Primes {
 		Collection<Integer> T = new TreeSet<Integer>();
 		Collection<Integer> S = new TreeSet<Integer>();
 		int p = 2;
+		// Add all numbers between p (2) and n to T.
+		for (int i = 2; i <= n; i++)
+			T.add(i);
 		while (p * p < n) {
-			for (int i = 2; i < n; i++) {
+			// Add multiples of p to S
+			for (int i = 2; i < n; i++)
 				S.add(i * p);
-			}
 			if (p == 2) {
 				p = 3;
 			} else {
-				while (S.contains(p)) {
+				System.out.println(p + " " + S);
+				do {
 					p += 2;
-				}
+				} while (S.contains((Integer) p));
 			}
 		}
-		System.out.println(T + " " + S);
-
+		System.out.println("S: " + S);
+		System.out.println("T: " + T);
+		T.removeAll(S);
+		System.out.println(T);
 	}
 }
 
