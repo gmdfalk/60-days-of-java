@@ -1,19 +1,10 @@
 package grundkurs_java;
 
 import java.io.IOException;
-import java.math.BigInteger;
-import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Scanner;
-import java.util.concurrent.Callable;
 import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.text.*;
+import java.util.*;
 
 public class Chap12 {
 
@@ -42,9 +33,70 @@ public class Chap12 {
 		// Stoppuhr.main(args);
 		// CalArith.main(args);
 		// CalStoppuhr.main(args);
-		MyDateFormats.main(args);
+		// MyDateFormats.main(args);
 		// MyStandardDateFormats.main(args);
-		SimpleTime.main(args);
+		// SimpleTime.main(args);
+		ZahlenMenge.main(args);
+	}
+}
+
+class SortierteZahlenMenge {
+	/** Methode zur Ausgabe von Infos ueber eine Collection */
+	public static void printInfo(Collection c) {
+		System.out.println("Die Menge enthaelt " + c.size() + " Elemente");
+		System.out.println("Ist 3.3 in der Menge enthalten? "
+				+ c.contains(new Double(3.3)));
+		System.out.println("Alle Elemente der Menge:");
+		for (Iterator i = c.iterator(); i.hasNext();)
+			System.out.print(i.next() + "");
+		System.out.println();
+		System.out.println();
+	}
+
+	/** Aufbau und Modifikation einer Collection */
+	public static void main(String[] args) {
+		Collection<Double> c = new TreeSet<Double>();
+		c.add(new Double(1.1));
+		c.add(new Double(2.2));
+		c.add(new Double(3.3));
+		c.add(new Double(0.0));
+		c.add(new Double(3.3));
+		c.add(new Double(4.4));
+		printInfo(c);
+		c.remove(new Double(3.3));
+		c.remove(new Double(0.0));
+		c.remove(new Double(4.4));
+		printInfo(c);
+	}
+}
+
+class ZahlenMenge {
+	/** Methode zur Ausgabe von Infos ueber eine Collection */
+	public static void printInfo(Collection c) {
+		System.out.println("Die Menge enthaelt " + c.size() + " Elemente");
+		System.out.println("Ist 3.3 in der Menge enthalten? "
+				+ c.contains(new Double(3.3)));
+		System.out.println("Alle Elemente der Menge:");
+		for (Iterator i = c.iterator(); i.hasNext();)
+			System.out.print(i.next() + "");
+		System.out.println();
+		System.out.println();
+	}
+
+	/** Aufbau und Modifikation einer Collection */
+	public static void main(String[] args) {
+		Collection<Double> c = new HashSet<Double>();
+		c.add(new Double(1.1));
+		c.add(new Double(2.2));
+		c.add(new Double(3.3));
+		c.add(new Double(0.0));
+		c.add(new Double(3.3));
+		c.add(new Double(4.4));
+		printInfo(c);
+		c.remove(new Double(3.3));
+		c.remove(new Double(0.0));
+		c.remove(new Double(4.4));
+		printInfo(c);
 	}
 }
 
