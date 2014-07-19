@@ -43,7 +43,25 @@ public class Chap12 {
 		// Lotto.main(args);
 		// Primes.main(args);
 		// Sieb.main(args);
-		StringTokens.main(args);
+		// StringTokens.main(args);
+		StringTokenExercise.main(args);
+	}
+}
+
+class StringTokenExercise {
+	public static void main(String[] args) {
+		// Scanner scanner = new Scanner(System.in);
+		// System.out.println("Please enter a sentence to split up and sort: ");
+		// String sentence = scanner.next();
+		String sentence = "The quick brown fox jumps over the lazy dog.";
+		StringTokenizer tokenized = new StringTokenizer(sentence);
+		List<String> wordlist = new ArrayList<String>();
+		for (int i = 0; i < tokenized.countTokens(); i++)
+			wordlist.add(tokenized.nextToken());
+		System.out.println(wordlist);
+		Collections.sort(wordlist);
+		System.out.println(wordlist);
+
 	}
 }
 
