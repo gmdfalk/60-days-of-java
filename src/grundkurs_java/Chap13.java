@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.Scanner;
 
 import javax.swing.*;
 
@@ -13,7 +14,8 @@ public class Chap13 {
 
 	public static void main(String[] args) {
 		// swing();
-		FrameMitText.main(args);
+		// FrameMitText.main(args);
+		ZweiFrames.main(args);
 	}
 
 	public static void swing() {
@@ -34,6 +36,71 @@ public class Chap13 {
 		fenster.setTitle("Bla");
 		fenster.setSize(300, 150);
 		fenster.setVisible(true);
+	}
+}
+
+class ZweiFrames {
+	// 13.1
+	public static void main(String[] args) {
+		FrameMitText fenster = new FrameMitText();
+		fenster.setTitle("Das erste Fenster");
+		fenster.setSize(400, 250);
+		fenster.setVisible(true);
+		fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		Scanner in = new Scanner(System.in);
+		System.out.println("Neuer Fenster-Titel: ");
+		String s = in.next();
+		fenster.setTitle(s);
+		System.out.println("<-'");
+
+		System.out.println("Neue Fenster-Breite: ");
+		int b = in.nextInt();
+		System.out.println("Neue Fenster-Hoehe: ");
+		int h = in.nextInt();
+		fenster.setSize(b, h);
+		System.out.println("<-'");
+
+		System.out.println("Fenster unsichtbar machen mit Eingabetaste: ");
+		try {
+			System.in.read();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		fenster.setVisible(false);
+		System.out.println("<-'");
+
+		System.out.println("Fenster wieder sichtbar machen mit Eingabetaste: ");
+		try {
+			System.in.read();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		fenster.setVisible(true);
+		System.out.println("<-'");
+
+		System.out
+				.println("Fenster auf die Koordinaten (300,10) verschieben mit Eingabetaste: ");
+		try {
+			System.in.read();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		fenster.setLocation(300, 10);
+		System.out.println("<-'");
+
+		System.out.println("Noch ein Fenster erzeugen mit Eingabetaste: ");
+		try {
+			System.in.read();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		FrameMitText fenster2 = new FrameMitText();
+		fenster2.setTitle("Das zweite Fenster");
+		fenster2.setSize(300, 150);
+		fenster2.setVisible(true);
+		System.out.println("<-'");
 	}
 }
 
