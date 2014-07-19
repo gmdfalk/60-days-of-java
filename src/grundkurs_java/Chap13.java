@@ -15,7 +15,8 @@ public class Chap13 {
 	public static void main(String[] args) {
 		// swing();
 		// FrameMitText.main(args);
-		ZweiFrames.main(args);
+		// ZweiFrames.main(args);
+		TextFrame.main(new String[] { "titel hier", "299", "399" });
 	}
 
 	public static void swing() {
@@ -36,6 +37,25 @@ public class Chap13 {
 		fenster.setTitle("Bla");
 		fenster.setSize(300, 150);
 		fenster.setVisible(true);
+	}
+}
+
+class TextFrame {
+	public static void main(String[] args) {
+		try {
+			FrameMitText fenster = new FrameMitText();
+			fenster.setTitle(args[0]);
+			fenster.setSize(Integer.parseInt(args[1]),
+					Integer.parseInt(args[2]));
+			fenster.setVisible(true);
+			fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		} catch (ArrayIndexOutOfBoundsException aioube) {
+			System.out
+					.println("Aufruf:  java TextFrame <Titel> <Breite> <Hoehe>");
+		} catch (NumberFormatException nfe) {
+			System.out
+					.println("Breiten- und Hoehen-Angabe muessen ganzzahlig sein!");
+		}
 	}
 }
 
