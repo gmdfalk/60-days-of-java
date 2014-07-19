@@ -50,21 +50,18 @@ public class Chap12 {
 
 class StringTokenExercise {
 	public static void main(String[] args) {
-		// Scanner scanner = new Scanner(System.in);
-		// System.out.println("Please enter a sentence to split up and sort: ");
-		// String sentence = scanner.next();
-		String sentence = "The quick brown fox jumps over the lazy dog";
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Please enter a sentence to split up and sort: ");
+		String sentence = scanner.next();
+		// String sentence = "The quick brown fox jumps over the lazy dog";
 		StringTokenizer tokenized = new StringTokenizer(sentence);
-		// while (tokenized.hasMoreTokens())
-		// System.out.println(tokenized.nextToken());
-		List<String> wordlist = new ArrayList<String>();
-		int tokencount = tokenized.countTokens();
-		for (int i = 0; i < tokencount; i++) { // 5 iterations
-			wordlist.add(tokenized.nextToken());
-		}
-		System.out.println(wordlist);
-		Collections.sort(wordlist);
-		System.out.println(wordlist);
+		Set<String> wordset = new HashSet<String>();
+		while (tokenized.hasMoreTokens())
+			wordset.add(tokenized.nextToken());
+		List<String> sorted = new ArrayList<String>(wordset);
+		System.out.println(sorted);
+		Collections.sort(sorted);
+		System.out.println(sorted);
 
 	}
 }

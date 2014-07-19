@@ -13,7 +13,7 @@ public class Chap13 {
 
 	public static void main(String[] args) {
 		// swing();
-		FrameOhneInhalt.main(args);
+		FrameMitText.main(args);
 	}
 
 	public static void swing() {
@@ -37,22 +37,28 @@ public class Chap13 {
 	}
 }
 
-class FrameOhneInhalt extends JFrame {
-	// Konstruktor fuer unseren Frame
-	public FrameOhneInhalt() {
-		// Hier werden spaeter die Komponenten hinzugefuegt
+class FrameMitText extends JFrame {
+	Container c;
+	// Container dieses Frames
+	JLabel beschriftung; // Label, das im Frame erscheinen soll
+
+	public FrameMitText() {
+		// Konstruktor414
+		// Bestimme die Referenz auf den eigenen Container
+		c = getContentPane();
+		// Setze das Layout
+		c.setLayout(new FlowLayout());
+		// Erzeuge das Labelobjekt mit Uebergabe des Labeltextes
+		beschriftung = new JLabel("Label-Text im Frame");
+		// Fuege das Label dem Frame hinzu
+		c.add(beschriftung);
 	}
 
 	public static void main(String[] args) {
-		// Erzeuge eine Instanz unseres Frames
-		FrameOhneInhalt fenster = new FrameOhneInhalt();
-		// Titelleiste definieren
-		fenster.setTitle("Frame ohne Inhalt");
-		// Setze die Groesse des Frames
+		FrameMitText fenster = new FrameMitText();
+		fenster.setTitle("Frame mit Text im Label");
 		fenster.setSize(300, 150);
-		// Schalte den Frame sichtbar
 		fenster.setVisible(true);
-		// Setze das Verhalten des Frames beim Schliessen
 		fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }
