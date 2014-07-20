@@ -1,6 +1,7 @@
 package grundkurs_java;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import javax.swing.*;
 
 public class Chap14 {
@@ -22,6 +23,142 @@ public class Chap14 {
 		// FrameMitTextFeldern.main(args);
 		// FrameMitTextArea.main(args);
 		// FrameMitScrollText.main(args);
+		// FrameMitPanels.main(args);
+		// TopLevelContainer.main(args);
+		FrameMitMenuBar.main(args);
+	}
+}
+
+class FrameMitMenuBar extends JFrame {
+	Container c;
+	// Container dieses Frames
+	JMenuBar menuBar;
+	// Menueleiste
+	JMenu menu;
+	// Menue
+	JMenuItem menuItem;
+	// Menue-Eintrag
+	JToolBar toolBar;
+	// Werkzeugleiste
+	JButton button;
+	// Knoepfe der Werkzeugleiste
+	JLabel textLabel;
+
+	// Label, das im Frame erscheinen soll
+	public FrameMitMenuBar() { // Konstruktor
+		// Bestimme die Referenz auf den eigenen Container
+		c = getContentPane();
+		// Erzeuge die Menueleiste.
+		menuBar = new JMenuBar();
+		// Erzeuge ein Menue
+		menu = new JMenu("Bilder");
+		menu.setMnemonic(KeyEvent.VK_B);
+		// Erzeuge die Menue-Eintraege und fuege sie dem Menue hinzu
+		menuItem = new JMenuItem("Hund");
+		menuItem.setMnemonic(java.awt.event.KeyEvent.VK_H);
+		menu.add(menuItem);
+		menuItem = new JMenuItem("Katze");
+		menuItem.setMnemonic(java.awt.event.KeyEvent.VK_K);
+		menu.add(menuItem);
+		menuItem = new JMenuItem("Maus");
+		menuItem.setMnemonic(java.awt.event.KeyEvent.VK_M);
+		menu.add(menuItem);
+		// Fuege das Menue der Menueleiste hinzu
+		menuBar.add(menu);
+		// Fuegt das Menue dem Frame hinzu
+		setJMenuBar(menuBar);
+		// Erzeuge die Werkzeugleiste
+		toolBar = new JToolBar("Rahmenfarbe");
+		// Erzeuge die Knoepfe
+		button = new JButton(new ImageIcon("images/rot.gif"));
+		button.setToolTipText("roter Rahmen");
+		toolBar.add(button);
+		button = new JButton(new ImageIcon("images/gruen.gif"));
+		button.setToolTipText("gruener Rahmen");
+		toolBar.add(button);
+		button = new JButton(new ImageIcon("images/blau.gif"));
+		button.setToolTipText("blauer Rahmen");
+		toolBar.add(button);
+		// Erzeuge das Labelobjekt
+		textLabel = new JLabel("Hier erscheint mal ein Bild mit Rahmen.",
+				JLabel.CENTER);
+		// Fuege Label und Toolbar dem Container hinzu
+		c.add(textLabel, BorderLayout.CENTER);
+		c.add(toolBar, BorderLayout.NORTH);
+	}
+
+	public static void main(String[] args) {
+		FrameMitMenuBar fenster = new FrameMitMenuBar();
+		fenster.setTitle("Frame mit Menueleiste und Toolbar");
+		fenster.setSize(350, 170);
+		fenster.setVisible(true);
+		fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+}
+
+class TopLevelContainer {
+	public static void main(String[] args) {
+		// Hauptfenster erzeugen und beschriften
+		JFrame f = new JFrame();
+		f.getContentPane().add(new JLabel("Frame", JLabel.CENTER));
+		f.setTitle("Frame");
+		f.setSize(300, 150);
+		f.setLocation(100, 100);
+		f.setVisible(true);
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// Unterfenster (Window) erzeugen und beschriften
+		JWindow w = new JWindow(f);
+		w.getContentPane().add(new JLabel("Window", JLabel.CENTER));
+		w.setSize(150, 150);
+		w.setLocation(410, 100);
+		w.setVisible(true);
+		// Modales Unterfenster (Dialog) erzeugen und beschriften
+		JDialog d = new JDialog(f, true);
+		d.getContentPane().add(new JLabel("Dialog", JLabel.CENTER));
+		d.setTitle("Dialog");
+		d.setSize(150, 100);
+		d.setLocation(300, 180);
+		d.setVisible(true);
+		d.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	}
+}
+
+class FrameMitPanels extends JFrame {
+	Container c;
+	// Container dieses Frames
+	JPanel jp1, jp2, jp3; // Panels
+
+	public FrameMitPanels() {
+		c = getContentPane();
+		// Panels erzeugen
+		jp1 = new JPanel();
+		// Konstruktor
+		// Container bestimmen14.5 Einige Grundkomponenten
+		jp2 = new JPanel();
+		jp3 = new JPanel(new GridLayout(2, 3));
+		// Vier Tasten in Panel 1 einfuegen
+		for (int i = 1; i <= 4; i++)
+			jp1.add(new JButton("Taste " + i));
+		// Bildobjekt erzeugen
+		Icon bild = new ImageIcon("kitten.jpg");
+		// Bild drei mal in Panel 2 einfuegen
+		for (int i = 1; i <= 3; i++)
+			jp2.add(new JLabel(bild));
+		// Sechs Haekchen-Kaestchen in Panel 3 einfuegen
+		for (int i = 1; i <= 6; i++)
+			jp3.add(new JCheckBox("Auswahl-Box " + i));
+		// Panels in den Container einfuegen
+		c.add(jp1, BorderLayout.NORTH);
+		c.add(jp2, BorderLayout.CENTER);
+		c.add(jp3, BorderLayout.SOUTH);
+	}
+
+	public static void main(String[] args) {
+		FrameMitPanels fenster = new FrameMitPanels();
+		fenster.setTitle("Label mit Panels");
+		fenster.setSize(350, 200);
+		fenster.setVisible(true);
+		fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }
 
