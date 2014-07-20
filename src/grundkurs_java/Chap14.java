@@ -14,7 +14,72 @@ public class Chap14 {
 		// FrameMitGridLayout.main(args);
 		// FrameMitBild.main(args);
 		// FrameMitButtons.main(args);
-		FrameMitToggleButtons.main(args);
+		// FrameMitToggleButtons.main(args);
+		// FrameMitCheckBoxes.main(args);
+		FrameMitRadioButtons.main(args);
+	}
+}
+
+class FrameMitRadioButtons extends JFrame {
+	Container c;
+	// Container dieses Frames
+	// Feld fuer Radio-Buttons, die im Frame erscheinen sollen
+	JRadioButton rb[] = new JRadioButton[4];
+
+	public FrameMitRadioButtons() { // Konstruktor
+		c = getContentPane();
+		// Container bestimmen
+		c.setLayout(new FlowLayout());
+		// Layout setzen
+		// Gruppe erzeugen
+		ButtonGroup bg = new ButtonGroup();
+		// Erzeuge die Button-Objekte und fuege
+		// sie dem Frame und der Gruppe hinzu
+		for (int i = 0; i < 4; i++) {
+			rb[i] = new JRadioButton("Box " + (i + 1)); // erzeugen
+			bg.add(rb[i]); // der Gruppe hinzufuegen
+			c.add(rb[i]); // dem Frame hinzufuegen
+		}
+	}
+
+	public static void main(String[] args) {
+		FrameMitRadioButtons fenster = new FrameMitRadioButtons();
+		fenster.setTitle("Frame mit RadioButtons");
+		fenster.setSize(330, 60);
+		fenster.setVisible(true);
+		fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+}
+
+class FrameMitCheckBoxes extends JFrame {
+	Container c;
+	// Container dieses Frames
+	// Feld fuer Check-Boxes, die im Frame erscheinen sollen14.5 Einige
+	// Grundkomponenten
+	JCheckBox cb[] = new JCheckBox[4];
+
+	public FrameMitCheckBoxes() { // Konstruktor
+		c = getContentPane();
+		// Container bestimmen
+		c.setLayout(new FlowLayout());
+		// Layout setzen
+		// Erzeuge die Button-Objekte
+		for (int i = 0; i < 4; i++)
+			cb[i] = new JCheckBox("Box " + (i + 1));
+		cb[0].setSelected(true);
+		cb[2].setSelected(true);
+		// Fuege die Buttons dem Frame hinzu
+		for (int i = 0; i < 4; i++) {
+			c.add(cb[i]);
+		}
+	}
+
+	public static void main(String[] args) {
+		FrameMitCheckBoxes fenster = new FrameMitCheckBoxes();
+		fenster.setTitle("Frame mit CheckBoxes");
+		fenster.setSize(280, 60);
+		fenster.setVisible(true);
+		fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }
 
