@@ -8,7 +8,8 @@ public class Chap15 {
 
 	public static void main(String[] args) {
 		// Farbwechsel.main(args);
-		Bilderrahmen.main(args);
+		// Bilderrahmen.main(args);
+		Farbwechsel2.main(args);
 	}
 
 }
@@ -123,6 +124,72 @@ class Bilderrahmen extends JFrame {
 		Bilderrahmen fenster = new Bilderrahmen();
 		fenster.setTitle("Bilderrahmen");
 		fenster.setSize(180, 280);
+		fenster.setVisible(true);
+		fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+}
+
+class Farbwechsel3 extends JFrame implements ActionListener {
+	Container c;
+	// Container dieses Frames
+	JButton button;
+
+	// Knopf
+	public Farbwechsel3() { // Konstruktor
+	// Container bestimmen
+		c = getContentPane();
+		// Button erzeugen und dem Container hinzufuegen
+		button = new JButton("Hintergrundfarbe wechseln");
+		c.add(button, BorderLayout.NORTH);
+		// Eigenes Objekt beim Button als Listener registrieren
+		button.addActionListener(this);
+	}
+
+	// Implementierung der Methode des ActionListener-Interface
+	public void actionPerformed(ActionEvent e) {
+		// Hintergrundfarbe des Containers zufaellig aendern
+		float zufall = (float) Math.random();
+		Color grauton = new Color(zufall, zufall, zufall);
+		c.setBackground(grauton);
+	}
+
+	public static void main(String[] args) {
+		Farbwechsel3 fenster = new Farbwechsel3();
+		fenster.setTitle("Farbwechsel");
+		fenster.setSize(200, 100);
+		fenster.setVisible(true);
+		fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+}
+
+class Farbwechsel2 extends JFrame {
+	Container c;
+	// Container dieses Frames
+	JButton button;
+
+	// Knopf
+	public Farbwechsel2() { // Konstruktor
+		// Container bestimmen
+		c = getContentPane();
+		// Button erzeugen und dem Container hinzufuegen
+		button = new JButton("Hintergrundfarbe wechseln");
+		c.add(button, BorderLayout.NORTH);
+		// Listener-Objekt erzeugen und beim Button registrieren
+		ActionListener bL = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Hintergrundfarbe des Containers zufaellig aendern
+				float zufall = (float) Math.random();
+				Color grauton = new Color(zufall, zufall, zufall);
+				c.setBackground(grauton);
+			}
+		}; // Ende der anonymen Klassendefinition
+		button.addActionListener(bL);
+	}
+
+	public static void main(String[] args) {
+		Farbwechsel2 fenster = new Farbwechsel2();
+		fenster.setTitle("Farbwechsel");
+		fenster.setSize(200, 100);
 		fenster.setVisible(true);
 		fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
