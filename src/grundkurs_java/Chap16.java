@@ -7,9 +7,65 @@ import java.awt.event.*;
 public class Chap16 {
 
 	public static void main(String[] args) {
-		Zeichnung.main(args);
+		// Zeichnung.main(args);
+		PunkteVerbinden.main(args);
 	}
 
+}
+
+class PunkteVerbinden extends JFrame {
+	Container c;
+	// Container dieses Frames
+	Zeichenbrett z;
+
+	// Zeichenbrett zum Linien Malen16.1 Zeichnen in Swing-Komponenten
+	public PunkteVerbinden() { // Konstruktor
+		c = getContentPane();
+		// Container bestimmen
+		z = new Zeichenbrett();
+		// Zeichenbrett erzeugen
+		c.add(z);
+		// und dem Frame hinzufuegen
+	}
+
+	public static void main(String[] args) {
+		PunkteVerbinden fenster = new PunkteVerbinden();
+		fenster.setTitle("Punkte verbinden");
+		fenster.setSize(250, 200);
+		fenster.setVisible(true);
+		fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+}
+
+class Zeichenbrett extends JPanel {
+	private int[] x, y; // Koordinaten der Maus-Klicks
+	private int n;
+
+	// Anzahl Klicks
+	public Zeichenbrett() {
+		// Konstruktor
+		n = 0;
+		x = new int[1000];
+		y = new int[1000];
+		addMouseListener(new ClickBearbeiter());
+	}
+
+	public void paintComponent(Graphics g) {
+		g.drawPolyline(x, y, n);
+	}
+
+	// Innere Listener-Klasse fuer Maus-Ereignisse
+	class ClickBearbeiter extends MouseAdapter {
+		public void mousePressed(MouseEvent e) {
+			x[n] = e.getX(); // speichere x-Koordinate
+			y[n] = e.getY(); // speichere y-Koordinate
+			n++;
+			// erhoehe Anzahl Klicks
+			repaint();
+			// Neuzeichnen der Komponente beim
+			// Repaint-Manager anfordern
+		}
+	}
 }
 
 class Zeichnung extends JFrame {
