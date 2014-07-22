@@ -2,6 +2,8 @@ package grundkurs_java;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.Random;
+
 import javax.swing.*;
 
 public class Chap14 {
@@ -31,6 +33,7 @@ public class Chap14 {
 }
 
 class VierButtonFrame extends JFrame {
+	// 14.1 + 14.2
 	Container c;
 	JLabel beschriftung;
 
@@ -45,13 +48,14 @@ class VierButtonFrame extends JFrame {
 		else
 			c.setLayout(new GridLayout(0, 1));
 
-		c.add(new JButton("A"));
+		JButton[] A = { new JButton("A"), new JButton("B"), new JButton("C"),
+				new JButton("D") };
 
-		c.add(new JButton("B"));
-
-		c.add(new JButton("C"));
-
-		c.add(new JButton("D"));
+		for (int j = 0; j < 4; j++) {
+			int bg = 1 + (int) (254 * Math.random());
+			A[j].setBackground(new Color(bg, bg, bg));
+			c.add(A[j]);
+		}
 
 	}
 
