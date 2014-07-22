@@ -8,9 +8,67 @@ public class Chap16 {
 
 	public static void main(String[] args) {
 		// Zeichnung.main(args);
-		PunkteVerbinden.main(args);
+		// PunkteVerbinden.main(args);
+		// NewButtonFrame1.main(args);
+		NewButtonFrame2.main(args);
+	}
+}
+
+class NewButtonFrame2 extends JFrame {
+	Container c;
+	JButton b;
+
+	public NewButtonFrame2() {
+		c = getContentPane();
+		c.setLayout(new FlowLayout(FlowLayout.LEFT));
+		b = new JButton("Drueck mich!");
+		b.addActionListener(new ButtonBearbeiter());
+		c.add(b);
 	}
 
+	class ButtonBearbeiter implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			c.add(b = new JButton("noch einer"));
+			b.revalidate();
+		}
+	}
+
+	public static void main(String[] args) {
+		JFrame fenster = new NewButtonFrame2();
+		fenster.setTitle("Buttons hinzufuegen");
+		fenster.setSize(500, 300);
+		fenster.setVisible(true);
+		fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+}
+
+class NewButtonFrame1 extends JFrame {
+	// new buttons only show after resizing (no revalidation)
+	Container c;
+	JButton b;
+
+	public NewButtonFrame1() {
+		c = getContentPane();
+		c.setLayout(new FlowLayout(FlowLayout.LEFT));
+		b = new JButton("Drueck mich!");
+		b.addActionListener(new ButtonBearbeiter());
+		c.add(b);
+	}
+
+	class ButtonBearbeiter implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			c.add(new JButton("noch einer"));
+			c.repaint();
+		}
+	}
+
+	public static void main(String[] args) {
+		JFrame fenster = new NewButtonFrame1();
+		fenster.setTitle("Buttons hinzufuegen");
+		fenster.setSize(500, 300);
+		fenster.setVisible(true);
+		fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
 }
 
 class PunkteVerbinden extends JFrame {
