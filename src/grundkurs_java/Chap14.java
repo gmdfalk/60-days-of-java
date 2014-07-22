@@ -2,6 +2,7 @@ package grundkurs_java;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.Random;
 
 import javax.swing.*;
@@ -29,8 +30,77 @@ public class Chap14 {
 		// TopLevelContainer.main(args);
 		// FrameMitMenuBar.main(args);
 		// VierButtonFrame.main(args);
-		NotenEingabeTest.main(args);
+		// NotenEingabeTest.main(args);
 		// NotenEingabeNeu.main(args);
+		SpruchDesTages.main(args);
+	}
+}
+
+class SpruchDesTages extends JFrame {
+
+	String[] sprueche = {
+			"I'm sorry, i missed the chequered flag. When did the argument start?",
+			"I've given this some serious thought, and decided that my favorite word is boobytrap. Because when you spell it backwards it's partyboob." };
+	Container c;
+	// Container dieses Frames
+	JLabel info;
+	// Label
+	JTextArea ta;
+
+	// TextArea
+	public SpruchDesTages() {
+		c = getContentPane();
+		// Konstruktor
+		// Container bestimmen
+		// Erzeuge Label und TextArea
+		info = new JLabel("Spruch des Tages:");
+		ta = new JTextArea(sprueche[(int) (sprueche.length * Math.random())]);
+		// Setze die Schriftart
+		Font schrift = new Font("SansSerif", Font.BOLD + Font.ITALIC, 16);
+		ta.setFont(schrift);
+		ta.setLineWrap(true);
+		// Automatischer Zeilenumbruch
+		ta.setWrapStyleWord(true);
+		// wortweise
+		JScrollPane sp = new JScrollPane(ta);
+		// Scrollpane erzeugen
+		// Fuege die Komponenten hinzu
+		c.add(info, BorderLayout.NORTH);
+		c.add(sp);
+	}
+
+	public static void main(String[] args) {
+		SpruchDesTages fenster = new SpruchDesTages();
+		fenster.setTitle("Spruch des Tages");
+		fenster.setSize(200, 160);
+		fenster.setVisible(true);
+		fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+}
+
+class TextFelderAuslesen extends JFrame {
+	// 14.4
+	public static void main(String[] args) {
+		FrameMitTextFeldern fenster = new FrameMitTextFeldern();
+		fenster.setTitle("Frame mit Textfeldern");
+		fenster.setSize(220, 100);
+		fenster.setVisible(true);
+		fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		System.out.println("Geben Sie im Frame in beide Textfelder etwas ein.");
+		System.out.println();
+		System.out
+				.println("Druecken Sie danach hier im Konsolenfenster die Eingabetaste!");
+		try {
+			System.in.read();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		System.out.println("Im Feld 'Name' steht: " + fenster.tf.getText());
+		System.out.println("Im Feld 'Passwort' steht: " + fenster.pf.getText()); // deprecated
+		System.out.println("Im Feld 'Passwort' steht: "
+				+ new String(fenster.pf.getPassword()));
 	}
 }
 
