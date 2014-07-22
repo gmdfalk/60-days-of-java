@@ -28,7 +28,54 @@ public class Chap14 {
 		// FrameMitPanels.main(args);
 		// TopLevelContainer.main(args);
 		// FrameMitMenuBar.main(args);
-		VierButtonFrame.main(args);
+		// VierButtonFrame.main(args);
+		NotenEingabeTest.main(args);
+		// NotenEingabeNeu.main(args);
+	}
+}
+
+class NotenEingabeNeu extends JFrame {
+	// 14.3
+	Container c;
+
+	public NotenEingabeNeu() {
+		JRadioButton A, B, C, D, E;
+		ButtonGroup bg = new ButtonGroup();
+		c = getContentPane();
+		c.setLayout(new GridLayout(6, 1));
+		c.add(A = new JRadioButton("sehr gut"));
+		c.add(B = new JRadioButton("gut"));
+		c.add(C = new JRadioButton("befriedigend"));
+		c.add(D = new JRadioButton("ausreichend", true));
+		c.add(E = new JRadioButton("ungenuegend"));
+		bg.add(A);
+		bg.add(B);
+		bg.add(C);
+		bg.add(D);
+		bg.add(E);
+		c.add(new JCheckBox("Wiederholungspruefung"));
+	}
+}
+
+class NotenEingabeTest {
+	public static void main(String[] args) {
+		NotenEingabeNeu a = new NotenEingabeNeu();
+		a.setSize(150, 200);
+		a.show();
+	}
+}
+
+class NotenEingabe extends JFrame {
+	Container c;
+
+	public NotenEingabe() {
+		c = getContentPane();
+		c.setLayout(new GridLayout(5, 1));
+		c.add(new JCheckBox("sehr gut"));
+		c.add(new JCheckBox("gut"));
+		c.add(new JCheckBox("befriedigend"));
+		c.add(new JCheckBox("ausreichend", true));
+		c.add(new JCheckBox("ungenuegend"));
 	}
 }
 
@@ -54,6 +101,7 @@ class VierButtonFrame extends JFrame {
 		for (int j = 0; j < 4; j++) {
 			int bg = 1 + (int) (254 * Math.random());
 			A[j].setBackground(new Color(bg, bg, bg));
+			A[j].setToolTipText("Background color: " + bg);
 			c.add(A[j]);
 		}
 
