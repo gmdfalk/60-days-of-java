@@ -9,7 +9,8 @@ public class Chap15 {
 	public static void main(String[] args) {
 		// Farbwechsel.main(args);
 		// Bilderrahmen.main(args);
-		Farbwechsel2.main(args);
+		// Farbwechsel2.main(args);
+		Farbwechsel4.main(args);
 	}
 
 }
@@ -129,6 +130,48 @@ class Bilderrahmen extends JFrame {
 	}
 }
 
+class Farbwechsel4 extends JFrame {
+	Container c;
+	// Container dieses Frames
+	JButton button;
+
+	// Knopf
+	public Farbwechsel4() { // Konstruktor
+		// Container bestimmen
+		c = getContentPane();
+		// Button erzeugen und dem Container hinzufuegen
+		button = new JButton("Hintergrundfarbe wechseln");
+		c.add(button, BorderLayout.NORTH);
+		// Listener-Objekt erzeugen und beim Button registrieren
+		ButtonListener bL = new ButtonListener(c);
+		button.addActionListener(bL);
+	}
+
+	public static void main(String[] args) {
+		Farbwechsel4 fenster = new Farbwechsel4();
+		fenster.setTitle("Farbwechsel");
+		fenster.setSize(200, 100);
+		fenster.setVisible(true);
+		fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+}
+
+class ButtonListener implements ActionListener {
+	Container c;
+
+	// Referenz auf den zu beinflussenden Container
+	public ButtonListener(Container c) {
+		this.c = c; // Referenz auf den zu beinflussenden Container sichern
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		// Hintergrundfarbe des Containers zufaellig aendern
+		float zufall = (float) Math.random();
+		Color grauton = new Color(zufall, zufall, zufall);
+		c.setBackground(grauton);
+	}
+}
+
 class Farbwechsel3 extends JFrame implements ActionListener {
 	Container c;
 	// Container dieses Frames
@@ -136,7 +179,7 @@ class Farbwechsel3 extends JFrame implements ActionListener {
 
 	// Knopf
 	public Farbwechsel3() { // Konstruktor
-	// Container bestimmen
+		// Container bestimmen
 		c = getContentPane();
 		// Button erzeugen und dem Container hinzufuegen
 		button = new JButton("Hintergrundfarbe wechseln");
