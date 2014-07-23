@@ -2,10 +2,12 @@ package grundkurs_java;
 
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
 
 import java.util.*;
 import java.text.*;
+
 import javax.swing.border.*;
 
 public class Chap15 {
@@ -18,9 +20,108 @@ public class Chap15 {
 		// CloseToggleButtons.main(args);
 		// LookAndFeel.main(args);
 		// StoppuhrFrame.main(args);
-		DatumFrame.main(args);
+		DatumFrame2.main(args);
 	}
 
+}
+
+class DatumFrame2 extends JFrame {
+	// 15.2
+	Container c;
+	// Container dieses Frames
+	JButton button;
+	private JMenu menu;
+	private JMenuBar menuBar;
+	private JMenuItem menuItem;
+	private JToolBar toolBar;
+	private JLabel datumsAnzeige;
+	private JLabel beschriftung;
+	private Date datum;
+	private static final SimpleDateFormat lang = new SimpleDateFormat(
+			"EEEE, dd. MMMM yyyy"), mittel = new SimpleDateFormat(
+			"EEEE, dd. MMMM"), kurz = new SimpleDateFormat("dd. MMMM");
+
+	// Knopf
+	public DatumFrame2() { // Konstruktor
+		// Container bestimmen
+		c = getContentPane();
+
+		datum = new Date();
+
+		beschriftung = new JLabel("Heutiges Datum:");
+		datumsAnzeige = new JLabel(lang.format(datum));
+
+		MenuListener mL = new MenuListener();
+		// Erzeuge die Menueleiste.
+		menuBar = new JMenuBar();
+		// Erzeuge ein Menue
+		menu = new JMenu("Formatierung");
+		menu.setMnemonic(KeyEvent.VK_B);
+		// Erzeuge die Menue-Eintraege und fuege sie dem Menue hinzu
+		menuItem = new JMenuItem("Alles anzeigen");
+		menuItem.setMnemonic(KeyEvent.VK_H);
+		menuItem.addActionListener(mL);
+		// Fuege den Listener hinzu
+		menuItem.setActionCommand("lang"); // Setze die Aktionsbezeichnung
+		menu.add(menuItem);
+		menuItem = new JMenuItem("Wochentag, Tag und Monat");
+		menuItem.setMnemonic(KeyEvent.VK_K);
+		menuItem.addActionListener(mL);
+		menuItem.setActionCommand("mittel"); // Setze die Aktionsbezeichnung
+		menu.add(menuItem);
+		menuItem = new JMenuItem("Tag und Monat");
+		menuItem.setMnemonic(KeyEvent.VK_C);
+		menuItem.addActionListener(mL);
+		menuItem.setActionCommand("kurz"); // Setze die Aktionsbezeichnung
+		menu.add(menuItem);
+
+		menuBar.add(menu);
+		// Fuegt die Menueleiste dem Frame hinzu
+
+		c.setLayout(new BoxLayout(c, BoxLayout.Y_AXIS));
+		c.add(menuBar);
+		c.add(beschriftung);
+		c.add(datumsAnzeige);
+		beschriftung.setAlignmentX(Component.CENTER_ALIGNMENT);
+		datumsAnzeige.setAlignmentX(Component.CENTER_ALIGNMENT);
+		setJMenuBar(menuBar);
+
+	}
+
+	// Innere Button-Listener-Klasse
+	// Listener fuer die Combo-Box
+	class MenuListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (e.getActionCommand() == "lang")
+				datumsAnzeige.setText(lang.format(datum));
+			else if (e.getActionCommand() == "mittel")
+				datumsAnzeige.setText(mittel.format(datum));
+			else if (e.getActionCommand() == "kurz")
+				datumsAnzeige.setText(kurz.format(datum));
+		}
+	}
+
+	// Innere Listener-Klasse fuer die Toolbar
+	class ToolBarListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			// Hintergrundfarbe abhaengig von der Aktionsbezeichnung aendern
+			if (e.getActionCommand() == "rot")
+				c.setBackground(Color.RED);
+			else if (e.getActionCommand() == "gruen")
+				c.setBackground(Color.GREEN);
+			else if (e.getActionCommand() == "blau")
+				c.setBackground(Color.BLUE);
+		}
+	}
+
+	public static void main(String[] args) {
+		DatumFrame datum = new DatumFrame();
+		datum.setTitle("DatumFrame2");
+		datum.setSize(200, 100);
+		datum.setVisible(true);
+		datum.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
 }
 
 class DatumFrame extends JFrame {
@@ -32,6 +133,9 @@ class DatumFrame extends JFrame {
 	private JLabel datumsAnzeige;
 	private JLabel beschriftung;
 	private Date datum;
+	private static final SimpleDateFormat lang = new SimpleDateFormat(
+			"EEEE, dd. MMMM yyyy"), mittel = new SimpleDateFormat(
+			"EEEE, dd. MMMM"), kurz = new SimpleDateFormat("dd. MMMM");
 
 	// Knopf
 	public DatumFrame() { // Konstruktor
@@ -41,7 +145,7 @@ class DatumFrame extends JFrame {
 		datum = new Date();
 
 		beschriftung = new JLabel("Heutiges Datum:");
-		datumsAnzeige = new JLabel(datum.toString());
+		datumsAnzeige = new JLabel(lang.format(datum));
 
 		formatAuswahl = new JComboBox();
 		formatAuswahl.addItem("Alles anzeigen");
@@ -49,16 +153,28 @@ class DatumFrame extends JFrame {
 		formatAuswahl.addItem("Tag und Monat");
 		formatAuswahl.addItemListener(new BoxListener());
 
-	}
+		// c.setLayout(new BoxLayout(c, BoxLayout.Y_AXIS));
+		c.setLayout(new GridLayout(3, 1));
+		c.add(beschriftung);
+		c.add(datumsAnzeige);
+		c.add(formatAuswahl);
+		beschriftung.setHorizontalAlignment(JLabel.CENTER);
+		datumsAnzeige.setHorizontalAlignment(JLabel.CENTER);
+		// beschriftung.setAlignmentX(Component.CENTER_ALIGNMENT);
+		// datumsAnzeige.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-	public void anzeigeAktualisieren() {
 	}
 
 	// Innere Button-Listener-Klasse
 	// Listener fuer die Combo-Box
 	class BoxListener implements ItemListener {
 		public void itemStateChanged(ItemEvent e) {
-			anzeigeAktualisieren();
+			if (e.getItem() == "Alles anzeigen")
+				datumsAnzeige.setText(lang.format(datum));
+			else if (e.getItem() == "Wochentag, Tag und Monat")
+				datumsAnzeige.setText(mittel.format(datum));
+			else if (e.getItem() == "Tag und Monat")
+				datumsAnzeige.setText(kurz.format(datum));
 		}
 	}
 
