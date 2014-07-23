@@ -17,9 +17,48 @@ public class Chap15 {
 		// Farbwechsel4.main(args);
 		// CloseToggleButtons.main(args);
 		// LookAndFeel.main(args);
-		StoppuhrFrame.main(args);
+		// StoppuhrFrame.main(args);
+		DatumFrame.main(args);
 	}
 
+}
+
+class DatumFrame extends JFrame {
+	// 15.1
+	Container c;
+	// Container dieses Frames
+	JButton button;
+
+	// Knopf
+	public DatumFrame() { // Konstruktor
+		// Container bestimmen
+		c = getContentPane();
+		// Button erzeugen und dem Container hinzufuegen
+		button = new JButton("Hintergrundfarbe wechseln");
+		c.add(button, BorderLayout.NORTH);
+		// Listener-Objekt erzeugen und beim Button registrieren
+		ButtonListener bL = new ButtonListener();
+		button.addActionListener(bL);
+	}
+
+	// Innere Button-Listener-Klasse
+	class ButtonListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			// Hintergrundfarbe des Containers zufaellig aendern
+			float zufall = (float) Math.random();
+			Color grauton = new Color(zufall, zufall, zufall);
+			c.setBackground(grauton); // Zugriff auf c moeglich, da
+		}
+		// ButtonListener innere Klasse
+	}
+
+	public static void main(String[] args) {
+		DatumFrame datum = new DatumFrame();
+		datum.setTitle("DatumFrame");
+		datum.setSize(200, 100);
+		datum.setVisible(true);
+		datum.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
 }
 
 /** Erzeuge ein Swing-Fenster mit Stoppuhrfunktion */
