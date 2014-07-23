@@ -20,58 +20,50 @@ public class Chap15 {
 		// CloseToggleButtons.main(args);
 		// LookAndFeel.main(args);
 		// StoppuhrFrame.main(args);
-		DatumFrame2.main(args);
+		// DatumFrame2.main(args);
 		// SimpleMenuExample.main(args);
+		FarbenFrame.main(args);
 	}
 
 }
 
-class SimpleMenuExample extends JFrame {
+class FarbenFrame extends JFrame {
+	Container c;
 
-	public SimpleMenuExample() {
+	public FarbenFrame() {
+		c = getContentPane();
+		c.setLayout(new FlowLayout());
+		JRadioButton rb1 = new JRadioButton("rot");
+		JRadioButton rb2 = new JRadioButton("grün");
+		JRadioButton rb3 = new JRadioButton("blau");
+		ButtonGroup bg = new ButtonGroup();
+		bg.add(rb1);
+		bg.add(rb2);
+		bg.add(rb3);
+		bg.setSelected(rb1.getModel(), true);
+		c.add(rb1);
+		c.add(rb2);
+		c.add(rb3);
 
-		initUI();
 	}
 
-	private void initUI() {
-
-		JMenuBar menubar = new JMenuBar();
-		ImageIcon icon = new ImageIcon("exit.png");
-
-		JMenu file = new JMenu("File");
-		file.setMnemonic(KeyEvent.VK_F);
-
-		JMenuItem eMenuItem = new JMenuItem("Exit", icon);
-		eMenuItem.setMnemonic(KeyEvent.VK_E);
-		eMenuItem.setToolTipText("Exit application");
-		eMenuItem.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent event) {
-				System.exit(0);
-			}
-		});
-
-		file.add(eMenuItem);
-
-		menubar.add(file);
-
-		setJMenuBar(menubar);
-
-		setTitle("Simple menu");
-		setSize(300, 200);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+	// Innere Button-Listener-Klasse
+	class ButtonListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			// Hintergrundfarbe des Containers zufaellig aendern
+			float zufall = (float) Math.random();
+			Color grauton = new Color(zufall, zufall, zufall);
+			c.setBackground(grauton); // Zugriff auf c moeglich, da
+		}
+		// ButtonListener innere Klasse
 	}
 
 	public static void main(String[] args) {
-
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				SimpleMenuExample ex = new SimpleMenuExample();
-				ex.setVisible(true);
-			}
-		});
+		FarbenFrame ff = new FarbenFrame();
+		ff.setTitle("bgSwitcher");
+		ff.setSize(200, 100);
+		ff.setVisible(true);
+		ff.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }
 
