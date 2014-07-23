@@ -29,7 +29,37 @@ public class Chap15 {
 
 class Calculator extends JFrame {
 	// 15.5
+	private Container c;
+	private JRadioButton rb1, rb2, rb3;
 
+	public Calculator() {
+		rb1 = new JRadioButton("rot");
+		rb2 = new JRadioButton("grün");
+		rb3 = new JRadioButton("blau");
+
+		ButtonGroup bg = new ButtonGroup();
+		bg.add(rb1);
+		bg.add(rb2);
+		bg.add(rb3);
+		rb1.setSelected(true);
+
+		c = getContentPane();
+		c.setLayout(new FlowLayout());
+
+		c.add(rb1);
+		c.add(rb2);
+		c.add(rb3);
+
+		c.addMouseListener(new MausLauscher(c, rb1, rb2, rb3));
+	}
+
+	public static void main(String[] args) {
+		FarbenFrame ff = new FarbenFrame();
+		ff.setTitle("bgSwitcher");
+		ff.setSize(200, 100);
+		ff.setVisible(true);
+		ff.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
 }
 
 class FarbenFrame extends JFrame {
