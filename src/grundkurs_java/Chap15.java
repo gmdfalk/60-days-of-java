@@ -27,6 +27,11 @@ public class Chap15 {
 
 }
 
+class Calculator extends JFrame {
+	// 15.5
+
+}
+
 class FarbenFrame extends JFrame {
 	private Container c;
 	private JRadioButton rb1, rb2, rb3;
