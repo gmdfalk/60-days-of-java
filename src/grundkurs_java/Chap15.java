@@ -28,34 +28,28 @@ public class Chap15 {
 }
 
 class FarbenFrame extends JFrame {
-	Container c;
+	private Container c;
+	private JRadioButton rb1, rb2, rb3;
 
 	public FarbenFrame() {
-		c = getContentPane();
-		c.setLayout(new FlowLayout());
-		JRadioButton rb1 = new JRadioButton("rot");
-		JRadioButton rb2 = new JRadioButton("grün");
-		JRadioButton rb3 = new JRadioButton("blau");
+		rb1 = new JRadioButton("rot");
+		rb2 = new JRadioButton("grün");
+		rb3 = new JRadioButton("blau");
+
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(rb1);
 		bg.add(rb2);
 		bg.add(rb3);
-		bg.setSelected(rb1.getModel(), true);
+		rb1.setSelected(true);
+
+		c = getContentPane();
+		c.setLayout(new FlowLayout());
+
 		c.add(rb1);
 		c.add(rb2);
 		c.add(rb3);
 
-	}
-
-	// Innere Button-Listener-Klasse
-	class ButtonListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			// Hintergrundfarbe des Containers zufaellig aendern
-			float zufall = (float) Math.random();
-			Color grauton = new Color(zufall, zufall, zufall);
-			c.setBackground(grauton); // Zugriff auf c moeglich, da
-		}
-		// ButtonListener innere Klasse
+		c.addMouseListener(new MausLauscher(c, rb1, rb2, rb3));
 	}
 
 	public static void main(String[] args) {
@@ -64,6 +58,33 @@ class FarbenFrame extends JFrame {
 		ff.setSize(200, 100);
 		ff.setVisible(true);
 		ff.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+}
+
+// Innere Button-Listener-Klasse
+class MausLauscher extends MouseAdapter {
+	Container c;
+	JRadioButton rb1, rb2, rb3;
+
+	public MausLauscher(Container c, JRadioButton rb1, JRadioButton rb2,
+			JRadioButton rb3) {
+		this.c = c;
+		this.rb1 = rb1;
+		this.rb2 = rb2;
+		this.rb3 = rb3;
+	}
+
+	public void mousePressed(MouseEvent e) {
+		float zufall = (float) Math.random();
+		if (zufall < 0.2)
+			zufall += 0.1;
+		System.out.println(zufall);
+		if (rb1.isSelected())
+			c.setBackground(new Color(zufall, 0, 0));
+		else if (rb2.isSelected())
+			c.setBackground(new Color(0, zufall, 0));
+		else if (rb3.isSelected())
+			c.setBackground(new Color(0, 0, zufall));
 	}
 }
 
