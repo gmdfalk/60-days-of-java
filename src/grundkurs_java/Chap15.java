@@ -28,28 +28,38 @@ class DatumFrame extends JFrame {
 	Container c;
 	// Container dieses Frames
 	JButton button;
+	private JComboBox formatAuswahl;
+	private JLabel datumsAnzeige;
+	private JLabel beschriftung;
+	private Date datum;
 
 	// Knopf
 	public DatumFrame() { // Konstruktor
 		// Container bestimmen
 		c = getContentPane();
-		// Button erzeugen und dem Container hinzufuegen
-		button = new JButton("Hintergrundfarbe wechseln");
-		c.add(button, BorderLayout.NORTH);
-		// Listener-Objekt erzeugen und beim Button registrieren
-		ButtonListener bL = new ButtonListener();
-		button.addActionListener(bL);
+
+		datum = new Date();
+
+		beschriftung = new JLabel("Heutiges Datum:");
+		datumsAnzeige = new JLabel(datum.toString());
+
+		formatAuswahl = new JComboBox();
+		formatAuswahl.addItem("Alles anzeigen");
+		formatAuswahl.addItem("Wochentag, Tag und Monat");
+		formatAuswahl.addItem("Tag und Monat");
+		formatAuswahl.addItemListener(new BoxListener());
+
+	}
+
+	public void anzeigeAktualisieren() {
 	}
 
 	// Innere Button-Listener-Klasse
-	class ButtonListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			// Hintergrundfarbe des Containers zufaellig aendern
-			float zufall = (float) Math.random();
-			Color grauton = new Color(zufall, zufall, zufall);
-			c.setBackground(grauton); // Zugriff auf c moeglich, da
+	// Listener fuer die Combo-Box
+	class BoxListener implements ItemListener {
+		public void itemStateChanged(ItemEvent e) {
+			anzeigeAktualisieren();
 		}
-		// ButtonListener innere Klasse
 	}
 
 	public static void main(String[] args) {
