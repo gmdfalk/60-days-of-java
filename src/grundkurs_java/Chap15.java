@@ -38,17 +38,17 @@ class EuroFrame extends JFrame {
 
 	public EuroFrame() {
 		c = getContentPane();
+
 		euroLabel = new JLabel("Euro");
 		euroLabel.setAlignmentX(LEFT_ALIGNMENT);
-		euroField = new JTextField();
-		waehrungsBox = new JComboBox();
-		otherField = new JTextField();
-		c.setLayout(new BoxLayout(c, 1));
-		c.add(euroLabel);
-		c.add(euroField);
-		c.add(waehrungsBox);
-		c.add(otherField);
 
+		euroField = new JTextField();
+		euroField.addActionListener(new EuroListener());
+
+		otherField = new JTextField();
+		otherField.addActionListener(new OtherListener());
+
+		waehrungsBox = new JComboBox();
 		waehrungsBox.addItem("Deutsche Mark");
 		waehrungsBox.addItem("Oesterreichische Schilling");
 		waehrungsBox.addItem("Franzoesische Franc");
@@ -61,7 +61,12 @@ class EuroFrame extends JFrame {
 		waehrungsBox.addItem("Finnische Mark");
 		waehrungsBox.addItem("Irische Pfund");
 		waehrungsBox.addItem("Griechische Drachmen");
-		// waehrungsBox.addItemListener(new BoxListener());
+
+		c.setLayout(new BoxLayout(c, 1));
+		c.add(euroLabel);
+		c.add(euroField);
+		c.add(waehrungsBox);
+		c.add(otherField);
 	}
 
 	class EuroListener implements ActionListener {
@@ -69,7 +74,7 @@ class EuroFrame extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			double result = 0;
 			result = EuroConverter.convertFromEuro(
-					Double.parseDouble(otherField.getText()),
+					Double.parseDouble(euroField.getText()),
 					waehrungsBox.getSelectedIndex());
 			otherField.setText(String.valueOf(result));
 		}
@@ -83,18 +88,6 @@ class EuroFrame extends JFrame {
 					Double.parseDouble(otherField.getText()),
 					waehrungsBox.getSelectedIndex());
 			euroField.setText(String.valueOf(result));
-		}
-	}
-
-	class BoxListener implements ItemListener {
-		public void itemStateChanged(ItemEvent e) {
-			if (e.getItem() == "Deutsche Mark") {
-				EuroConverter
-						.convertToEuro(Double.parseDouble(e.toString()), 0);
-			} else if (e.getItem() == "")
-				;
-			else if (e.getItem() == "")
-				;
 		}
 	}
 
