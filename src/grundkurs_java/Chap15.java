@@ -23,19 +23,85 @@ public class Chap15 {
 		// DatumFrame2.main(args);
 		// SimpleMenuExample.main(args);
 		// FarbenFrame.main(args);
-		Calculator.main(args);
+		// RechenFrame.main(args);
+		EuroFrame.main(args);
 	}
 
 }
 
-class Calculator extends JFrame {
+class EuroFrame extends JFrame {
+	// 15.6
+	private Container c;
+	private JLabel euroLabel;
+	private JComboBox waehrungsBox;
+	private JTextField euroField, otherField;
+
+	public EuroFrame() {
+		c = getContentPane();
+		euroLabel = new JLabel("Euro");
+		euroLabel.setAlignmentX(LEFT_ALIGNMENT);
+		euroField = new JTextField();
+		waehrungsBox = new JComboBox();
+		otherField = new JTextField();
+		c.setLayout(new BoxLayout(c, 1));
+		c.add(euroLabel);
+		c.add(euroField);
+		c.add(waehrungsBox);
+		c.add(otherField);
+	}
+
+	public static void main(String[] args) {
+		EuroFrame euro = new EuroFrame();
+		euro.setTitle("EuroFrame");
+		euro.setSize(200, 100);
+		euro.setVisible(true);
+		euro.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+}
+
+class EuroConverter {
+	// 15.6
+	// Waehrungs-Kennungen
+	static final int DEM = 0, ATS = 1, FRF = 2, BEF = 3, LUF = 4, NLG = 5,
+			ESP = 6, PTE = 7, ITL = 8, FIM = 9, IEP = 10, GDR = 11;
+	// Umrechnungsfaktoren
+	private static final double[] faktor = new double[] { 1.95583, 13.7603,
+			6.55957, 40.3399, 40.3399, 2.20371, 166.386, 200.482, 1936.27,
+			5.94573, 0.787564, 340.750 };
+	// Ausgeschriebene Bezeichnungen der Waehrungen
+	private static final String[] bezeichnung = new String[] { "Deutsche Mark",
+			"Oesterreichische Schilling", "Franzoesische Franc",
+			"Belgische Franc", "Luxemburgische Franc",
+			"Niederlaendische Gulden", "Spanische Peseten",
+			"Portugiesische Escudos", "Italienische Lire", "Finnische Mark",
+			"Irische Pfund", "Griechische Drachmen" };
+
+	// liefert die Bezeichnung zur Waehrungs-Kennung ’kennung’
+	static String getBezeichnung(int kennung) {
+		return bezeichnung[kennung];
+	}
+
+	// konvertiert den Euro-Wert ’euro’ in die durch die
+	// Waehrungs-Kennung ’kennung’ spezifizierte Waehrung
+	static double convertFromEuro(double euro, int kennung) {
+		return faktor[kennung] * euro;
+	}
+
+	// konvertiert den Wert ’sonst’ der durch die Waehrungs-Kennung
+	// ’kennung’ spezifizierten Waehrung in den entsprechenden Euro-Wert
+	static double convertToEuro(double sonst, int kennung) {
+		return sonst / faktor[kennung];
+	}
+}
+
+class RechenFrame extends JFrame {
 	// 15.5
 	private Container c;
 	private JButton add, subtract, multiply, divide, deleteall;
 	private JLabel operand1, operand2, result;
 	private JTextField operand1Field, operand2Field, resultField;
 
-	public Calculator() {
+	public RechenFrame() {
 		c = getContentPane();
 		c.setLayout(new GridLayout(3, 4));
 		operand1Field = new JTextField();
@@ -121,7 +187,7 @@ class Calculator extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		Calculator calc = new Calculator();
+		RechenFrame calc = new RechenFrame();
 		calc.setTitle("RechenFrame");
 		calc.setSize(500, 80);
 		calc.setVisible(true);
