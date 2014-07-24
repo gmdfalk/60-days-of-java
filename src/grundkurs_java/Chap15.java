@@ -49,18 +49,9 @@ class EuroFrame extends JFrame {
 		otherField.addActionListener(new OtherListener());
 
 		waehrungsBox = new JComboBox();
-		waehrungsBox.addItem("Deutsche Mark");
-		waehrungsBox.addItem("Oesterreichische Schilling");
-		waehrungsBox.addItem("Franzoesische Franc");
-		waehrungsBox.addItem("Belgische Franc");
-		waehrungsBox.addItem("Luxemburgische Franc");
-		waehrungsBox.addItem("Niederlaendische Gulden");
-		waehrungsBox.addItem("Spanische Peseten");
-		waehrungsBox.addItem("Portugiesische Escudos");
-		waehrungsBox.addItem("Italienische Lire");
-		waehrungsBox.addItem("Finnische Mark");
-		waehrungsBox.addItem("Irische Pfund");
-		waehrungsBox.addItem("Griechische Drachmen");
+		for (int i = 0; i < 12; i++) {
+			waehrungsBox.addItem(EuroConverter.getBezeichnung(i));
+		}
 
 		c.setLayout(new BoxLayout(c, 1));
 		c.add(euroLabel);
