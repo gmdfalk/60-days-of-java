@@ -22,7 +22,8 @@ public class Chap15 {
 		// StoppuhrFrame.main(args);
 		// DatumFrame2.main(args);
 		// SimpleMenuExample.main(args);
-		FarbenFrame.main(args);
+		// FarbenFrame.main(args);
+		Calculator.main(args);
 	}
 
 }
@@ -31,21 +32,43 @@ class Calculator extends JFrame {
 	// 15.5
 	private Container c;
 	private JButton add, subtract, multiply, divide, deleteall;
+	private JLabel operand1, operand2, result;
+	private JTextField operand1Field, operand2Field, resultField;
 
 	public Calculator() {
 		c = getContentPane();
-		c.setLayout(new GridLayout(4, 3));
+		c.setLayout(new GridLayout(3, 4));
 		add = new JButton("Addieren");
 		subtract = new JButton("Subtrahieren");
 		multiply = new JButton("Multiplizieren");
 		divide = new JButton("Dividieren");
 		deleteall = new JButton("Alles loeschen");
+		operand1 = new JLabel("Operand 1:");
+		operand1.setHorizontalAlignment(JLabel.RIGHT);
+		operand2 = new JLabel("Operand 2:");
+		operand2.setHorizontalAlignment(JLabel.RIGHT);
+		result = new JLabel("Ergebnis:");
+		result.setHorizontalAlignment(JLabel.RIGHT);
+		operand1Field = new JTextField();
+		operand2Field = new JTextField();
+		resultField = new JTextField();
+		c.add(operand1);
+		c.add(operand1Field);
+		c.add(operand2);
+		c.add(operand2Field);
+		c.add(add);
+		c.add(subtract);
+		c.add(multiply);
+		c.add(divide);
+		c.add(result);
+		c.add(resultField);
+		c.add(deleteall);
 	}
 
 	public static void main(String[] args) {
 		Calculator calc = new Calculator();
 		calc.setTitle("RechenFrame");
-		calc.setSize(350, 100);
+		calc.setSize(500, 80);
 		calc.setVisible(true);
 		calc.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
