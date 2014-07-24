@@ -38,20 +38,33 @@ class Calculator extends JFrame {
 	public Calculator() {
 		c = getContentPane();
 		c.setLayout(new GridLayout(3, 4));
+		operand1Field = new JTextField();
+		operand2Field = new JTextField();
+		resultField = new JTextField();
+		resultField.setEditable(false);
+		OperatorListener ol = new OperatorListener(operand1Field,
+				operand2Field, resultField);
 		add = new JButton("Addieren");
+		add.addActionListener(ol);
+		add.setActionCommand("add");
 		subtract = new JButton("Subtrahieren");
+		subtract.addActionListener(ol);
+		subtract.setActionCommand("subtract");
 		multiply = new JButton("Multiplizieren");
+		multiply.addActionListener(ol);
+		multiply.setActionCommand("multiply");
 		divide = new JButton("Dividieren");
+		divide.addActionListener(ol);
+		divide.setActionCommand("divide");
 		deleteall = new JButton("Alles loeschen");
+		deleteall.addActionListener(ol);
+		add.setActionCommand("deleteall");
 		operand1 = new JLabel("Operand 1:");
 		operand1.setHorizontalAlignment(JLabel.RIGHT);
 		operand2 = new JLabel("Operand 2:");
 		operand2.setHorizontalAlignment(JLabel.RIGHT);
 		result = new JLabel("Ergebnis:");
 		result.setHorizontalAlignment(JLabel.RIGHT);
-		operand1Field = new JTextField();
-		operand2Field = new JTextField();
-		resultField = new JTextField();
 		c.add(operand1);
 		c.add(operand1Field);
 		c.add(operand2);
@@ -63,6 +76,40 @@ class Calculator extends JFrame {
 		c.add(result);
 		c.add(resultField);
 		c.add(deleteall);
+	}
+
+	class OperatorListener implements ActionListener {
+		JTextField o1;
+		JTextField o2;
+		JTextField rf;
+
+		public OperatorListener(JTextField o1, JTextField o2, JTextField rf) {
+			this.o1 = o1;
+			this.o2 = o2;
+			this.rf = rf;
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			Double result = null;
+			if (e.getActionCommand() == "add")
+				result = Double.parseDouble(o1.getText())
+						+ Double.parseDouble(o2.getText());
+			else if (e.getActionCommand() == "subtract")
+				result = Double.parseDouble(o1.getText())
+						- Double.parseDouble(o2.getText());
+			else if (e.getActionCommand() == "divide")
+				result = Double.parseDouble(o1.getText())
+						/ Double.parseDouble(o2.getText());
+			else if (e.getActionCommand() == "multiply")
+				result = Double.parseDouble(o1.getText())
+						* Double.parseDouble(o2.getText());
+			else if (e.getActionCommand() == "deletall") {
+				operand1Field.setText("");
+				operand2Field.setText("");
+				result = new Double("0");
+			}
+			resultField.setText(result.toString());
+		}
 	}
 
 	public static void main(String[] args) {
