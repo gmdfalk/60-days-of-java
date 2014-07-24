@@ -35,11 +35,9 @@ class EuroFrame extends JFrame {
 	private JLabel euroLabel;
 	private JComboBox waehrungsBox;
 	private JTextField euroField, otherField;
-	private EuroConverter converter;
 
 	public EuroFrame() {
 		c = getContentPane();
-		converter = new EuroConverter();
 		euroLabel = new JLabel("Euro");
 		euroLabel.setAlignmentX(LEFT_ALIGNMENT);
 		euroField = new JTextField();
@@ -51,19 +49,51 @@ class EuroFrame extends JFrame {
 		c.add(waehrungsBox);
 		c.add(otherField);
 
-		waehrungsBox.addItem("Alles anzeigen");
-		waehrungsBox.addItem("Wochentag, Tag und Monat");
-		waehrungsBox.addItem("Tag und Monat");
-		waehrungsBox.addItemListener(new BoxListener());
+		waehrungsBox.addItem("Deutsche Mark");
+		waehrungsBox.addItem("Oesterreichische Schilling");
+		waehrungsBox.addItem("Franzoesische Franc");
+		waehrungsBox.addItem("Belgische Franc");
+		waehrungsBox.addItem("Luxemburgische Franc");
+		waehrungsBox.addItem("Niederlaendische Gulden");
+		waehrungsBox.addItem("Spanische Peseten");
+		waehrungsBox.addItem("Portugiesische Escudos");
+		waehrungsBox.addItem("Italienische Lire");
+		waehrungsBox.addItem("Finnische Mark");
+		waehrungsBox.addItem("Irische Pfund");
+		waehrungsBox.addItem("Griechische Drachmen");
+		// waehrungsBox.addItemListener(new BoxListener());
+	}
+
+	class EuroListener implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+			double result = 0;
+			result = EuroConverter.convertFromEuro(
+					Double.parseDouble(otherField.getText()),
+					waehrungsBox.getSelectedIndex());
+			otherField.setText(String.valueOf(result));
+		}
+	}
+
+	class OtherListener implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+			double result = 0;
+			result = EuroConverter.convertToEuro(
+					Double.parseDouble(otherField.getText()),
+					waehrungsBox.getSelectedIndex());
+			euroField.setText(String.valueOf(result));
+		}
 	}
 
 	class BoxListener implements ItemListener {
 		public void itemStateChanged(ItemEvent e) {
-			if (e.getItem() == "Alles anzeigen")
+			if (e.getItem() == "Deutsche Mark") {
+				EuroConverter
+						.convertToEuro(Double.parseDouble(e.toString()), 0);
+			} else if (e.getItem() == "")
 				;
-			else if (e.getItem() == "Wochentag, Tag und Monat")
-				;
-			else if (e.getItem() == "Tag und Monat")
+			else if (e.getItem() == "")
 				;
 		}
 	}
