@@ -35,9 +35,11 @@ class EuroFrame extends JFrame {
 	private JLabel euroLabel;
 	private JComboBox waehrungsBox;
 	private JTextField euroField, otherField;
+	private EuroConverter converter;
 
 	public EuroFrame() {
 		c = getContentPane();
+		converter = new EuroConverter();
 		euroLabel = new JLabel("Euro");
 		euroLabel.setAlignmentX(LEFT_ALIGNMENT);
 		euroField = new JTextField();
@@ -48,6 +50,22 @@ class EuroFrame extends JFrame {
 		c.add(euroField);
 		c.add(waehrungsBox);
 		c.add(otherField);
+
+		waehrungsBox.addItem("Alles anzeigen");
+		waehrungsBox.addItem("Wochentag, Tag und Monat");
+		waehrungsBox.addItem("Tag und Monat");
+		waehrungsBox.addItemListener(new BoxListener());
+	}
+
+	class BoxListener implements ItemListener {
+		public void itemStateChanged(ItemEvent e) {
+			if (e.getItem() == "Alles anzeigen")
+				;
+			else if (e.getItem() == "Wochentag, Tag und Monat")
+				;
+			else if (e.getItem() == "Tag und Monat")
+				;
+		}
 	}
 
 	public static void main(String[] args) {
