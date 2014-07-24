@@ -30,15 +30,22 @@ public class Chap15 {
 class Calculator extends JFrame {
 	// 15.5
 	private Container c;
-	private JRadioButton rb1, rb2, rb3;
+	private JButton add, subtract, multiply, divide, deleteall;
 
 	public Calculator() {
+		c = getContentPane();
+		c.setLayout(new GridLayout(4, 3));
+		add = new JButton("Addieren");
+		subtract = new JButton("Subtrahieren");
+		multiply = new JButton("Multiplizieren");
+		divide = new JButton("Dividieren");
+		deleteall = new JButton("Alles loeschen");
 	}
 
 	public static void main(String[] args) {
 		Calculator calc = new Calculator();
-		calc.setTitle("bgSwitcher");
-		calc.setSize(200, 100);
+		calc.setTitle("RechenFrame");
+		calc.setSize(350, 100);
 		calc.setVisible(true);
 		calc.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
