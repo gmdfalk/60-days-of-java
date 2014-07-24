@@ -45,20 +45,20 @@ class Calculator extends JFrame {
 		OperatorListener ol = new OperatorListener(operand1Field,
 				operand2Field, resultField);
 		add = new JButton("Addieren");
-		add.addActionListener(ol);
 		add.setActionCommand("add");
+		add.addActionListener(ol);
 		subtract = new JButton("Subtrahieren");
-		subtract.addActionListener(ol);
 		subtract.setActionCommand("subtract");
+		subtract.addActionListener(ol);
 		multiply = new JButton("Multiplizieren");
-		multiply.addActionListener(ol);
 		multiply.setActionCommand("multiply");
+		multiply.addActionListener(ol);
 		divide = new JButton("Dividieren");
-		divide.addActionListener(ol);
 		divide.setActionCommand("divide");
+		divide.addActionListener(ol);
 		deleteall = new JButton("Alles loeschen");
+		deleteall.setActionCommand("deleteall");
 		deleteall.addActionListener(ol);
-		add.setActionCommand("deleteall");
 		operand1 = new JLabel("Operand 1:");
 		operand1.setHorizontalAlignment(JLabel.RIGHT);
 		operand2 = new JLabel("Operand 2:");
@@ -91,24 +91,32 @@ class Calculator extends JFrame {
 
 		public void actionPerformed(ActionEvent e) {
 			Double result = null;
-			if (e.getActionCommand() == "add")
-				result = Double.parseDouble(o1.getText())
-						+ Double.parseDouble(o2.getText());
-			else if (e.getActionCommand() == "subtract")
-				result = Double.parseDouble(o1.getText())
-						- Double.parseDouble(o2.getText());
-			else if (e.getActionCommand() == "divide")
-				result = Double.parseDouble(o1.getText())
-						/ Double.parseDouble(o2.getText());
-			else if (e.getActionCommand() == "multiply")
-				result = Double.parseDouble(o1.getText())
-						* Double.parseDouble(o2.getText());
-			else if (e.getActionCommand() == "deletall") {
-				operand1Field.setText("");
-				operand2Field.setText("");
-				result = new Double("0");
+			try {
+				if (e.getActionCommand() == "add")
+					result = Double.parseDouble(o1.getText())
+							+ Double.parseDouble(o2.getText());
+				else if (e.getActionCommand() == "subtract")
+					result = Double.parseDouble(o1.getText())
+							- Double.parseDouble(o2.getText());
+				else if (e.getActionCommand() == "divide")
+					result = Double.parseDouble(o1.getText())
+							/ Double.parseDouble(o2.getText());
+				else if (e.getActionCommand() == "multiply")
+					result = Double.parseDouble(o1.getText())
+							* Double.parseDouble(o2.getText());
+				else if (e.getActionCommand() == "deleteall") {
+					o1.setText("");
+					o2.setText("");
+				}
+			} catch (NumberFormatException nfe) {
+				System.out.println(nfe);
+				resultField.setText("Error");
+				return;
 			}
-			resultField.setText(result.toString());
+			if (result == null)
+				resultField.setText("");
+			else
+				resultField.setText(result.toString());
 		}
 	}
 
