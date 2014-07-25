@@ -10,7 +10,35 @@ public class Chap16 {
 		// Zeichnung.main(args);
 		// PunkteVerbinden.main(args);
 		// NewButtonFrame1.main(args);
-		NewButtonFrame2.main(args);
+		// NewButtonFrame2.main(args);
+		Punkt.main(args);
+	}
+}
+
+class Punkt {
+	private double x, y;
+
+	public Punkt(double x, double y) {
+		this.x = x;
+		this.y = y;
+	}
+
+	public double getX() {
+		return x;
+	}
+
+	public double getY() {
+		return y;
+	}
+
+	public void drehen(double phi) {
+		double xAlt = x;
+		x = x * Math.cos(phi) - y * Math.sin(phi);
+		y = xAlt * Math.sin(phi) + y * Math.cos(phi);
+	}
+
+	public static void main(String[] args) {
+
 	}
 }
 
