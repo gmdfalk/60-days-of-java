@@ -15,12 +15,35 @@ public class Chap16 {
 	}
 }
 
+class DrehPanel extends JPanel {
+	// 16.4
+
+}
+
 class Dreieck implements GeoObjekt {
 	// 16.3
+	protected Punkt p, q, r;
+	private Strecke pq, qr, pr;
+
+	public Dreieck(Punkt p, Punkt q, Punkt r) {
+		this.p = p;
+		this.q = q;
+		this.r = r;
+		pq = new Strecke(p, q);
+		qr = new Strecke(q, r);
+		pr = new Strecke(p, r);
+	}
+
 	public void drehen(double phi) {
+		pq.drehen(phi);
+		qr.drehen(phi);
+		pr.drehen(phi);
 	};
 
 	public void zeichnen(Graphics g, int xNull, int yNull) {
+		pq.zeichnen(g, xNull, yNull);
+		qr.zeichnen(g, xNull, yNull);
+		pr.zeichnen(g, xNull, yNull);
 	};
 
 }
