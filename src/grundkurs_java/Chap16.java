@@ -11,22 +11,43 @@ public class Chap16 {
 		// PunkteVerbinden.main(args);
 		// NewButtonFrame1.main(args);
 		// NewButtonFrame2.main(args);
-		Punkt.main(args);
+		// Punkt.main(args);
 	}
 }
 
-class Strecke implements GeoObjekt {
+class Dreieck implements GeoObjekt {
+	// 16.3
 	public void drehen(double phi) {
+	};
+
+	public void zeichnen(Graphics g, int xNull, int yNull) {
+	};
+
+}
+
+class Strecke implements GeoObjekt {
+	// 16.2
+	private Punkt p, q;
+
+	public Strecke(Punkt p, Punkt q) {
+		this.p = p;
+		this.q = q;
+	}
+
+	public void drehen(double phi) {
+		p.drehen(phi);
+		q.drehen(phi);
 
 	}
 
 	public void zeichnen(Graphics g, int xNull, int yNull) {
-
+		g.drawLine(xNull + (int) this.p.getX(), yNull + (int) this.p.getY(),
+				xNull + (int) this.q.getX(), yNull + (int) this.q.getY());
 	}
-
 }
 
 interface GeoObjekt {
+	// 16.2
 	public void drehen(double phi);
 
 	// dreht das Objekt um den Winkel phi
@@ -37,6 +58,7 @@ interface GeoObjekt {
 }
 
 class Punkt {
+	// 16.1
 	private double x, y;
 
 	public Punkt(double x, double y) {
