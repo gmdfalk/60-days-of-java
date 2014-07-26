@@ -17,6 +17,12 @@ public class Chap16 {
 
 class DrehPanel extends JPanel {
 	// 16.4
+	static final double SCHRITTWEITE = Math.PI / 60;
+	private GeoObjekt drehObject;
+
+	public DrehPanel() {
+
+	}
 
 }
 
