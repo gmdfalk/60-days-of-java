@@ -1,4 +1,5 @@
 package grundkurs_java;
+
 import java.awt.*;
 import javax.swing.*;
 
@@ -34,24 +35,5 @@ class FrameMitText extends JFrame {
 		fenster.setSize(300, 150);
 		fenster.setVisible(true);
 		fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	}
-}
-
-class AppletMitText extends JApplet {
-	Container c;
-	// Container dieses Applets17.1 Erstellen und Ausf uhren
-	JLabel beschriftung;
-
-	// Label das im Applet erscheinen soll
-	// init-Methode fuer unser Applet mit Textlabel
-	public void init() {
-		// Bestimme die Referenz auf den eigenen Container
-		c = getContentPane();
-		// Setze das Layout
-		c.setLayout(new FlowLayout());
-		// Erzeuge das Labelobjekt mit Uebergabe des Labeltextes
-		beschriftung = new JLabel("Label-Text im Applet");
-		// Fuege das Label dem Applet hinzu
-		c.add(beschriftung);
 	}
 }
