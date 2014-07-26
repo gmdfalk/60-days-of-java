@@ -12,59 +12,61 @@ public class Chap16 {
 		// NewButtonFrame1.main(args);
 		// NewButtonFrame2.main(args);
 		// Punkt.main(args);
+		DrehPanel.main(args);
 	}
 }
 
 class DrehPanel extends JPanel {
 	// 16.4
 	static final double SCHRITTWEITE = Math.PI / 60;
+	private JButton linksButton, rechtsButton, streckeButton, dreieckButton;
 	private GeoObjekt drehObject;
 
 	public DrehPanel() {
 		drehObject = erzeugeStrecke();
-		JButton linksButton = new JButton("Links");
-		JButton rechtsButton = new JButton("rechts");
-		JButton streckeButton = new JButton("Strecke");
-		JButton dreieckButton = new JButton("Dreieck");
 
-		ActionListener linksL = new ActionListener() {
+		setLayout(new FlowLayout());
+		setOpaque(false);
+
+		add(linksButton = new JButton("Links"));
+		add(rechtsButton = new JButton("rechts"));
+		add(streckeButton = new JButton("Strecke"));
+		add(dreieckButton = new JButton("Dreieck"));
+
+		linksButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				drehObject.drehen(-SCHRITTWEITE);
 				repaint();
 			}
-		}; // Ende der anonymen Klassendefinition
-		linksButton.addActionListener(linksL);
+		}); // Ende der anonymen Klassendefinition
 
-		ActionListener rechtsL = new ActionListener() {
+		rechtsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				drehObject.drehen(SCHRITTWEITE);
 				repaint();
 			}
-		}; // Ende der anonymen Klassendefinition
-		rechtsButton.addActionListener(rechtsL);
+		});
 
-		ActionListener streckeL = new ActionListener() {
+		streckeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				drehObject = erzeugeStrecke();
 				repaint();
 			}
-		}; // Ende der anonymen Klassendefinition
-		streckeButton.addActionListener(streckeL);
+		});
 
-		ActionListener dreieckL = new ActionListener() {
+		dreieckButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				drehObject = erzeugeDreieck();
 				repaint();
 			}
-		}; // Ende der anonymen Klassendefinition
-		dreieckButton.addActionListener(dreieckL);
+		});
 	}
 
-	public Strecke erzeugeStrecke() {
+	public GeoObjekt erzeugeStrecke() {
 		return new Strecke(new Punkt(0, 0), new Punkt(100, 0));
 	}
 
-	public Dreieck erzeugeDreieck() {
+	public GeoObjekt erzeugeDreieck() {
 		return new Dreieck(new Punkt(0, 0), new Punkt(100, 0), new Punkt(50,
 				-66));
 
@@ -72,7 +74,7 @@ class DrehPanel extends JPanel {
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		drehObject.zeichnen(g, 0, 0);
+		drehObject.zeichnen(g, this.getWidth() / 2, this.getHeight() / 2);
 	}
 
 	public static void main(String[] args) {
