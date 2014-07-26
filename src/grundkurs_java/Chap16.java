@@ -21,7 +21,44 @@ class DrehPanel extends JPanel {
 	private GeoObjekt drehObject;
 
 	public DrehPanel() {
+		JButton linksButton = new JButton("Links");
+		JButton rechtsButton = new JButton("rechts");
+		JButton streckeButton = new JButton("Strecke");
+		JButton dreieckButton = new JButton("Dreieck");
 
+		ActionListener linksL = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				drehObject.drehen(-SCHRITTWEITE);
+			}
+		}; // Ende der anonymen Klassendefinition
+		linksButton.addActionListener(linksL);
+
+		ActionListener rechtsL = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				drehObject.drehen(SCHRITTWEITE);
+			}
+		}; // Ende der anonymen Klassendefinition
+		rechtsButton.addActionListener(rechtsL);
+
+		ActionListener streckeL = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				drehObject = erzeugeStrecke();
+			}
+		}; // Ende der anonymen Klassendefinition
+		streckeButton.addActionListener(streckeL);
+
+		ActionListener dreieckL = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				drehObject = erzeugeDreieck();
+			}
+		}; // Ende der anonymen Klassendefinition
+		dreieckButton.addActionListener(dreieckL);
+	}
+
+	public static void main(String[] args) {
+		DrehPanel drehPanel = new DrehPanel();
+		drehPanel.setSize(200, 100);
+		drehPanel.setVisible(true);
 	}
 
 }
