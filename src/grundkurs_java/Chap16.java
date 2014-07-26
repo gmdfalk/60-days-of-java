@@ -19,19 +19,20 @@ public class Chap16 {
 class DrehFrame extends JFrame {
 	// 16.5
 	Container c;
+	DrehPanel d;
 
 	public DrehFrame() {
 		c = getContentPane();
-		DrehPanel drehPanel = new DrehPanel();
-		c.setLayout(new BorderLayout());
-		c.add(drehPanel, BorderLayout.CENTER);
+		d = new DrehPanel();
+		c.add(d);
 	}
 
 	public static void main(String[] args) {
-		DrehFrame drehFrame = new DrehFrame();
-		drehFrame.setTitle("DrehFrame");
-		drehFrame.setSize(350, 300);
-		drehFrame.setVisible(true);
+		DrehFrame fenster = new DrehFrame();
+		fenster.setTitle("DrehFrame");
+		fenster.setSize(350, 300);
+		fenster.setVisible(true);
+		fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }
 
@@ -137,7 +138,6 @@ class Strecke implements GeoObjekt {
 	public void drehen(double phi) {
 		p.drehen(phi);
 		q.drehen(phi);
-
 	}
 
 	public void zeichnen(Graphics g, int xNull, int yNull) {

@@ -49,9 +49,9 @@ public class OOPAdvanced {
 // 9.17
 class RunStrecke {
 	public static void main(String[] args) {
-		Punkt a = new Punkt(1, 1);
-		Punkt b = new Punkt(3, 3);
-		Strecke s = new Strecke(a, b);
+		PunktOld a = new PunktOld(1, 1);
+		PunktOld b = new PunktOld(3, 3);
+		StreckeOld s = new StreckeOld(a, b);
 		System.out.println(s);
 		double winkel = 0.14;
 		s.turn(winkel);
@@ -59,11 +59,11 @@ class RunStrecke {
 	}
 }
 
-class Strecke {
-	private Punkt p;
-	private Punkt q;
+class StreckeOld {
+	private PunktOld p;
+	private PunktOld q;
 
-	public Strecke(Punkt p, Punkt q) {
+	public StreckeOld(PunktOld p, PunktOld q) {
 		this.p = p;
 		this.q = q;
 	}
@@ -82,12 +82,12 @@ class Strecke {
 	}
 }
 
-/** Klasse fuer Punkte (x,y) in der Ebene */
-class Punkt {
+/** Klasse fuer PunktOlde (x,y) in der Ebene */
+class PunktOld {
 	private double x;
 	private double y;
 
-	public Punkt(double x, double y) {
+	public PunktOld(double x, double y) {
 		this.x = x;
 		this.y = y;
 	}
@@ -107,7 +107,7 @@ class Punkt {
 		y = xAlt * Math.sin(phi) + y * Math.cos(phi);
 	}
 
-	public static double distance(Punkt p, Punkt q) {
+	public static double distance(PunktOld p, PunktOld q) {
 		// liefert den Abstand zwischen p und q
 		double xdiff = p.getX() - q.getX();
 		double ydiff = p.getY() - q.getY();
