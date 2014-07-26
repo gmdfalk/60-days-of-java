@@ -7,8 +7,6 @@ public class Chap17 {
 
 	public static void main(String[] args) {
 		// FrameMitText.main(args);
-		AppletMitText amt = new AppletMitText();
-		amt.init();
 	}
 
 }
