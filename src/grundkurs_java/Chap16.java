@@ -21,6 +21,7 @@ class DrehPanel extends JPanel {
 	private GeoObjekt drehObject;
 
 	public DrehPanel() {
+		drehObject = erzeugeStrecke();
 		JButton linksButton = new JButton("Links");
 		JButton rechtsButton = new JButton("rechts");
 		JButton streckeButton = new JButton("Strecke");
@@ -29,6 +30,7 @@ class DrehPanel extends JPanel {
 		ActionListener linksL = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				drehObject.drehen(-SCHRITTWEITE);
+				repaint();
 			}
 		}; // Ende der anonymen Klassendefinition
 		linksButton.addActionListener(linksL);
@@ -36,6 +38,7 @@ class DrehPanel extends JPanel {
 		ActionListener rechtsL = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				drehObject.drehen(SCHRITTWEITE);
+				repaint();
 			}
 		}; // Ende der anonymen Klassendefinition
 		rechtsButton.addActionListener(rechtsL);
@@ -43,6 +46,7 @@ class DrehPanel extends JPanel {
 		ActionListener streckeL = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				drehObject = erzeugeStrecke();
+				repaint();
 			}
 		}; // Ende der anonymen Klassendefinition
 		streckeButton.addActionListener(streckeL);
@@ -50,9 +54,25 @@ class DrehPanel extends JPanel {
 		ActionListener dreieckL = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				drehObject = erzeugeDreieck();
+				repaint();
 			}
 		}; // Ende der anonymen Klassendefinition
 		dreieckButton.addActionListener(dreieckL);
+	}
+
+	public Strecke erzeugeStrecke() {
+		return new Strecke(new Punkt(0, 0), new Punkt(100, 0));
+	}
+
+	public Dreieck erzeugeDreieck() {
+		return new Dreieck(new Punkt(0, 0), new Punkt(100, 0), new Punkt(50,
+				-66));
+
+	}
+
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		drehObject.zeichnen(g, 0, 0);
 	}
 
 	public static void main(String[] args) {
