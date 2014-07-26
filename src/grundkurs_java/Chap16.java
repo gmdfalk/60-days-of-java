@@ -16,6 +16,21 @@ public class Chap16 {
 	}
 }
 
+class SchwerDreieck extends Dreieck {
+	// 16.6
+
+	public SchwerDreieck(Punkt a, Punkt b, Punkt c) {
+		super(a, b, c);
+	}
+
+	public void zeichnen(Graphics g, int xNull, int yNull) {
+		double xs = (p.getX() + q.getX() + r.getX()) / 3;
+		double ys = (p.getY() + q.getY() + r.getY()) / 3;
+
+		super.zeichnen(g, xNull - (int) xs, yNull - (int) ys);
+	};
+}
+
 class DrehFrame extends JFrame {
 	// 16.5
 	Container c;
