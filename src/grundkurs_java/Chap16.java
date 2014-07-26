@@ -12,7 +12,26 @@ public class Chap16 {
 		// NewButtonFrame1.main(args);
 		// NewButtonFrame2.main(args);
 		// Punkt.main(args);
-		DrehPanel.main(args);
+		DrehFrame.main(args);
+	}
+}
+
+class DrehFrame extends JFrame {
+	// 16.5
+	Container c;
+
+	public DrehFrame() {
+		c = getContentPane();
+		DrehPanel drehPanel = new DrehPanel();
+		c.setLayout(new BorderLayout());
+		c.add(drehPanel, BorderLayout.CENTER);
+	}
+
+	public static void main(String[] args) {
+		DrehFrame drehFrame = new DrehFrame();
+		drehFrame.setTitle("DrehFrame");
+		drehFrame.setSize(350, 300);
+		drehFrame.setVisible(true);
 	}
 }
 
@@ -76,13 +95,6 @@ class DrehPanel extends JPanel {
 		super.paintComponent(g);
 		drehObject.zeichnen(g, this.getWidth() / 2, this.getHeight() / 2);
 	}
-
-	public static void main(String[] args) {
-		DrehPanel drehPanel = new DrehPanel();
-		drehPanel.setSize(200, 100);
-		drehPanel.setVisible(true);
-	}
-
 }
 
 class Dreieck implements GeoObjekt {
