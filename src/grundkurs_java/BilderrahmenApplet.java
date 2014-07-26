@@ -1,10 +1,3 @@
-/*
- * "Grundkurs Programmieren in Java (6. Auflage, 2011)"
- * 2003-2011, Carl Hanser Verlag
- * Loesungsvorschlag zu Aufgabe 17.1 (Version 2.0)
- * (c) 2003-2011 D. Ratz, J. Scheffler, D. Seese, J. Wiesenberger
- *
- */
 package grundkurs_java;
 
 import java.awt.*;

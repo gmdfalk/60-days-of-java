@@ -586,15 +586,15 @@ class KreisPlot implements Plottable {
 		return Math.cos(t);
 	}
 
-	public static void main(String[] args) {
-		Plotter p = new Plotter(new KreisPlot(), "Kreisplot");
-		p.adjustGrid(0.2, 0.2);
-		p.showGrid(true);
-		p.setNumOfPoints(9);
-		p.setVisible(true);
-		System.out.print("zum Beenden bitte das ");
-		System.out.println("Grafikfenster schliessen.");
-	}
+	// public static void main(String[] args) {
+	// Plotter p = new Plotter(new KreisPlot(), "Kreisplot");
+	// p.adjustGrid(0.2, 0.2);
+	// p.showGrid(true);
+	// p.setNumOfPoints(9);
+	// p.setVisible(true);
+	// System.out.print("zum Beenden bitte das ");
+	// System.out.println("Grafikfenster schliessen.");
+	// }
 }
 
 interface Wertgegenstand {
