@@ -13,12 +13,32 @@ public class Chap18 {
 		// MehrmalsR.main(args);
 		// TVProgAuslosungMitRunnable.main(args);
 		// StoppuhrMitThread.main(args);
-		FigurenThreads1.main(args);
+		// FigurenThreads1.main(args);
+		EVTest1.main(args);
 	}
 
 }
 
 // Erzeuger-Verbraucher-Problem
+class EVTest3 {
+	public static void main(String args[]) {
+		KlemmWert w = new KlemmWert();
+		Erzeuger e = new Erzeuger(w);
+		Verbraucher v = new Verbraucher(w);
+		e.start();
+		v.start();
+	}
+}
+
+class EVTest2 {
+	public static void main(String args[]) {
+		GuterWert w = new GuterWert();
+		Erzeuger e = new Erzeuger(w);
+		Verbraucher v = new Verbraucher(w);
+		e.start();
+		v.start();
+	}
+}
 
 class EVTest1 {
 	public static void main(String args[]) {
@@ -30,7 +50,31 @@ class EVTest1 {
 	}
 }
 
+class KlemmWert extends Wert {
+	// causes deadlock
+	public synchronized int get() {
+		try {
+			wait();
+		} catch (InterruptedException ie) {
+		}
+		notify();
+		System.out.println("Wert verbraucht!");
+		return wert;
+	}
+
+	public synchronized void put(int w) {
+		wert = w;
+		System.out.println("Wert erzeugt!");
+		notify();
+		try {
+			wait();
+		} catch (InterruptedException ie) {
+		}
+	}
+}
+
 class GuterWert extends Wert {
+	// using notify, synchronized and wait to avoid timing issues
 	private boolean verfuegbar = false;
 
 	public synchronized int get() {
@@ -45,22 +89,21 @@ class GuterWert extends Wert {
 		return wert;
 	}
 
-	public synchronized void put (int w) {
-if (verfuegbar)
-try {
-wait();
-}
-catch (InterruptedException ie) {
-}
-wert = w;
-System.out.println("Erzeuger
-put: " + wert);
-verfuegbar = true;
-notify();
-}
+	public synchronized void put(int w) {
+		if (verfuegbar)
+			try {
+				wait();
+			} catch (InterruptedException ie) {
+			}
+		wert = w;
+		System.out.println("Erzeuger put: " + wert);
+		verfuegbar = true;
+		notify();
+	}
 }
 
 class SchlechterWert extends Wert {
+	// no wait or notify, uncontrolled at runtime, timing issues inc
 	public synchronized int get() {
 		System.out.println("Verbraucher get: " + wert);
 		return wert;
