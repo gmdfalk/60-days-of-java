@@ -14,7 +14,8 @@ public class Chap18 {
 		// TVProgAuslosungMitRunnable.main(args);
 		// StoppuhrMitThread.main(args);
 		// FigurenThreads1.main(args);
-		EVTest3.main(args);
+		// EVTest3.main(args);
+		UseTerminals.main(args);
 	}
 
 }
@@ -23,7 +24,9 @@ public class Chap18 {
 class KonzertDaten {
 	private int sitzPlatz = 0;
 
-	int freierPlatz() {
+	// without synchronized here, two terminals using the same KonzertDaten
+	// instance will sell overlapping seats
+	synchronized int freierPlatz() {
 		int n = sitzPlatz;
 		try { // simuliere Datenbankabfragen
 			Thread.sleep((int) (Math.random() * 100));
