@@ -12,9 +12,102 @@ public class Chap18 {
 		// TVProgAuslosung.main(args);
 		// MehrmalsR.main(args);
 		// TVProgAuslosungMitRunnable.main(args);
-		StoppuhrMitThread.main(args);
+		// StoppuhrMitThread.main(args);
+		FigurenThreads1.main(args);
 	}
 
+}
+
+class FigurenThreads2 {
+	public static void main(String[] args) {
+		GuteFigur f = new GuteFigur();
+		Schreiber s = new Schreiber(f);
+		Leser l = new Leser(f);
+		s.setDaemon(true);
+		s.start();
+		l.start();
+	}
+}
+
+class FigurenThreads1 {
+	public static void main(String[] args) {
+		SchlechteFigur f = new SchlechteFigur();
+		Schreiber s = new Schreiber(f);
+		Leser l = new Leser(f);
+		s.setDaemon(true);
+		s.start();
+		l.start();
+	}
+}
+
+class GuteFigur extends Figur {
+	synchronized public void setPosition(char x, int y) {
+		this.x = x;
+		MachMal.eineSekundeLangGarNichts();
+		this.y = y;
+	}
+
+	synchronized public String getPosition() {
+		MachMal.eineSekundeLangGarNichts();
+		return "(" + x + "," + y + ")";
+	}
+}
+
+class SchlechteFigur extends Figur {
+	public void setPosition(char x, int y) {
+		this.x = x;
+		MachMal.eineSekundeLangGarNichts();
+		this.y = y;
+	}
+
+	public String getPosition() {
+		MachMal.eineSekundeLangGarNichts();
+		return "(" + x + "," + y + ")";
+	}
+}
+
+abstract class Figur {
+	protected char x;
+	protected int y;
+
+	abstract public void setPosition(char x, int y);
+
+	abstract public String getPosition();
+}
+
+class Schreiber extends Thread {
+	Figur f;
+
+	public Schreiber(Figur f) {
+		this.f = f;
+	}
+
+	public void run() {
+		while (true) {
+			int z = (int) (Math.random() * 8); // 0 .. 7
+			char x = (char) ('A' + z);
+			// A .. H
+			int y = 1 + z;
+			// 1 .. 818.4 Thread-Synchronisation und -Kommunikation
+			f.setPosition(x, y);
+		}
+	}
+}
+
+class Leser extends Thread {
+	Figur f;
+
+	public Leser(Figur f) {
+		this.f = f;
+	}
+
+	public void run() {
+		for (int i = 1; i <= 30; i++) {
+			System.out.print(f.getPosition() + " ");
+			if (i % 10 == 0)
+				System.out.println();
+		}
+	}
 }
 
 class StoppuhrMitThread {
@@ -59,7 +152,7 @@ class UhrzeitThread extends Thread {
 				break;
 			}
 			Date time = new Date();
-			System.out.print(hms.format(time) + "\b\b\b\b\b\b\b\b");
+			System.out.println(hms.format(time));
 			try {
 				sleep(1000);
 			} catch (InterruptedException ie) {
