@@ -1,5 +1,9 @@
 package grundkurs_java;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Chap18 {
 
 	public static void main(String[] args) {
@@ -7,9 +11,62 @@ public class Chap18 {
 		// MehrmalsT.main(args);
 		// TVProgAuslosung.main(args);
 		// MehrmalsR.main(args);
-		TVProgAuslosungMitRunnable.main(args);
+		// TVProgAuslosungMitRunnable.main(args);
+		StoppuhrMitThread.main(args);
 	}
 
+}
+
+class StoppuhrMitThread {
+	public static void main(String[] args) {
+		// Auf Betaetigen der Eingabetaste warten
+		// Aktuellen Zeitpunkt im Date-Objekt start festhalten
+		System.out.println("Starten mit Eingabetaste");
+		MachMal.wartenAufEingabe();
+
+		Date start = new Date();
+		// Zeitpunkt ausgeben
+		System.out.println("Startzeitpunkt: " + start);
+		System.out.println();
+		System.out.println("Stoppuhr anhalten mit Eingabetaste!");
+		// Anzeige-Thread starten
+		Thread t = new UhrzeitThread();
+		t.start();
+		// Auf Betaetigen der Eingabetaste warten
+		MachMal.wartenAufEingabe();
+		// Aktuellen Zeitpunkt im Date-Objekt stopp festhalten
+		Date stopp = new Date();
+		// Anzeige-Thread anhalten
+		t.interrupt();
+		// Zeitpunkt ausgeben
+		System.out.println("Stoppzeitpunkt: " + stopp);
+		System.out.println();
+		// Laufzeit als Differenz von stopp und start bestimmen
+		long laufzeit = stopp.getTime() - start.getTime();
+		// Laufzeit ausgeben
+		System.out.println("Gesamtlaufzeit: " + laufzeit + " ms");
+	}
+}
+
+class UhrzeitThread extends Thread {
+	public static final SimpleDateFormat hms = new SimpleDateFormat("HH:mm:ss");
+
+	public void run() {
+		System.out.println();
+		while (true) {
+			if (isInterrupted()) {
+				System.out.println();
+				break;
+			}
+			Date time = new Date();
+			System.out.print(hms.format(time) + "\b\b\b\b\b\b\b\b");
+			try {
+				sleep(1000);
+			} catch (InterruptedException ie) {
+				interrupt();
+			}
+		}
+	}
 }
 
 class TVProgAuslosungMitRunnable {
@@ -43,10 +100,7 @@ class TVProgRunnable implements Runnable {
 		for (int i = 1; i <= 5; i++) {
 			System.out.println(Thread.currentThread().getName() + " zum " + i
 					+ ". Mal");
-			try {
-				Thread.sleep((int) (Math.random() * 1000));
-			} catch (InterruptedException e) {
-			}
+			MachMal.zufaelligGarNichts();
 		}
 		System.out.println(Thread.currentThread().getName() + " FERTIG!");
 	}
@@ -147,6 +201,14 @@ class MachMal {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
+		}
+	}
+
+	public static void wartenAufEingabe() {
+		try {
+			System.in.read();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
