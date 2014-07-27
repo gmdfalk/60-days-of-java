@@ -3,7 +3,6 @@ package grundkurs_java;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.applet.*;
 
 public class EuroApplet2 extends JApplet {
 
