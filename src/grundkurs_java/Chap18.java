@@ -15,9 +15,55 @@ public class Chap18 {
 		// StoppuhrMitThread.main(args);
 		// FigurenThreads1.main(args);
 		// EVTest3.main(args);
-		UseTerminals.main(args);
+		// UseTerminals.main(args);
+		EVTest4.main(args);
 	}
 
+}
+
+// 18.2
+class EVTest4 {
+	public static void main(String args[]) {
+		BessererWert w = new BessererWert();
+		Erzeuger e1 = new Erzeuger(w), e2 = new Erzeuger(w), e3 = new Erzeuger(
+				w);
+		Verbraucher v1 = new Verbraucher(w), v2 = new Verbraucher(w), v3 = new Verbraucher(
+				w);
+		e1.start();
+		e2.start();
+		e3.start();
+		v1.start();
+		v2.start();
+		v3.start();
+	}
+}
+
+class BessererWert extends Wert {
+	private boolean verfuegbar = false;
+
+	public synchronized int get() {
+		while (!verfuegbar)
+			try {
+				wait();
+			} catch (InterruptedException ie) {
+			}
+		verfuegbar = false;
+		notify();
+		System.out.println("Verbraucher get: " + wert);
+		return wert;
+	}
+
+	public synchronized void put(int w) {
+		while (verfuegbar)
+			try {
+				wait();
+			} catch (InterruptedException ie) {
+			}
+		wert = w;
+		System.out.println("Erzeuger put: " + wert);
+		verfuegbar = true;
+		notify();
+	}
 }
 
 // 18.1
