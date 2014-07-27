@@ -14,7 +14,7 @@ public class Chap18 {
 		// TVProgAuslosungMitRunnable.main(args);
 		// StoppuhrMitThread.main(args);
 		// FigurenThreads1.main(args);
-		EVTest1.main(args);
+		EVTest3.main(args);
 	}
 
 }
@@ -51,7 +51,8 @@ class EVTest1 {
 }
 
 class KlemmWert extends Wert {
-	// causes deadlock
+	// causes deadlock, all threads are just waiting forever
+	// (Philosophenproblem)
 	public synchronized int get() {
 		try {
 			wait();
