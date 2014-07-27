@@ -19,6 +19,45 @@ public class Chap18 {
 
 }
 
+// 18.1
+class KonzertDaten {
+	private int sitzPlatz = 0;
+
+	int freierPlatz() {
+		int n = sitzPlatz;
+		try { // simuliere Datenbankabfragen
+			Thread.sleep((int) (Math.random() * 100));
+		} catch (InterruptedException ie) {
+		}
+		return sitzPlatz = n + 1;
+	}
+}
+
+class KartenTerminal extends Thread {
+	private KonzertDaten daten;
+
+	KartenTerminal(String name, KonzertDaten daten) {
+		super(name);
+		this.daten = daten;
+	}
+
+	public void run() {
+		for (int i = 0; i < 100; i++)
+			System.out.println(getName() + ": Sitzplatz " + daten.freierPlatz()
+					+ " verkauft");
+	}
+}
+
+class UseTerminals {
+	public static void main(String[] args) {
+		KonzertDaten daten = new KonzertDaten();
+		KartenTerminal t1 = new KartenTerminal("Karten-Terminal 1", daten), t2 = new KartenTerminal(
+				"Karten-Terminal 2", daten);
+		t1.start();
+		t2.start();
+	}
+}
+
 // Erzeuger-Verbraucher-Problem
 class EVTest3 {
 	public static void main(String args[]) {
