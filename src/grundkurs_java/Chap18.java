@@ -18,6 +18,106 @@ public class Chap18 {
 
 }
 
+// Erzeuger-Verbraucher-Problem
+
+class EVTest1 {
+	public static void main(String args[]) {
+		SchlechterWert w = new SchlechterWert();
+		Erzeuger e = new Erzeuger(w);
+		Verbraucher v = new Verbraucher(w);
+		e.start();
+		v.start();
+	}
+}
+
+class GuterWert extends Wert {
+	private boolean verfuegbar = false;
+
+	public synchronized int get() {
+		if (!verfuegbar)
+			try {
+				wait();
+			} catch (InterruptedException ie) {
+			}
+		verfuegbar = false;
+		notify();
+		System.out.println("Verbraucher get: " + wert);
+		return wert;
+	}
+
+	public synchronized void put (int w) {
+if (verfuegbar)
+try {
+wait();
+}
+catch (InterruptedException ie) {
+}
+wert = w;
+System.out.println("Erzeuger
+put: " + wert);
+verfuegbar = true;
+notify();
+}
+}
+
+class SchlechterWert extends Wert {
+	public synchronized int get() {
+		System.out.println("Verbraucher get: " + wert);
+		return wert;
+	}
+
+	public synchronized void put(int w) {
+		wert = w;
+		System.out.println("Erzeuger put: " + wert);
+	}
+}
+
+abstract class Wert {
+	protected int wert;
+
+	abstract public int get();
+
+	abstract public void put(int w);
+}
+
+class Erzeuger extends Thread {
+	Wert w;
+
+	public Erzeuger(Wert w) {
+		this.w = w;
+	}
+
+	public void run() {
+		for (int i = 0; i < 5; i++) {
+			w.put(i);
+			try {
+				sleep((int) (Math.random() * 100));
+			} catch (InterruptedException e) {
+			}
+		}
+	}
+}
+
+class Verbraucher extends Thread {
+	Wert w;
+
+	public Verbraucher(Wert w) {
+		this.w = w;
+	}
+
+	public void run() {
+		int v;
+		for (int i = 0; i < 5; i++) {
+			v = w.get();
+			try {
+				sleep((int) (Math.random() * 100));
+			} catch (InterruptedException e) {
+			}
+		}
+	}
+}
+
+// Read-write problem: (fix is "synchronized")
 class FigurenThreads2 {
 	public static void main(String[] args) {
 		GuteFigur f = new GuteFigur();
