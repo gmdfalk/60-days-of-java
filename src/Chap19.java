@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.Scanner;
 
 public class Chap19 {
 
@@ -7,12 +8,55 @@ public class Chap19 {
 		// WriteToFile.main(args);
 		// BufferedWriteToFile.main(args);
 		// ZahlenSumme.main(args);
-		try {
-			PrintWriting.main(args);
-		} catch (IOException e) {
-		}
+		// try {
+		// PrintWriting.main(args);
+		// } catch (IOException e) {
+		// }
+		InTools.main(args);
 	}
 
+}
+
+class Eingaben {
+	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+		int i;
+		double d;
+		boolean b;
+		System.out.print("i = ");
+		i = in.nextInt();
+		System.out.print("d = ");
+		d = in.nextDouble();
+		System.out.print("b = ");
+		b = in.nextBoolean();
+		System.out.println("i = " + i);
+		System.out.println("d = " + d);
+		System.out.println("b = " + b);
+	}
+}
+
+class InTools {
+	// Gepufferter Eingabestrom ueber den Standardeingabestrom System.in
+	public static BufferedReader in = new BufferedReader(new InputStreamReader(
+			System.in));
+
+	// Methode zum Einlesen von double-Werten
+	public static double readDouble() {
+		double erg = 0;
+		try {
+			erg = Double.parseDouble(in.readLine());
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return erg;
+	}
+
+	// main-Methode
+	public static void main(String[] args) {
+		System.out.print("double-Wert eingeben: d = ");
+		double d = readDouble();
+		System.out.println("d = " + d + " wurde eingelesen");
+	}
 }
 
 class PrintWriting {
