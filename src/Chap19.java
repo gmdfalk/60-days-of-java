@@ -12,9 +12,60 @@ public class Chap19 {
 		// PrintWriting.main(args);
 		// } catch (IOException e) {
 		// }
-		InTools.main(args);
+		// InTools.main(args);
+		ObjectWrite.main(args);
 	}
 
+}
+
+class ObjectWrite {
+	public static void main(String[] summand) {
+		try {
+			// Dateiname fuer die Speicherung festlegen
+			String dateiname = "MeineDaten.dat";
+			// Datenstrom zum Schreiben in die Datei erzeugen
+			FileOutputStream datAus = new FileOutputStream(dateiname);
+			// Objektstrom darueber legen
+			ObjectOutputStream oAus = new ObjectOutputStream(datAus);
+			// Testdatensaetze erzeugen
+			int anzahl = 2; // Anzahl der Datensaetze
+			Datensatz a = new Datensatz(99, 56, "Coca Cola");
+			Datensatz b = new Datensatz(111, 1234.79, "Fahrrad");
+			// Datensaetze in die Datei schreiben
+			oAus.writeInt(anzahl);
+			// Anzahl der Datensaetze
+			oAus.writeObject(a);
+			// Datensatz 1
+			oAus.writeObject(b);
+			// Datensatz 2
+			// Dateistrom schliessen
+			oAus.close();
+			System.out.println(anzahl + " Datensaetze in die Datei "
+					+ dateiname + " geschrieben");
+			System.out.println(a);
+			System.out.println(b);
+		} catch (Exception e) {
+			System.out.println("Fehler beim Schreiben: " + e);
+		}
+	}
+}
+
+class Datensatz implements Serializable {
+	public int nr;
+	// Nummer des Datensatzes
+	public double wert; // Wert des Datensatzes
+	public String kom; // Kommentar
+
+	public Datensatz(int nr, double wert, String kom) { // Konstruktor
+		this.nr = nr;
+		this.wert = wert;
+		this.kom = kom;
+	}
+
+	public String toString() {
+		// Erzeugung einer String-Darstellung
+		return "Nr. " + nr + ": " + wert + " (" + kom + ")";
+	}
 }
 
 class DataWriteAndRead {
