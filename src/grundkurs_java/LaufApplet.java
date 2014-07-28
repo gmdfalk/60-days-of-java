@@ -3,6 +3,8 @@ package grundkurs_java;
 import javax.swing.*;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Random;
 
 public class LaufApplet extends JApplet {
@@ -18,7 +20,7 @@ public class LaufApplet extends JApplet {
 		c = getContentPane();
 
 		runButton1 = new ColorRunButton();
-		runButton1.setText("J");
+		runButton1.setText("3");
 		runButton1.setPreferredSize(new Dimension(80, 80));
 		runButton1.setBackground(Color.WHITE);
 		runButton2 = new ColorRunButton();
@@ -29,9 +31,11 @@ public class LaufApplet extends JApplet {
 		fontBox = new JComboBox();
 		fontBox.addItem("schwarze Schrift");
 		fontBox.addItem("graue Schrift");
+		fontBox.addActionListener(new FontListener());
 
 		letterCheck = new JCheckBox("Buchstaben");
 		letterCheck.setAlignmentX(Component.CENTER_ALIGNMENT);
+		letterCheck.addActionListener(new LetterListener());
 
 		c.setLayout(new BoxLayout(c, BoxLayout.Y_AXIS));
 		// c.setLayout(new BorderLayout());
@@ -46,19 +50,44 @@ public class LaufApplet extends JApplet {
 		c.add(letterCheck);
 		setSize(170, 130);
 	}
+
+	class FontListener implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+			if (fontBox.getSelectedIndex() == 0) {
+				runButton1.setForeground(Color.BLACK);
+				runButton2.setForeground(Color.BLACK);
+			} else if (fontBox.getSelectedIndex() == 1) {
+				runButton1.setForeground(Color.GRAY);
+				runButton2.setForeground(Color.GRAY);
+			}
+		}
+
+	}
+
+	class LetterListener implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+			if (letterCheck.isSelected())
+				ColorRunButton.useLetters = true;
+			else
+				ColorRunButton.useLetters = false;
+		}
+
+	}
 }
 
 class ColorRunButton extends JButton implements Runnable {
 
-	private boolean useLetters = true;
+	public static boolean useLetters = true;
 
 	public void run() {
 		char ordinal;
-		if (useLetters)
+		if (useLetters) {
 			ordinal = (char) randInt(65, 90);
-		else
+		} else {
 			ordinal = (char) randInt(48, 57);
-
+		}
 		setText(String.valueOf(ordinal));
 	}
 
