@@ -5,9 +5,51 @@ public class Chap19 {
 	public static void main(String[] args) {
 		// Create.main(args);
 		// WriteToFile.main(args);
-		BufferedWriteToFile.main(args);
+		// BufferedWriteToFile.main(args);
+		ZahlenSumme.main(args);
 	}
 
+}
+
+class ZahlenSumme {
+	public static void main(String[] args) {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StreamTokenizer st = new StreamTokenizer(br);
+		System.out.println("Addiere alle Zahlen in einer Zeichenfolge");
+		System.out.println("(Eingabe mit STOP abschliessen)");
+		System.out.println();
+		StringBuffer woerter = new StringBuffer(); // zum Woerter sammeln
+		double sum = 0.0;
+		// zum Zahlen summieren
+		int tokenType;
+		// Typ des Tokens
+		boolean stop = false;
+		// Flag fuer Schleife
+		try {
+			do {
+				switch (tokenType = st.nextToken()) { // naechstes Token
+				case StreamTokenizer.TT_NUMBER:
+					// ist Zahl
+					sum += st.nval;
+					// summiere Wert
+					break;
+				case StreamTokenizer.TT_WORD:
+					// ist Wort
+					if (!(stop = st.sval.equals("STOP")))
+						// falls nicht STOP
+						woerter.append(st.sval);
+					// Wort anhaengen
+					break;
+				}
+			} while (!stop);
+			System.out.println();
+			System.out.println("Summe aller Zahlen: " + sum);
+			System.out.println("Text: " + woerter.toString());
+		} catch (IOException e) {
+			System.out.println(e);
+		}
+		;
+	}
 }
 
 class BufferedWriteToFile {
