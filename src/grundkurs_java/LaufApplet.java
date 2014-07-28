@@ -1,10 +1,14 @@
 package grundkurs_java;
 
 import javax.swing.*;
+import javax.swing.event.MouseInputListener;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Random;
 
 public class LaufApplet extends JApplet {
@@ -21,12 +25,16 @@ public class LaufApplet extends JApplet {
 
 		runButton1 = new ColorRunButton();
 		runButton1.setText("3");
+		runButton1.setActionCommand("runButton1");
 		runButton1.setPreferredSize(new Dimension(80, 80));
 		runButton1.setBackground(Color.WHITE);
+		runButton1.addActionListener(new RunButtonListener());
 		runButton2 = new ColorRunButton();
 		runButton2.setText("H");
+		runButton2.setActionCommand("runButton2");
 		runButton2.setPreferredSize(new Dimension(80, 80));
 		runButton2.setBackground(Color.WHITE);
+		runButton2.addActionListener(new RunButtonListener());
 
 		fontBox = new JComboBox();
 		fontBox.addItem("schwarze Schrift");
@@ -49,6 +57,17 @@ public class LaufApplet extends JApplet {
 		c.add(fontBox);
 		c.add(letterCheck);
 		setSize(170, 130);
+	}
+
+	class RunButtonListener implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+			if (e.getActionCommand() == "runButton1") {
+				runButton1.change();
+			} else if (e.getActionCommand() == "runButton2") {
+				runButton2.change();
+			}
+		}
 	}
 
 	class FontListener implements ActionListener {
@@ -80,19 +99,34 @@ public class LaufApplet extends JApplet {
 class ColorRunButton extends JButton implements Runnable {
 
 	public static boolean useLetters = true;
+	private boolean running;
+
+	public void start() {
+		running = true;
+		new Thread(this).start();
+	}
+
+	public void stop() {
+		running = false;
+	}
 
 	public void run() {
-		char ordinal;
-		if (useLetters) {
-			ordinal = (char) randInt(65, 90);
-		} else {
-			ordinal = (char) randInt(48, 57);
+		while (running) {
+			char ordinal;
+			if (useLetters) {
+				ordinal = (char) randInt(65, 90);
+			} else {
+				ordinal = (char) randInt(48, 57);
+			}
+			setText(String.valueOf(ordinal));
 		}
-		setText(String.valueOf(ordinal));
 	}
 
 	public void change() {
-
+		if (running)
+			stop();
+		else
+			start();
 	}
 
 	public static int randInt(int min, int max) {
