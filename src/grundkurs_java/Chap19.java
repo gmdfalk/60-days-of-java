@@ -1,4 +1,5 @@
 package grundkurs_java;
+
 import java.io.*;
 import java.util.Scanner;
 
@@ -15,7 +16,17 @@ public class Chap19 {
 		// }
 		// InTools.main(args);
 		// ObjectWrite.main(args);
-		ObjectRead.main(args);
+		// ObjectRead.main(args);
+		CopyFile.main(new String[] { "Chap19.java", "test.java" });
+	}
+
+}
+
+class CopyFile {
+	// 19.1
+
+	public static void main(String[] args) {
+
 	}
 
 }
