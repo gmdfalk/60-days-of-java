@@ -42,12 +42,12 @@ class Vokalumwandlung {
 		FileInputStream fis = null;
 		BufferedReader br = null;
 		LineNumberReader lnr = null;
-		File dest;
+		String dest;
 		String[] nameTokens = args[0].split("\\.(?=[^\\.]+$)");
-		dest = new File(nameTokens[0] + "_ausgabe" + nameTokens[1]);
+		dest = nameTokens[0] + "_ausgabe" + nameTokens[1];
 
 		// List<String> output = new ArrayList<String>();
-		String[] output;
+		String[] output = null;
 
 		try {
 			fis = new FileInputStream(args[0]);
@@ -79,6 +79,17 @@ class Vokalumwandlung {
 				br.close();
 				fis.close();
 			} catch (IOException e) {
+			}
+		}
+		for (int i = 0; i < output.length; i++) {
+			try (BufferedWriter bw = new BufferedWriter(new FileWriter(dest,
+					true))) {
+				String s;
+				s = output[i];
+				bw.write(s);
+				bw.flush();
+				bw.newLine();
+			} catch (IOException ex) {
 			}
 		}
 	}
