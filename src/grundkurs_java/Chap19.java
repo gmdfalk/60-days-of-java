@@ -30,9 +30,49 @@ public class Chap19 {
 
 }
 
+class InOutTools {
+	// 19.2
+	// Gepufferter Eingabestrom ueber den Standardeingabstrom System.in
+	public static BufferedReader in = new BufferedReader(new InputStreamReader(
+			System.in));
+
+	// Methode zum Einlesen von double-Werten
+	public static double readDouble() {
+		double erg = 0;
+		try {
+			erg = Double.parseDouble(in.readLine());
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return erg;
+	}
+
+	// Methode zum Einlesen von double-Werten mit Prompt
+	public static double readDouble(String prompt) {
+		System.out.print(prompt);
+		System.out.flush();
+		double erg = 0;
+		try {
+			erg = Double.parseDouble(in.readLine());
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return erg;
+	}
+
+	// main-Methode
+	public static void main(String[] args) {
+		System.out.print("double-Wert eingeben: d = ");
+		double d = readDouble();
+		System.out.println("d = " + d + " wurde eingelesen");
+
+		double e = readDouble("double-Wert eingeben: e = ");
+		System.out.println("e = " + e + " wurde eingelesen");
+	}
+}
+
 class CopyFile {
 	// 19.1
-
 	private static void usingApacheCommonsIO(File source, File dest)
 			throws IOException {
 		FileUtils.copyFile(source, dest);
@@ -75,6 +115,27 @@ class CopyFile {
 			Files.copy(source.toPath(), dest.toPath());
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	public static void main(String[] args) {
+		// official solution
+		try {
+			File inputFile = new File(args[0]); // Eingabedatei
+			File outputFile = new File(args[1]); // Ausgabedatei
+			FileReader in = new FileReader(inputFile); // Eingabestrom
+			FileWriter out = new FileWriter(outputFile); // Ausgabestrom
+			int c;
+			while ((c = in.read()) != -1)
+				// Einlesen mit Test auf Strom-Ende
+				out.write(c); // Ausgeben in Datei
+			in.close();
+			out.close();
+			System.out.println(args[0] + " kopiert nach " + args[1]);
+		} catch (ArrayIndexOutOfBoundsException ae) {
+			System.out.println("Aufruf:  java Kopiere <Quelle> <Ziel>");
+		} catch (IOException e) {
+			System.out.println(e);
 		}
 	}
 }
