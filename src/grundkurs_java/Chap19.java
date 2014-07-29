@@ -3,7 +3,10 @@ package grundkurs_java;
 import java.io.*;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+
 import org.apache.commons.io.FileUtils;
 
 public class Chap19 {
@@ -34,35 +37,43 @@ class Vokalumwandlung {
 	public static void main(String[] args) {
 		FileInputStream fis = null;
 		BufferedReader br = null;
+		LineNumberReader lnr = null;
 		File dest;
 		String[] nameTokens = args[0].split("\\.(?=[^\\.]+$)");
 		dest = new File(nameTokens[0] + "_ausgabe" + nameTokens[1]);
+		List<String> output = new ArrayList<String>();
 
 		try {
 			fis = new FileInputStream(args[0]);
 			br = new BufferedReader(new InputStreamReader(fis));
+			lnr = new LineNumberReader(new FileReader(new File(args[0])));
 
-			String line = br.readLine();
+			String replaceLC = args[1].toLowerCase();
+			String replaceUC = args[1].toUpperCase();
 			String newLine;
-			while (line != null) {
-				System.out.println(line);
-				line = br.readLine();
-				newLine = line.replaceAll("Ae|Oe|Ue", args[1]);
-				newLine = line.replaceAll("ae|oe|ue", args[1]);
-				newLine = line.replaceAll("[aeiou]", args[1].toLowerCase());
-				newLine = line.replaceAll("[AEIOU]", args[1].toUpperCase());
-				System.out.println(newLine);
-			}
+			String line;
 
+			lnr.skip(Long.MAX_VALUE);
+			for (int i = 0; i < lnr.getLineNumber() - 1; i++) {
+				line = br.readLine();
+				newLine = line.replaceAll("Ae|Oe|Ue", replaceUC + replaceLC);
+				newLine = newLine.replaceAll("ae|oe|ue", replaceLC + replaceLC);
+				newLine = newLine.replaceAll("[aeiou]", replaceLC);
+				newLine = newLine.replaceAll("[AEIOU]", replaceUC);
+				output.add(newLine);
+			}
 		} catch (FileNotFoundException e) {
 		} catch (IOException e) {
 		} finally {
 			try {
+				lnr.close();
 				br.close();
 				fis.close();
 			} catch (IOException e) {
 			}
 		}
+		for (String s : output)
+			System.out.println(s);
 	}
 }
 
