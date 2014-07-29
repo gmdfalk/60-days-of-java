@@ -20,14 +20,24 @@ public class Chap19 {
 		// InTools.main(args);
 		// ObjectWrite.main(args);
 		// ObjectRead.main(args);
-		try {
-			CopyFile.usingFileStreams(new File("MeineDaten.dat"), new File(
-					"MeineDaten.test"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		// try {
+		// CopyFile.usingFileStreams(new File("MeineDaten.dat"), new File(
+		// "MeineDaten.test"));
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// }
+		Vokalumwandlung.main(new String[] { "example.txt", "a" });
 	}
+}
 
+class Vokalumwandlung {
+	public static void main(String[] args) {
+		String[] vokaleGroß = { "A", "E", "I", "O", "U" };
+		String[] vokaleKlein = { "a", "e", "i", "o", "u" };
+		File source = new File(args[0]);
+		File dest = new File(args[0] + "_ausgabe");
+
+	}
 }
 
 class InOutTools {
