@@ -33,6 +33,10 @@ public class Chap19 {
 	}
 }
 
+class HexaStream {
+	// 19.4
+}
+
 class Vokalumwandlung {
 	public static void main(String[] args) {
 		FileInputStream fis = null;
