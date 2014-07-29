@@ -3,8 +3,8 @@ package grundkurs_java;
 import java.io.*;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.List;
+//import java.util.ArrayList;
+//import java.util.List;
 import java.util.Scanner;
 
 import org.apache.commons.io.FileUtils;
@@ -41,7 +41,9 @@ class Vokalumwandlung {
 		File dest;
 		String[] nameTokens = args[0].split("\\.(?=[^\\.]+$)");
 		dest = new File(nameTokens[0] + "_ausgabe" + nameTokens[1]);
-		List<String> output = new ArrayList<String>();
+
+		// List<String> output = new ArrayList<String>();
+		String[] output;
 
 		try {
 			fis = new FileInputStream(args[0]);
@@ -54,13 +56,16 @@ class Vokalumwandlung {
 			String line;
 
 			lnr.skip(Long.MAX_VALUE);
-			for (int i = 0; i < lnr.getLineNumber() - 1; i++) {
+			output = new String[lnr.getLineNumber()];
+			for (int i = 0; i < lnr.getLineNumber(); i++) {
 				line = br.readLine();
 				newLine = line.replaceAll("Ae|Oe|Ue", replaceUC + replaceLC);
 				newLine = newLine.replaceAll("ae|oe|ue", replaceLC + replaceLC);
 				newLine = newLine.replaceAll("[aeiou]", replaceLC);
 				newLine = newLine.replaceAll("[AEIOU]", replaceUC);
-				output.add(newLine);
+				// output.add(newLine);
+				output[i] = newLine;
+				System.out.println(newLine);
 			}
 		} catch (FileNotFoundException e) {
 		} catch (IOException e) {
@@ -72,8 +77,6 @@ class Vokalumwandlung {
 			} catch (IOException e) {
 			}
 		}
-		for (String s : output)
-			System.out.println(s);
 	}
 }
 
