@@ -32,11 +32,37 @@ public class Chap19 {
 
 class Vokalumwandlung {
 	public static void main(String[] args) {
-		String[] vokaleGroß = { "A", "E", "I", "O", "U" };
-		String[] vokaleKlein = { "a", "e", "i", "o", "u" };
-		File source = new File(args[0]);
-		File dest = new File(args[0] + "_ausgabe");
+		FileInputStream fis = null;
+		BufferedReader br = null;
+		File dest;
+		String[] nameTokens = args[0].split("\\.(?=[^\\.]+$)");
+		dest = new File(nameTokens[0] + "_ausgabe" + nameTokens[1]);
 
+		try {
+			fis = new FileInputStream(args[0]);
+			br = new BufferedReader(new InputStreamReader(fis));
+
+			String line = br.readLine();
+			String newLine;
+			while (line != null) {
+				System.out.println(line);
+				line = br.readLine();
+				newLine = line.replaceAll("Ae|Oe|Ue", args[1]);
+				newLine = line.replaceAll("ae|oe|ue", args[1]);
+				newLine = line.replaceAll("[aeiou]", args[1].toLowerCase());
+				newLine = line.replaceAll("[AEIOU]", args[1].toUpperCase());
+				System.out.println(newLine);
+			}
+
+		} catch (FileNotFoundException e) {
+		} catch (IOException e) {
+		} finally {
+			try {
+				br.close();
+				fis.close();
+			} catch (IOException e) {
+			}
+		}
 	}
 }
 
