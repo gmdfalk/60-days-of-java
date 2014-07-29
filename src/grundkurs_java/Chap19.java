@@ -1,7 +1,10 @@
 package grundkurs_java;
 
 import java.io.*;
+import java.nio.channels.FileChannel;
+import java.nio.file.Files;
 import java.util.Scanner;
+import org.apache.commons.io.FileUtils;
 
 public class Chap19 {
 
@@ -17,7 +20,12 @@ public class Chap19 {
 		// InTools.main(args);
 		// ObjectWrite.main(args);
 		// ObjectRead.main(args);
-		CopyFile.main(new String[] { "Chap19.java", "test.java" });
+		try {
+			CopyFile.usingFileStreams(new File("MeineDaten.dat"), new File(
+					"MeineDaten.test"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
@@ -25,10 +33,50 @@ public class Chap19 {
 class CopyFile {
 	// 19.1
 
-	public static void main(String[] args) {
-
+	private static void usingApacheCommonsIO(File source, File dest)
+			throws IOException {
+		FileUtils.copyFile(source, dest);
 	}
 
+	private static void usingFileChannels(File source, File dest)
+			throws IOException {
+		FileChannel inputChannel = null;
+		FileChannel outputChannel = null;
+		try {
+			inputChannel = new FileInputStream(source).getChannel();
+			outputChannel = new FileOutputStream(dest).getChannel();
+			outputChannel.transferFrom(inputChannel, 0, inputChannel.size());
+		} finally {
+			inputChannel.close();
+			outputChannel.close();
+		}
+	}
+
+	public static void usingFileStreams(File source, File dest)
+			throws IOException {
+		InputStream input = null;
+		OutputStream output = null;
+		try {
+			input = new FileInputStream(source);
+			output = new FileOutputStream(dest);
+			byte[] buf = new byte[1024];
+			int bytesRead;
+			while ((bytesRead = input.read(buf)) > 0) {
+				output.write(buf, 0, bytesRead);
+			}
+		} finally {
+			input.close();
+			output.close();
+		}
+	}
+
+	public static void usingFiles(File source, File dest) {
+		try {
+			Files.copy(source.toPath(), dest.toPath());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
 
 class ObjectRead {
