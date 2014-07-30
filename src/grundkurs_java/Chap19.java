@@ -39,13 +39,32 @@ public class Chap19 {
 class HexaStream {
 	// 19.4
 	public static void main(String[] args) {
-
+		String hexString, hexOutput = "", charOutput = "";
+		int hexInteger, count = 0;
+		FileInputStream fis;
 		try {
-			FileInputStream fis = new FileInputStream(new File(
+			fis = new FileInputStream(new File(
 					"bin/grundkurs_java/Chap19.class"));
-			while (fis != null) {
-				System.out.println(Integer.toHexString(fis.read()));
-				System.out.println(fis.read());
+			while (true) {
+				count++;
+				hexInteger = fis.read();
+				if (hexInteger == -1) {
+					System.out.println(hexOutput + "\t\t\t" + charOutput);
+					break;
+				}
+				hexString = Integer.toHexString(hexInteger);
+
+				hexOutput += hexString + " ";
+				if (hexInteger > 31 && hexInteger < 127) {
+					charOutput += (char) hexInteger;
+				} else {
+					charOutput += ".";
+				}
+				if (count % 16 == 0) {
+					System.out.println(hexOutput + "\t\t\t" + charOutput);
+					hexOutput = "";
+					charOutput = "";
+				}
 			}
 		} catch (FileNotFoundException e) {
 			System.out.println(e);
