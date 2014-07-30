@@ -33,6 +33,57 @@ public class Chap19 {
 		// }
 		// Vokalumwandlung.main(new String[] { "example.txt", "a" });
 		HexaStream.main(args);
+		try {
+			BinOut.main(new String[] { "bin/grundkurs_java/Chap19.class" });
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+class BinOut {
+	// 19.4 official solution
+	public static void main(String[] args) throws IOException {
+		PrintWriter out = new PrintWriter(System.out, true);
+		if (args.length == 0) {
+			out.println("Aufruf:  java BinOut <Dateiname>");
+			return;
+		}
+
+		final int BREITE = 16; // Anzahl Bytes je Ausgabe-Zeile
+		FileInputStream in = new FileInputStream(args[0]); // Eingabedatei
+															// (Bytes)
+		StringBuffer buf = new StringBuffer(); // zum Sammeln der darstellb.
+												// Zeichen
+		int i, c = 0;
+
+		while ((i = in.read()) != -1) { // lies Bytes bis Dateiende erreicht ist
+			c++; // erhöhe Zähler für gelesene Bytes
+			if (i <= 15) // falls der gelesene Byte-Wert < 15
+				out.print('0'); // gib eine Null aus
+			out.print(Integer.toHexString(i)); // gib den Bytewert hexadezimal
+												// aus
+			out.print(" "); // gib 1 Leerzeichen aus
+			if (i >= 32 && i < 127) // falls das Byte i als char darstellbar
+				buf.append((char) i); // hänge das entspr. Zeichen an buf an
+			else
+				// andernfalls
+				buf.append('.'); // hänge einen . an buf an
+			if (c == BREITE) { // wenn 16 Bytes bearbeitet sind
+				out.println("\t" + buf); // gib den Inhalt von buf aus
+				c = 0; // setze Zähler auf Null zurück
+				buf = new StringBuffer(); // erzeuge neues StringBuffer-Objekt
+			}
+		}
+		// restliche Bytes, die keine volle Zeile mehr ergeben, bearbeiten
+		int l = buf.length(); // bestimme die Länge des StringBuffers
+		if (l > 0) { // falls noch Zeichen im Buffer
+			for (int k = 0; k < BREITE - l; k++) {
+				out.print("   "); // fülle Hex-Ausgabe mit Leerzeichen
+				buf.append(' '); // hänge Leerzeichen an buf an
+			}
+			out.println("\t" + buf); // gib den Inhalt von Buffer aus
+		}
 	}
 }
 
@@ -53,6 +104,8 @@ class HexaStream {
 					break;
 				}
 				hexString = Integer.toHexString(hexInteger);
+				if (hexInteger < 16)
+					hexString = "0" + hexString;
 
 				hexOutput += padRight(hexString, 3);
 				if (hexInteger > 31 && hexInteger < 127) {
@@ -79,6 +132,7 @@ class HexaStream {
 }
 
 class Vokalumwandlung {
+	// 19.3
 	public static void main(String[] args) {
 		FileInputStream fis = null;
 		BufferedReader br = null;
