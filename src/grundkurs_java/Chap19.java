@@ -49,19 +49,19 @@ class HexaStream {
 				count++;
 				hexInteger = fis.read();
 				if (hexInteger == -1) {
-					System.out.println(hexOutput + "\t\t\t" + charOutput);
+					System.out.println(hexOutput + "\t" + charOutput);
 					break;
 				}
 				hexString = Integer.toHexString(hexInteger);
 
-				hexOutput += hexString + " ";
+				hexOutput += padRight(hexString, 3);
 				if (hexInteger > 31 && hexInteger < 127) {
 					charOutput += (char) hexInteger;
 				} else {
 					charOutput += ".";
 				}
 				if (count % 16 == 0) {
-					System.out.println(hexOutput + "\t\t\t" + charOutput);
+					System.out.println(hexOutput + "\t" + charOutput);
 					hexOutput = "";
 					charOutput = "";
 				}
@@ -71,6 +71,10 @@ class HexaStream {
 		} catch (IOException e) {
 			System.out.println(e);
 		}
+	}
+
+	public static String padRight(String s, int n) {
+		return String.format("%1$-" + n + "s", s);
 	}
 }
 
