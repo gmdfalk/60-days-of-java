@@ -8,9 +8,9 @@ import java.text.*;
 public class Chap20 {
 
 	public static void main(String[] args) {
-		DNSAnfrage.main(new String[] { "www.github.com" });
+		// DNSAnfrage.main(new String[] { "www.github.com" });
+		DateTimeServer.main(new String[] { "2222" });
 	}
-
 }
 
 class DateTimeServer {
@@ -36,8 +36,8 @@ class DateTimeServer {
 class DateTimeProtokoll {
 	static SimpleDateFormat
 	// Formate fuer den Zeitpunkt
-			time = new SimpleDateFormat("’Es ist gerade ’H’.’mm’ Uhr.’"),
-			date = new SimpleDateFormat("’Heute ist ’EEEE’, der ’dd.MM.yy");
+			time = new SimpleDateFormat("'Es ist gerade 'H'.'mm' Uhr.'"),
+			date = new SimpleDateFormat("'Heute ist 'EEEE', der 'dd.MM.yy");
 	Socket s;
 	BufferedReader vomClient;
 	PrintWriter zumClient;
