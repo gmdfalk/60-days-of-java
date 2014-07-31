@@ -103,7 +103,7 @@ class CdServerDienst extends Thread {
 					for (String s : cdArchiv.list())
 						zumClient.println(s);
 				else if (wunsch.toLowerCase().startsWith("tracks"))
-					zumClient.println(wunsch);
+					zumClient.println(findTracks(wunsch));
 				else
 					zumClient.println(wunsch + "ist als Kommando unzulaessig!");
 			}
@@ -113,6 +113,22 @@ class CdServerDienst extends Thread {
 			System.out.println("IO-Error bei Client " + nr);
 		}
 		System.out.println("Protokoll fuer Client " + nr + " beendet");
+	}
+
+	private String findTracks(String wunsch) {
+		String[] wunschSplit = wunsch.split("\\s");
+		for (String s : wunschSplit)
+			System.out.println(s);
+
+		File[] matches = cdArchiv.listFiles(new FilenameFilter() {
+			public boolean accept(File dir, String name) {
+				return name.startsWith(wunschSplit[1]);
+			}
+		});
+		for (File match : matches) {
+			;
+		}
+		return cdArchiv.s;
 	}
 }
 
