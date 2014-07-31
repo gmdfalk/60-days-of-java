@@ -4,6 +4,7 @@ import java.net.*;
 import java.io.*;
 import java.util.*;
 import java.text.*;
+import javax.swing.*;
 
 public class Chap20 {
 
@@ -11,7 +12,92 @@ public class Chap20 {
 		// DNSAnfrage.main(new String[] { "www.github.com" });
 		// DateTimeServer.main(new String[] { "2222" });
 		// DateTimeClient.main(new String[] { "localhost", "2222" });
-		DateTimeMultiServer.main(new String[] { "3333" });
+		// DateTimeMultiServer.main(new String[] { "3333" });
+		// MyClient.main(new String[] { "3333" });
+		// LiesURL.main(new String[] { "http://github.com" });
+	}
+}
+
+class DateTimeApplet extends JApplet {
+	public void init() {
+		try {
+			Socket socket = new Socket(this.getCodeBase().getHost(), 7777);
+			BufferedReader in = new BufferedReader(new InputStreamReader(
+					socket.getInputStream()));
+			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+			in.readLine();
+			out.println("date");
+			String s = in.readLine();
+			getContentPane().add(new JLabel(s, JLabel.CENTER));
+		} catch (IOException e) {
+			String s = "Verbindung zum DateTimeServer fehlgeschlagen!";
+			getContentPane().add(new JLabel(s, JLabel.CENTER));
+		}
+	}
+}
+
+class LiesURL {
+	public static void main(String[] args) {
+		try {
+			URL u = new URL(args[0]);
+			BufferedReader in = new BufferedReader(new InputStreamReader(
+					u.openStream()));
+			String zeile;
+			while ((zeile = in.readLine()) != null)
+				System.out.println(zeile);
+			in.close();
+		} catch (ArrayIndexOutOfBoundsException ae) {
+			System.out.println("Aufruf: java LiesURL <URL>");
+		} catch (MalformedURLException me) {
+			System.out.println(args[0] + " ist keine zulaessige URL");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+class MyClient {
+	// liest alle vom Server geschickten Daten
+	static void zeigeWasKommt(BufferedReader sin) throws IOException {
+		String str = null;
+		try {
+			while ((str = sin.readLine()) != null)
+				System.out.println(str);
+		} catch (SocketTimeoutException sto) {
+		}
+	}
+
+	static void zeigePrompt() {
+		System.out.print("> ");
+		System.out.flush();
+	}
+
+	public static void main(String[] args) {
+		try {
+			System.out.println("Client laeuft. Beenden mit QUIT");
+			Socket c = new Socket(args[0], Integer.parseInt(args[1]));
+			c.setSoTimeout(500); // setze Timeout auf eine halbe Sekunde
+			BufferedReader vomServer = new BufferedReader(
+					new InputStreamReader(c.getInputStream()));
+			PrintWriter zumServer = new PrintWriter(c.getOutputStream(), true);
+			BufferedReader vonTastatur = new BufferedReader(
+					new InputStreamReader(System.in));
+			String zeile;
+			do {
+				zeigeWasKommt(vomServer);
+				zeigePrompt();
+				zeile = vonTastatur.readLine();
+				zumServer.println(zeile);
+			} while (!zeile.equalsIgnoreCase("quit"));
+			c.close();
+			// Socket (und damit auch Stroeme) schliessen
+		} catch (ArrayIndexOutOfBoundsException ae) {
+			System.out.println("Aufruf: java MyClient <Port-Nummer>");
+		} catch (UnknownHostException ux) {
+			System.out.println("Kein DNS-Eintrag fuer " + args[0]);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
 
