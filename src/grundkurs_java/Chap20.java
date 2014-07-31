@@ -20,6 +20,11 @@ public class Chap20 {
 
 class OnlineCdArchiv {
 	// 20.1
+
+}
+
+class CdServer {
+	// 20.1
 }
 
 class DateTimeApplet extends JApplet {
