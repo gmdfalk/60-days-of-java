@@ -18,13 +18,84 @@ public class Chap20 {
 	}
 }
 
-class OnlineCdArchiv {
-	// 20.1
-
-}
-
 class CdServer {
 	// 20.1
+	public static void main(String[] args) {
+		try {
+			int port = Integer.parseInt(args[0]);
+			// Port-Nummer
+			ServerSocket server = new ServerSocket(port); // Server-Socket
+			System.out.println("CdServer laeuft"); // Statusmeldung
+			while (true) {
+				Socket s = server.accept(); // Client-Verbindung akzeptieren
+				// Dienst starten
+				new CdServerDienst(s).start();
+			}
+		} catch (ArrayIndexOutOfBoundsException ae) {
+			System.out.println("Aufruf: java CdServer <Port>");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+class CdServerDienst extends Thread {
+	// 20.1
+	static SimpleDateFormat time = new SimpleDateFormat(
+			"'Es ist gerade 'H'.'mm' Uhr.'"), date = new SimpleDateFormat(
+			"'Heute ist 'EEEE', der 'dd.MM.yy");
+	// Formate fuer den Zeitpunkt20.2 Client/Server-Programmierung
+
+	static int anzahl = 0;
+	// Anzahl der Clients insgesamt
+	int nr = 0;
+	// Nummer des Clients
+	Socket s;
+	// Socket in Verbindung mit dem Client
+	BufferedReader vomClient;
+	// Eingabe-Strom vom Client
+	PrintWriter zumClient;
+
+	// Ausgabe-Strom zum Client
+	public CdServerDienst(Socket s) { // Konstruktor
+		try {
+			this.s = s;
+			nr = ++anzahl;
+			vomClient = new BufferedReader(new InputStreamReader(
+					s.getInputStream()));
+			zumClient = new PrintWriter(s.getOutputStream(), true);
+		} catch (IOException e) {
+			System.out.println("IO-Error bei Client " + nr);
+			e.printStackTrace();
+		}
+	}
+
+	public void run() { // Methode, die das Protokoll abwickelt
+		System.out.println("Protokoll fuer Client " + nr + " gestartet");
+		try {
+			while (true) {
+				zumClient
+						.println("Mögliche Befehle: list, tracks <album>, date, time, quit");
+				String wunsch = vomClient.readLine(); // vom Client empfangen
+				if (wunsch == null || wunsch.equalsIgnoreCase("quit"))
+					break;
+				Date jetzt = new Date();
+				if (wunsch.equalsIgnoreCase("date"))
+					zumClient.println(date.format(jetzt));
+				else if (wunsch.equalsIgnoreCase("time"))
+					zumClient.println(time.format(jetzt));
+				else if (wunsch.equalsIgnoreCase("list"))
+					File.listRoots();
+				else
+					zumClient.println(wunsch + "ist als Kommando unzulaessig!");
+			}
+			s.close();
+			// Socket (und damit auch Stroeme) schliessen
+		} catch (IOException e) {
+			System.out.println("IO-Error bei Client " + nr);
+		}
+		System.out.println("Protokoll fuer Client " + nr + " beendet");
+	}
 }
 
 class DateTimeApplet extends JApplet {
