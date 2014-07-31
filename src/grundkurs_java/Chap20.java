@@ -15,21 +15,33 @@ public class Chap20 {
 		// DateTimeMultiServer.main(new String[] { "3333" });
 		// MyClient.main(new String[] { "3333" });
 		// LiesURL.main(new String[] { "http://github.com" });
+		CdServer.main(args);
 	}
 }
 
 class CdServer {
 	// 20.1
+
 	public static void main(String[] args) {
 		try {
 			int port = Integer.parseInt(args[0]);
 			// Port-Nummer
 			ServerSocket server = new ServerSocket(port); // Server-Socket
 			System.out.println("CdServer laeuft"); // Statusmeldung
+			File cdArchiv = new File("cdArchiv");
+			if (!cdArchiv.exists()) {
+				try {
+					cdArchiv.mkdir();
+				} catch (SecurityException e) {
+					System.out
+							.println("Could neither find nor create cdArchive directory.");
+					System.exit(1);
+				}
+			}
 			while (true) {
 				Socket s = server.accept(); // Client-Verbindung akzeptieren
 				// Dienst starten
-				new CdServerDienst(s).start();
+				new CdServerDienst(s, cdArchiv).start();
 			}
 		} catch (ArrayIndexOutOfBoundsException ae) {
 			System.out.println("Aufruf: java CdServer <Port>");
@@ -56,10 +68,13 @@ class CdServerDienst extends Thread {
 	// Eingabe-Strom vom Client
 	PrintWriter zumClient;
 
+	File cdArchiv;
+
 	// Ausgabe-Strom zum Client
-	public CdServerDienst(Socket s) { // Konstruktor
+	public CdServerDienst(Socket s, File cdArchiv) { // Konstruktor
 		try {
 			this.s = s;
+			this.cdArchiv = cdArchiv;
 			nr = ++anzahl;
 			vomClient = new BufferedReader(new InputStreamReader(
 					s.getInputStream()));
@@ -85,7 +100,9 @@ class CdServerDienst extends Thread {
 				else if (wunsch.equalsIgnoreCase("time"))
 					zumClient.println(time.format(jetzt));
 				else if (wunsch.equalsIgnoreCase("list"))
-					File.listRoots();
+					cdArchiv.list();
+				else if (wunsch.equalsIgnoreCase("tracks.*"))
+					System.out.println("tracks" + wunsch);
 				else
 					zumClient.println(wunsch + "ist als Kommando unzulaessig!");
 			}
