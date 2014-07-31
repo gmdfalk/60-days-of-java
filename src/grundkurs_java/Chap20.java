@@ -15,7 +15,7 @@ public class Chap20 {
 		// DateTimeMultiServer.main(new String[] { "3333" });
 		// MyClient.main(new String[] { "3333" });
 		// LiesURL.main(new String[] { "http://github.com" });
-		CdServer.main(args);
+		CdServer.main(new String[] { "3334" });
 	}
 }
 
@@ -27,7 +27,7 @@ class CdServer {
 			int port = Integer.parseInt(args[0]);
 			// Port-Nummer
 			ServerSocket server = new ServerSocket(port); // Server-Socket
-			System.out.println("CdServer laeuft"); // Statusmeldung
+			System.out.println("CdServer wartet auf Port " + port); // Statusmeldung
 			File cdArchiv = new File("cdArchiv");
 			if (!cdArchiv.exists()) {
 				try {
@@ -100,9 +100,10 @@ class CdServerDienst extends Thread {
 				else if (wunsch.equalsIgnoreCase("time"))
 					zumClient.println(time.format(jetzt));
 				else if (wunsch.equalsIgnoreCase("list"))
-					cdArchiv.list();
-				else if (wunsch.equalsIgnoreCase("tracks.*"))
-					System.out.println("tracks" + wunsch);
+					for (String s : cdArchiv.list())
+						zumClient.println(s);
+				else if (wunsch.toLowerCase().startsWith("tracks"))
+					zumClient.println(wunsch);
 				else
 					zumClient.println(wunsch + "ist als Kommando unzulaessig!");
 			}
