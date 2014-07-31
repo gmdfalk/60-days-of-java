@@ -1,9 +1,12 @@
 package grundkurs_java;
 
 import java.net.*;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.io.*;
 import java.util.*;
 import java.text.*;
+
 import javax.swing.*;
 
 public class Chap20 {
@@ -17,6 +20,10 @@ public class Chap20 {
 		// LiesURL.main(new String[] { "http://github.com" });
 		CdServer.main(new String[] { "3334" });
 	}
+}
+
+class CurrencyServer {
+	// 20.2
 }
 
 class CdServer {
@@ -115,20 +122,29 @@ class CdServerDienst extends Thread {
 		System.out.println("Protokoll fuer Client " + nr + " beendet");
 	}
 
-	private String findTracks(String wunsch) {
-		String[] wunschSplit = wunsch.split("\\s");
-		for (String s : wunschSplit)
-			System.out.println(s);
+	private List<String> findTracks(String wunsch) throws IOException {
+		File[] matches = cdArchiv.listFiles(new FilesearchFilter(wunsch));
+		System.out.println(matches.length + " matches");
+		if (matches.length == 0)
+			return null;
+		return Files
+				.readAllLines(matches[0].toPath(), Charset.defaultCharset());
+	}
 
-		File[] matches = cdArchiv.listFiles(new FilenameFilter() {
-			public boolean accept(File dir, String name) {
-				return name.startsWith(wunschSplit[1]);
-			}
-		});
-		for (File match : matches) {
-			;
+	class FilesearchFilter implements FilenameFilter {
+
+		private String wunsch;
+
+		public FilesearchFilter(String wunsch) {
+			this.wunsch = wunsch;
 		}
-		return cdArchiv.s;
+
+		public boolean accept(File dir, String name) {
+			String[] wunschSplit = wunsch.split("\\s");
+			for (String w : wunschSplit)
+				System.out.println(w);
+			return name.startsWith(wunsch.split("\\s")[1]);
+		}
 	}
 }
 
