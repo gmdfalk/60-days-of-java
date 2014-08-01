@@ -59,8 +59,6 @@ class CurrencyServerDienst extends Thread {
 	// Eingabe-Strom vom Client
 	PrintWriter zumClient;
 
-	File cdArchiv;
-
 	// Ausgabe-Strom zum Client
 	public CurrencyServerDienst(Socket s) { // Konstruktor
 		try {
@@ -80,7 +78,9 @@ class CurrencyServerDienst extends Thread {
 		try {
 			while (true) {
 				zumClient
-						.println("Mögliche Befehle: list, tracks <album>, date, time, quit");
+						.println("Der Client laueft und kann mit 'quit' beendet werden.");
+				zumClient
+						.println("Welche Waehrung wollen Sie eingeben (DM oder EUR)?");
 				String wunsch = vomClient.readLine(); // vom Client empfangen
 				if (wunsch == null || wunsch.equalsIgnoreCase("quit"))
 					break;
@@ -89,11 +89,10 @@ class CurrencyServerDienst extends Thread {
 					zumClient.println(date.format(jetzt));
 				else if (wunsch.equalsIgnoreCase("time"))
 					zumClient.println(time.format(jetzt));
-				else if (wunsch.equalsIgnoreCase("list"))
-					for (String s : cdArchiv.list())
-						zumClient.println(s);
-				else if (wunsch.toLowerCase().startsWith("tracks"))
-					zumClient.println(findTracks(wunsch));
+				else if (wunsch.equalsIgnoreCase("dm"))
+					zumClient.println(toEuro());
+				else if (wunsch.equalsIgnoreCase("eur"))
+					zumClient.println(toDM());
 				else
 					zumClient.println(wunsch + "ist als Kommando unzulaessig!");
 			}
@@ -105,30 +104,30 @@ class CurrencyServerDienst extends Thread {
 		System.out.println("Protokoll fuer Client " + nr + " beendet");
 	}
 
-	private List<String> findTracks(String wunsch) throws IOException {
-		File[] matches = cdArchiv.listFiles(new FilesearchFilter(wunsch));
-		System.out.println(matches.length + " matches");
-		if (matches.length == 0)
-			return null;
-		return Files
-				.readAllLines(matches[0].toPath(), Charset.defaultCharset());
+	private double toEuro() {
+		String betrag = null;
+		System.out.println("Bitte DM Betrag eingeben: ");
+		try {
+			betrag = vomClient.readLine();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return EuroConverter.convertToEuro(Double.parseDouble(betrag),
+				EuroConverter.DEM);
 	}
 
-	class FilesearchFilter implements FilenameFilter {
-
-		private String wunsch;
-
-		public FilesearchFilter(String wunsch) {
-			this.wunsch = wunsch;
+	private double toDM() {
+		String betrag = null;
+		System.out.println("Bitte EUR Betrag eingeben: ");
+		try {
+			betrag = vomClient.readLine();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-
-		public boolean accept(File dir, String name) {
-			String[] wunschSplit = wunsch.split("\\s");
-			for (String w : wunschSplit)
-				System.out.println(w);
-			return name.startsWith(wunsch.split("\\s")[1]);
-		}
+		return EuroConverter.convertFromEuro(Double.parseDouble(betrag),
+				EuroConverter.DEM);
 	}
+
 }
 
 class CdServer {
