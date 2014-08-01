@@ -252,6 +252,85 @@ class CurrencyServerDienst extends Thread {
 
 }
 
+class CDServer {
+	// 20.1 Musterlösung
+	public static void main(String[] args) {
+		if (args.length != 1) {
+			System.out.println("Aufruf:  java CDServer <portnr>");
+			System.exit(1);
+		}
+		try {
+			int port = Integer.parseInt(args[0]);
+			ServerSocket server = new ServerSocket(port);
+			System.out.println("CDServer wartet auf Port " + port);
+			boolean neu = true;
+			while (neu) {
+				Socket sock = server.accept();
+				new CDVerbindung(sock).start();
+			}
+			server.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+class CDVerbindung extends Thread {
+	// 20.1 Musterlösung
+	Socket sock;
+	PrintWriter sockOut;
+	BufferedReader sockIn;
+	static final String LIST = "list", TRACKS = "tracks";
+
+	CDVerbindung(Socket sock) {
+		this.sock = sock;
+		try {
+			sockIn = new BufferedReader(new InputStreamReader(
+					sock.getInputStream()));
+			sockOut = new PrintWriter(sock.getOutputStream(), true);
+		} catch (IOException e) {
+			protokolliere("Ausnahme beim Verbindungsaufbau: " + e);
+		}
+	}
+
+	void protokolliere(String action) {
+		System.out.println("[" + sock.getInetAddress() + ":" + sock.getPort()
+				+ ": " + action + "]");
+	}
+
+	public void run() {
+		try {
+			protokolliere("neue Verbindung");
+			String clientAnfrage;
+			while ((clientAnfrage = sockIn.readLine()) != null) {
+				if (clientAnfrage.equalsIgnoreCase(LIST)) {
+					protokolliere("sende Verzeichnis der CDs");
+					String[] verzeichnis = new File("cdArchiv").list();
+					for (int i = 0; i < verzeichnis.length; i++)
+						sockOut.println(verzeichnis[i]);
+				} else if (clientAnfrage.startsWith(TRACKS)) {
+					String cd = clientAnfrage.substring(TRACKS.length() + 1)
+							.trim();
+					protokolliere("sende Tracks der CD " + cd);
+					BufferedReader fileIn;
+					try {
+						fileIn = new BufferedReader(new FileReader("cdArchiv/"
+								+ cd));
+					} catch (FileNotFoundException e) {
+						continue;
+					}
+					while ((cd = fileIn.readLine()) != null)
+						sockOut.println(cd);
+					fileIn.close();
+				}
+			}
+			sock.close();
+			protokolliere("Verbindung unterbrochen");
+		} catch (IOException e) {
+		}
+	}
+}
+
 class CdServer {
 	// 20.1
 
