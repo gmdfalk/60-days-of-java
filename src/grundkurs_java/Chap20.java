@@ -18,7 +18,129 @@ public class Chap20 {
 		// DateTimeMultiServer.main(new String[] { "3333" });
 		// MyClient.main(new String[] { "3333" });
 		// LiesURL.main(new String[] { "http://github.com" });
-		CdServer.main(new String[] { "3334" });
+		// CdServer.main(new String[] { "3334" });
+		CurrencyServer.main(new String[] { "3334" });
+	}
+}
+
+class EuroServer {
+	// 20.2 offiziell
+	static boolean serverAktiv = true;
+
+	public static void main(String[] args) {
+		// Argumentanzahl überprüfen
+		if (args.length == 1) {
+			// Port-Nummer bestimmen
+			int port = Integer.parseInt(args[0]);
+			// Try-Catch-Block beginnen
+			try {
+				// Server-Steuerung aktivieren
+				new SteuerDienst().start();
+				// Einen Socket für den Server erzeugen
+				ServerSocket server = new ServerSocket(port);
+				System.out.println("Der Server laeuft.");
+				// "Endlos"-Schleife
+				while (serverAktiv) {
+					// Für jeden Client, der eine Verbindung aufbaut,
+					// einen EuroThread starten
+					new EuroThread(server.accept()).start();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			System.out.println("Der Server ist beendet.");
+		} else {
+			// Hinweis für korrekten Aufruf auf die Konsole ausgeben
+			System.out.println("Aufruf: java EuroServer <PortNummer>");
+		}
+	}
+}
+
+class EuroThread extends Thread {
+	// 20.2 offiziell
+	Socket c; // Socket für den Clients
+	BufferedReader in; // Eingabe-Strom zum Client
+	PrintWriter out; // Ausgabe-Strom zum Client
+
+	// Einen Konstruktor für den EuroThread deklarieren
+	EuroThread(Socket sock) {
+		System.out.println("Neuer Client wird bearbeitet.");
+		// Den Client-Socket in der Instanzvariablen speichern
+		c = sock;
+		// Try-Catch-Block beginnen
+		try {
+			// Den Eingabe-Strom zum Client erzeugen
+			in = new BufferedReader(new InputStreamReader(c.getInputStream()));
+			// Den Ausgabe-Strom zum Client erzeugen
+			out = new PrintWriter(c.getOutputStream(), true);
+		} catch (IOException e) {
+		}
+	}
+
+	public void run() {
+		try {
+
+			String zeile;
+			double wert;
+			boolean toEuroDesired, nochmal;
+
+			nochmal = true;
+
+			// Protokoll für die Unterhaltung
+
+			while (nochmal) {
+				out.println("Welche Waehrung wollen Sie eingeben (DM oder EUR)?");
+				zeile = in.readLine();
+				if (zeile == null)
+					break;
+				toEuroDesired = zeile.toUpperCase().startsWith("DM");
+
+				out.println("Welchen Wert wollen Sie umrechnen?");
+				zeile = in.readLine();
+				if (zeile == null)
+					break;
+				wert = Double.parseDouble(zeile);
+
+				if (toEuroDesired) {
+					wert = EuroConverter.convertToEuro(wert, EuroConverter.DEM);
+					out.println("Wert in EUR: " + wert);
+				} else {
+					wert = EuroConverter.convertFromEuro(wert,
+							EuroConverter.DEM);
+					out.println("Wert in DM: " + wert);
+				}
+
+				out.println();
+				out.println("Darf's noch eine Umrechnung sein?");
+				zeile = in.readLine();
+				if (zeile == null)
+					break;
+				nochmal = zeile.startsWith("j") || zeile.startsWith("J");
+			}
+		} catch (IOException ign) {
+		}
+	}
+}
+
+class SteuerDienst extends Thread {
+	// 20.2 offiziell
+	BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+	String eingabe;
+
+	public void run() {
+		try {
+			// Solange Benutzer-Eingaben anfordern, bis SHUTDOWN eingegeben wird
+			do {
+				System.out
+						.println("Server beenden durch Eingabe von SHUTDOWN!");
+			} while (!(eingabe = in.readLine()).toLowerCase().startsWith(
+					"shutdown"));
+			// EuroServer deaktivieren
+			EuroServer.serverAktiv = false;
+			System.out.println("Der Server wird nun nach Abarbeitung des");
+			System.out.println("naechsten Clients automatisch beendet.");
+		} catch (IOException e) {
+		}
 	}
 }
 
@@ -43,7 +165,7 @@ class CurrencyServer {
 }
 
 class CurrencyServerDienst extends Thread {
-	// 20.1
+	// 20.2
 	static SimpleDateFormat time = new SimpleDateFormat(
 			"'Es ist gerade 'H'.'mm' Uhr.'"), date = new SimpleDateFormat(
 			"'Heute ist 'EEEE', der 'dd.MM.yy");
@@ -90,9 +212,9 @@ class CurrencyServerDienst extends Thread {
 				else if (wunsch.equalsIgnoreCase("time"))
 					zumClient.println(time.format(jetzt));
 				else if (wunsch.equalsIgnoreCase("dm"))
-					zumClient.println(toEuro());
+					zumClient.println("Wert in Euro: " + toEuro());
 				else if (wunsch.equalsIgnoreCase("eur"))
-					zumClient.println(toDM());
+					zumClient.println("Wert in DM: " + toDM());
 				else
 					zumClient.println(wunsch + "ist als Kommando unzulaessig!");
 			}
@@ -105,27 +227,27 @@ class CurrencyServerDienst extends Thread {
 	}
 
 	private double toEuro() {
-		String betrag = null;
-		System.out.println("Bitte DM Betrag eingeben: ");
-		try {
-			betrag = vomClient.readLine();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		zumClient.println("Bitte DM Betrag eingeben: ");
+		String betrag = readBetrag();
 		return EuroConverter.convertToEuro(Double.parseDouble(betrag),
 				EuroConverter.DEM);
 	}
 
 	private double toDM() {
+		zumClient.println("Bitte EUR Betrag eingeben: ");
+		String betrag = readBetrag();
+		return EuroConverter.convertFromEuro(Double.parseDouble(betrag),
+				EuroConverter.DEM);
+	}
+
+	private String readBetrag() {
 		String betrag = null;
-		System.out.println("Bitte EUR Betrag eingeben: ");
 		try {
 			betrag = vomClient.readLine();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return EuroConverter.convertFromEuro(Double.parseDouble(betrag),
-				EuroConverter.DEM);
+		return betrag;
 	}
 
 }
