@@ -24,6 +24,111 @@ public class Chap20 {
 
 class CurrencyServer {
 	// 20.2
+	public static void main(String[] args) {
+		try {
+			int port = Integer.parseInt(args[0]);
+			// Port-Nummer
+			ServerSocket server = new ServerSocket(port); // Server-Socket
+			System.out.println("CurrencyServer wartet auf Port " + port); // Statusmeldung
+			while (true) {
+				Socket s = server.accept(); // Client-Verbindung akzeptieren
+				new CurrencyServerDienst(s).start();
+			}
+		} catch (ArrayIndexOutOfBoundsException ae) {
+			System.out.println("Aufruf: java CdServer <Port>");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+class CurrencyServerDienst extends Thread {
+	// 20.1
+	static SimpleDateFormat time = new SimpleDateFormat(
+			"'Es ist gerade 'H'.'mm' Uhr.'"), date = new SimpleDateFormat(
+			"'Heute ist 'EEEE', der 'dd.MM.yy");
+	// Formate fuer den Zeitpunkt20.2 Client/Server-Programmierung
+
+	static int anzahl = 0;
+	// Anzahl der Clients insgesamt
+	int nr = 0;
+	// Nummer des Clients
+	Socket s;
+	// Socket in Verbindung mit dem Client
+	BufferedReader vomClient;
+	// Eingabe-Strom vom Client
+	PrintWriter zumClient;
+
+	File cdArchiv;
+
+	// Ausgabe-Strom zum Client
+	public CurrencyServerDienst(Socket s) { // Konstruktor
+		try {
+			this.s = s;
+			nr = ++anzahl;
+			vomClient = new BufferedReader(new InputStreamReader(
+					s.getInputStream()));
+			zumClient = new PrintWriter(s.getOutputStream(), true);
+		} catch (IOException e) {
+			System.out.println("IO-Error bei Client " + nr);
+			e.printStackTrace();
+		}
+	}
+
+	public void run() { // Methode, die das Protokoll abwickelt
+		System.out.println("Protokoll fuer Client " + nr + " gestartet");
+		try {
+			while (true) {
+				zumClient
+						.println("Mögliche Befehle: list, tracks <album>, date, time, quit");
+				String wunsch = vomClient.readLine(); // vom Client empfangen
+				if (wunsch == null || wunsch.equalsIgnoreCase("quit"))
+					break;
+				Date jetzt = new Date();
+				if (wunsch.equalsIgnoreCase("date"))
+					zumClient.println(date.format(jetzt));
+				else if (wunsch.equalsIgnoreCase("time"))
+					zumClient.println(time.format(jetzt));
+				else if (wunsch.equalsIgnoreCase("list"))
+					for (String s : cdArchiv.list())
+						zumClient.println(s);
+				else if (wunsch.toLowerCase().startsWith("tracks"))
+					zumClient.println(findTracks(wunsch));
+				else
+					zumClient.println(wunsch + "ist als Kommando unzulaessig!");
+			}
+			s.close();
+			// Socket (und damit auch Stroeme) schliessen
+		} catch (IOException e) {
+			System.out.println("IO-Error bei Client " + nr);
+		}
+		System.out.println("Protokoll fuer Client " + nr + " beendet");
+	}
+
+	private List<String> findTracks(String wunsch) throws IOException {
+		File[] matches = cdArchiv.listFiles(new FilesearchFilter(wunsch));
+		System.out.println(matches.length + " matches");
+		if (matches.length == 0)
+			return null;
+		return Files
+				.readAllLines(matches[0].toPath(), Charset.defaultCharset());
+	}
+
+	class FilesearchFilter implements FilenameFilter {
+
+		private String wunsch;
+
+		public FilesearchFilter(String wunsch) {
+			this.wunsch = wunsch;
+		}
+
+		public boolean accept(File dir, String name) {
+			String[] wunschSplit = wunsch.split("\\s");
+			for (String w : wunschSplit)
+				System.out.println(w);
+			return name.startsWith(wunsch.split("\\s")[1]);
+		}
+	}
 }
 
 class CdServer {
