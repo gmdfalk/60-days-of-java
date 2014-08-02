@@ -23,6 +23,88 @@ public class Chap20 {
 	}
 }
 
+class TalkServer {
+
+	public static void main(String[] args) {
+		Socket c1;
+		Socket c2;
+		// Argumentanzahl überprüfen
+		if (args.length == 1) {
+			// Port-Nummer bestimmen
+			int port = Integer.parseInt(args[0]);
+			// try-catch-Block beginnen
+			try {
+				// Einen Socket für den Server erzeugen
+				ServerSocket server = new ServerSocket(port);
+				System.out.println("Der Server laeuft");
+				// Endlosschleife
+				while (true) {
+					// Für je zwei Clients, die eine Verbindung aufbauen,
+					// zwei Talk-Dienst Threads starten
+					c1 = server.accept();
+					c2 = server.accept();
+					new TalkDienst(c1, c2).start();
+					new TalkDienst(c2, c1).start();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			// Hinweis für korrekten Aufruf auf die Konsole ausgeben
+			System.out.println("Aufruf: java TalkServer <PortNummer>");
+		}
+	}
+}
+
+class TalkDienst extends Thread {
+
+	Socket c1, c2; // Sockets für die beiden Clients
+	BufferedReader in; // Eingabe-Ströme zu den Clients
+	PrintWriter out; // Ausgabe-Ströme zu den Clients
+
+	/**
+	 * Eingabe- und Ausgabestroeme zu den Clients erzeugen
+	 *
+	 */
+	TalkDienst(Socket sin, Socket sout) {
+		// Die Client-Sockets in den Instanzvariablen speichern
+		c1 = sin;
+		c2 = sout;
+		// try-catch-Block beginnen
+		try {
+			// Den Eingabe-Strom vom anderen Client erzeugen
+			in = new BufferedReader(new InputStreamReader(c1.getInputStream()));
+
+			// Den Ausgabe-Strom zum anderen Client erzeugen
+			out = new PrintWriter(c2.getOutputStream(), true);
+			out.println("*** " + "Chatpartner gefunden, es kann losgehen!"
+					+ " ***");
+		} catch (IOException e) {
+		}
+	}
+
+	// run-Methode ueberschreiben: Abarbeitung des eigentlichen Protokolls
+
+	public void run() {
+		String line;
+
+		try {
+			while (true) {
+				line = in.readLine();
+				if (line != null)
+					out.println(line);
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) {
+					break;
+				}
+			}
+		} catch (IOException e) {
+			System.out.println("Fehler:" + e);
+		}
+	}
+}
+
 class ChatServer {
 	// 20.3
 	public static void main(String[] args) {
