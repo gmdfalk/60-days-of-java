@@ -23,6 +23,103 @@ public class Chap20 {
 	}
 }
 
+class ChatServer {
+	// 20.3
+	public static void main(String[] args) {
+		// Argumentanzahl überprüfen
+		if (args.length == 1) {
+			// Port-Nummer bestimmen
+			int port = Integer.parseInt(args[0]);
+			// Try-Catch-Block beginnen
+			try {
+				// Server-Steuerung aktivieren
+				new SteuerDienst().start();
+				// Einen Socket für den Server erzeugen
+				ServerSocket server = new ServerSocket(port);
+				System.out.println("Der Server laeuft.");
+				// "Endlos"-Schleife
+				while (true) {
+					// Für jeden Client, der eine Verbindung aufbaut,
+					// einen EuroThread starten
+					new ChatDienst(server.accept()).start();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			System.out.println("Der Server ist beendet.");
+		} else {
+			// Hinweis für korrekten Aufruf auf die Konsole ausgeben
+			System.out.println("Aufruf: java ChatServer <PortNummer>");
+		}
+	}
+}
+
+class ChatDienst extends Thread {
+	// 20.3
+	Socket c; // Socket für den Clients
+	BufferedReader in; // Eingabe-Strom zum Client
+	PrintWriter out; // Ausgabe-Strom zum Client
+
+	// Einen Konstruktor für den EuroThread deklarieren
+	public ChatDienst(Socket socket) {
+		System.out.println("Neuer Client wird bearbeitet.");
+		// Den Client-Socket in der Instanzvariablen speichern
+		c = socket;
+		// Try-Catch-Block beginnen
+		try {
+			// Den Eingabe-Strom zum Client erzeugen
+			in = new BufferedReader(new InputStreamReader(c.getInputStream()));
+			// Den Ausgabe-Strom zum Client erzeugen
+			out = new PrintWriter(c.getOutputStream(), true);
+		} catch (IOException e) {
+		}
+	}
+
+	public void run() {
+		try {
+
+			String zeile;
+			double wert;
+			boolean toEuroDesired, nochmal;
+
+			nochmal = true;
+
+			// Protokoll für die Unterhaltung
+
+			while (nochmal) {
+				out.println("Welche Waehrung wollen Sie eingeben (DM oder EUR)?");
+				zeile = in.readLine();
+				if (zeile == null)
+					break;
+				toEuroDesired = zeile.toUpperCase().startsWith("DM");
+
+				out.println("Welchen Wert wollen Sie umrechnen?");
+				zeile = in.readLine();
+				if (zeile == null)
+					break;
+				wert = Double.parseDouble(zeile);
+
+				if (toEuroDesired) {
+					wert = EuroConverter.convertToEuro(wert, EuroConverter.DEM);
+					out.println("Wert in EUR: " + wert);
+				} else {
+					wert = EuroConverter.convertFromEuro(wert,
+							EuroConverter.DEM);
+					out.println("Wert in DM: " + wert);
+				}
+
+				out.println();
+				out.println("Darf's noch eine Umrechnung sein?");
+				zeile = in.readLine();
+				if (zeile == null)
+					break;
+				nochmal = zeile.startsWith("j") || zeile.startsWith("J");
+			}
+		} catch (IOException ign) {
+		}
+	}
+}
+
 class EuroServer {
 	// 20.2 offiziell
 	static boolean serverAktiv = true;
