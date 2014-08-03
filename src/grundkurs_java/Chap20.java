@@ -19,7 +19,8 @@ public class Chap20 {
 		// MyClient.main(new String[] { "3333" });
 		// LiesURL.main(new String[] { "http://github.com" });
 		// CdServer.main(new String[] { "3334" });
-		CurrencyServer.main(new String[] { "3334" });
+		// CurrencyServer.main(new String[] { "3334" });
+		TalkServer.main(new String[] { "3332" });
 	}
 }
 
@@ -101,107 +102,6 @@ class TalkDienst extends Thread {
 			}
 		} catch (IOException e) {
 			System.out.println("Fehler:" + e);
-		}
-	}
-}
-
-class ChatServer {
-	// 20.3
-	public static void main(String[] args) {
-		// Argumentanzahl überprüfen
-		if (args.length == 1) {
-			// Port-Nummer bestimmen
-			int client1Port = Integer.parseInt(args[0]);
-			int client2Port = Integer.parseInt(args[1]);
-			// Try-Catch-Block beginnen
-			try {
-				ChatDienst client1Thread;
-				ChatDienst client2Thread;
-				ServerSocket client1Socket = new ServerSocket(client1Port);
-				ServerSocket client2Socket = new ServerSocket(client2Port);
-				System.out.println("Der Server laeuft.");
-				// "Endlos"-Schleife
-				while (true) {
-					// Für jeden Client, der eine Verbindung aufbaut,
-					// einen EuroThread starten
-					client1Thread = new ChatDienst(client2Socket.accept());
-					client2Thread = new ChatDienst(client1Socket.accept());
-					client1Thread.start();
-					client2Thread.start();
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			System.out.println("Der Server ist beendet.");
-		} else {
-			// Hinweis für korrekten Aufruf auf die Konsole ausgeben
-			System.out.println("Aufruf: java ChatServer <PortNummer>");
-		}
-	}
-}
-
-class ChatDienst extends Thread {
-	// 20.3
-	Socket c; // Socket für den Clients
-	BufferedReader in; // Eingabe-Strom zum Client
-	PrintWriter out; // Ausgabe-Strom zum Client
-
-	// Einen Konstruktor für den EuroThread deklarieren
-	public ChatDienst(Socket socket) {
-		System.out.println("Neuer Client wird bearbeitet.");
-		// Den Client-Socket in der Instanzvariablen speichern
-		c = socket;
-		// Try-Catch-Block beginnen
-		try {
-			// Den Eingabe-Strom zum Client erzeugen
-			in = new BufferedReader(new InputStreamReader(c.getInputStream()));
-			// Den Ausgabe-Strom zum Client erzeugen
-			out = new PrintWriter(c.getOutputStream(), true);
-		} catch (IOException e) {
-		}
-	}
-
-	public void run() {
-		try {
-
-			String zeile;
-			double wert;
-			boolean toEuroDesired, nochmal;
-
-			nochmal = true;
-
-			// Protokoll für die Unterhaltung
-
-			while (nochmal) {
-				out.println("Welche Waehrung wollen Sie eingeben (DM oder EUR)?");
-				zeile = in.readLine();
-				if (zeile == null)
-					break;
-				toEuroDesired = zeile.toUpperCase().startsWith("DM");
-
-				out.println("Welchen Wert wollen Sie umrechnen?");
-				zeile = in.readLine();
-				if (zeile == null)
-					break;
-				wert = Double.parseDouble(zeile);
-
-				if (toEuroDesired) {
-					wert = EuroConverter.convertToEuro(wert, EuroConverter.DEM);
-					out.println("Wert in EUR: " + wert);
-				} else {
-					wert = EuroConverter.convertFromEuro(wert,
-							EuroConverter.DEM);
-					out.println("Wert in DM: " + wert);
-				}
-
-				out.println();
-				out.println("Darf's noch eine Umrechnung sein?");
-				zeile = in.readLine();
-				if (zeile == null)
-					break;
-				nochmal = zeile.startsWith("j") || zeile.startsWith("J");
-			}
-		} catch (IOException ign) {
 		}
 	}
 }
