@@ -111,19 +111,23 @@ class ChatServer {
 		// Argumentanzahl überprüfen
 		if (args.length == 1) {
 			// Port-Nummer bestimmen
-			int port = Integer.parseInt(args[0]);
+			int client1Port = Integer.parseInt(args[0]);
+			int client2Port = Integer.parseInt(args[1]);
 			// Try-Catch-Block beginnen
 			try {
-				// Server-Steuerung aktivieren
-				new SteuerDienst().start();
-				// Einen Socket für den Server erzeugen
-				ServerSocket server = new ServerSocket(port);
+				ChatDienst client1Thread;
+				ChatDienst client2Thread;
+				ServerSocket client1Socket = new ServerSocket(client1Port);
+				ServerSocket client2Socket = new ServerSocket(client2Port);
 				System.out.println("Der Server laeuft.");
 				// "Endlos"-Schleife
 				while (true) {
 					// Für jeden Client, der eine Verbindung aufbaut,
 					// einen EuroThread starten
-					new ChatDienst(server.accept()).start();
+					client1Thread = new ChatDienst(client2Socket.accept());
+					client2Thread = new ChatDienst(client1Socket.accept());
+					client1Thread.start();
+					client2Thread.start();
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
